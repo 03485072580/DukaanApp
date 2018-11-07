@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content">
 
                 <!--Toolbar-->
+                <include layout="@layout/top_toolbar" />
             </RelativeLayout>
 
             <RelativeLayout
