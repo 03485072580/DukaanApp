@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Dukaan App</string>
+    <!-- Static Constants For UI-->
+    <string name="as_user">USER</string>
+    <string name="as_shop">SHOP</string>
+    <string name="use_options">OPTIONS</string>
 </resources>
