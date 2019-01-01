@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.login;
+package com.example.fasih.dukaanapp.categories.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,14 +10,15 @@ import android.view.ViewGroup;
 import com.example.fasih.dukaanapp.R;
 
 /**
- * Created by Fasih on 11/07/18.
+ * Created by Fasih on 01/01/19.
  */
 
-public class LoginOptionsFragment extends Fragment {
+public class ClothingFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_options_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_clothing, container, false);
         return view;
     }
 }

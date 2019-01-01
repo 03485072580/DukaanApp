@@ -25,14 +25,14 @@ public class LoginActivity extends AppCompatActivity {
         SectionPagerAdapter adapter = new SectionPagerAdapter(getSupportFragmentManager(), this);
         adapter.setFragments(new UserFragment());
         adapter.setFragments(new ShopFragment());
-        adapter.setFragments(new LoginOptionsFragment());
+        adapter.setFragments(new AdminFragment());
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(TAB_NUM).setText(getString(R.string.as_user));
         tabLayout.getTabAt(++TAB_NUM).setText(getString(R.string.as_shop));
-        tabLayout.getTabAt(++TAB_NUM).setText(getString(R.string.use_options));
+        tabLayout.getTabAt(++TAB_NUM).setText(getString(R.string.admin));
     }
 
     private void setupActivityWidgets() {

@@ -3,18 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fasih.dukaanapp.register.RegisterActivity">
+    tools:context="com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--Container For Child Views-->
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relLayout1">
+            <!--Material Relevant to the Login Screen-->
 
-
-            <!--It can be used to handle different Fragments For Registration-->
+            <!--Container for the Different Categories-->
             <FrameLayout
                 android:id="@+id/fragmentContainer"
                 android:layout_width="match_parent"

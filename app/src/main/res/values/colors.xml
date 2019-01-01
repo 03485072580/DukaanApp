@@ -7,4 +7,9 @@
     <color name="white">#ffffff</color>
     <color name="grey">#808080</color>
     <color name="light_grey">#4a4a</color>
+    <color name="blackish_border">#9cdad1d1</color>
+    <color name="light_green">#6cc661</color>
+    <color name="light_black">#dd252222</color>
+    <color name="line_std">#c8464242</color>
+    <color name="orange">#edffb405</color>
 </resources>

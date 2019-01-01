@@ -9,13 +9,14 @@
         <!--- Container For Child Views-->
 
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Fragment Options" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true">
+            <!--Snippet User Code-->
+            <include layout="@layout/layout_admin_login_setup" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

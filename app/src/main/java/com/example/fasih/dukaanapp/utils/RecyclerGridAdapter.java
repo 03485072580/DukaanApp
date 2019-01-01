@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.home.HomeFragment;
+import com.example.fasih.dukaanapp.home.OnRecyclerImageSelectedListener;
 
 /**
  * Created by Fasih on 11/17/18.
@@ -17,10 +19,11 @@ import com.example.fasih.dukaanapp.R;
 
 public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapter.MyViewHolder> {
     private Context mContext;
+    private OnRecyclerImageSelectedListener imageSelected;
 
-    public RecyclerGridAdapter(Context mContext) {
+    public RecyclerGridAdapter(Context mContext, HomeFragment homeFragment) {
         this.mContext = mContext;
-
+        this.imageSelected = homeFragment;
     }
 
     @Override
@@ -43,6 +46,7 @@ public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapte
 
     }
 
+    //provide given dynamic data size here
     @Override
     public int getItemCount() {
         return 8;
@@ -56,10 +60,16 @@ public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapte
         private ImageView recycler_grid_image;
         private TextView imgDescription;
 
-        private MyViewHolder(View itemView) {
+        private MyViewHolder(final View itemView) {
             super(itemView);
             recycler_grid_image = itemView.findViewById(R.id.recycler_grid_image);
             imgDescription = itemView.findViewById(R.id.imgDescription);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageSelected.onClickGridImage(getAdapterPosition(), itemView);
+                }
+            });
         }
     }
 

@@ -3,6 +3,24 @@
     <!-- Static Constants For UI-->
     <string name="as_user">USER</string>
     <string name="as_shop">SHOP</string>
+    <string name="admin">ADMIN</string>
     <string name="use_options">OPTIONS</string>
+
     <string name="contentDescription">contentDescription</string>
+
+
+    <string name="username_password">username or email</string>
+    <string name="password">password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="account_warning">Don\'t Have an Account?</string>
+
+    <!--Fragments Package-->
+    <string name="userFragment">UserFragment</string>
+    <string name="shopFragment">ShopFragment</string>
+    <string name="adminFragment">AdminFragment</string>
+    <string name="carsFragment">CarsFragment</string>
+    <string name="clothingFragment">ClothingFragment</string>
+    <string name="jewellaryFragment">JewellaryFragment</string>
+    <string name="mobileFragment">MobileFragment</string>
+
 </resources>

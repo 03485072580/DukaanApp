@@ -1,5 +1,6 @@
 package com.example.fasih.dukaanapp.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.utils.RecyclerGridAdapter;
 import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
 
@@ -18,10 +20,23 @@ import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
  * Created by Fasih on 11/17/18.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnRecyclerImageSelectedListener {
+
     private static final int currentFragmentNumber = 0;
     private RecyclerView recyclerView;
     private RecyclerView saleRecyclerVIew;
+
+    /**
+     * This method is responsible for
+     * keeping track of the click events on the categories items
+     *
+     * @param position
+     * @param view
+     */
+    @Override
+    public void onClickGridImage(int position, View view) {
+        startActivity(new Intent(getActivity(), UniqueCategoryActivity.class));
+    }
 
     @Nullable
     @Override
@@ -33,7 +48,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        RecyclerGridAdapter adapter = new RecyclerGridAdapter(getActivity());
+        RecyclerGridAdapter adapter = new RecyclerGridAdapter(getActivity(),this);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
@@ -49,4 +64,5 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         saleRecyclerVIew = view.findViewById(R.id.saleRecyclerView);
     }
+
 }

@@ -18,14 +18,14 @@ import com.example.fasih.dukaanapp.register.RegisterActivity;
  * Created by Fasih on 11/07/18.
  */
 
-public class UserFragment extends Fragment {
+public class AdminFragment extends Fragment {
 
     private TextView signUp;
     private Button signIn;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin, container, false);
         setupFragmentWidgets(view);
         return view;
     }
@@ -39,7 +39,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                intent.putExtra(getString(R.string.userFragment), getString(R.string.userFragment));
+                intent.putExtra(getString(R.string.adminFragment), getString(R.string.adminFragment));
                 startActivity(intent);
             }
         });
