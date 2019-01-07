@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.home;
+package com.example.fasih.dukaanapp.home.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.utils.RecyclerGridAdapter;
 import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
 

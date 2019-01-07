@@ -1,33 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_10dp"
-        android:text="User Registration"
-        android:textAlignment="center"
-        android:textSize="@dimen/_24sp" />
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/dukaanLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150dp"
+                    android:layout_alignParentTop="true" />
+
+                <TextView
+                    android:id="@+id/userRegistration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dukaanLogo"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="@string/user_registration"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_24sp" />
 
 
         <EditText
             android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/userRegistration"
             android:layout_marginEnd="@dimen/_10dp"
             android:layout_marginRight="@dimen/_10dp"
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="first name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -40,7 +57,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="last name"
+            android:hint="@string/last_name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -53,7 +70,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="username"
+            android:hint="@string/username"
             android:inputType="textPersonName" />
 
         <EditText
@@ -66,7 +83,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -79,20 +96,108 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
-        <Button
+                <LinearLayout
             android:id="@+id/signUp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_56dp"
             android:layout_below="@+id/password"
             android:layout_marginEnd="@dimen/_10dp"
             android:layout_marginLeft="@dimen/_10dp"
             android:layout_marginRight="@dimen/_10dp"
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
-            android:text="Button" />
+                    android:background="@drawable/custom_btn_std1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_button"
+                        android:textSize="@dimen/_24sp" />
+
+                    <ProgressBar
+                        android:id="@+id/registerProgress"
+                        style="@style/MyProgressBarStyle"
+                        android:layout_width="@dimen/_56dp"
+                        android:layout_height="@dimen/_56dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
 
     </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/easyLoginAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relLayout1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="@dimen/_10dp"
+                android:layout_marginRight="@dimen/_10dp"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+
+                android:text="EasyLoginAccess"
+                android:textSize="@dimen/_18sp" />
+
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/easyLoginAccess"
+                android:layout_margin="@dimen/_5dp"
+                app:cardBackgroundColor="#ffffff"
+                app:cardCornerRadius="@dimen/_10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/middleLogin"
+                        android:layout_width="@dimen/_56dp"
+                        android:layout_height="@dimen/_56dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="@dimen/_30dp"
+                        android:layout_marginStart="@dimen/_30dp"
+                        android:src="@drawable/facebook"
+                        app:civ_border_color="@color/light_black"
+                        app:civ_border_width="0.5dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/leftLogin"
+                        android:layout_width="@dimen/_56dp"
+                        android:layout_height="@dimen/_56dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/middleLogin"
+                        android:src="@drawable/gmail"
+                        app:civ_border_color="@color/light_black"
+                        app:civ_border_width="0.5dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/rightLogin"
+                        android:layout_width="@dimen/_56dp"
+                        android:layout_height="@dimen/_56dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/middleLogin"
+                        android:src="@drawable/twitter"
+                        app:civ_border_color="@color/light_black"
+                        app:civ_border_width="0.5dp" />
+
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
 </RelativeLayout>

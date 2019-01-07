@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <TextView
+
+    <ImageView
+        android:id="@+id/dukaanLogo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/_10dp"
-        android:text="Shop Registration"
-        android:textAlignment="center"
-        android:textSize="@dimen/_24sp" />
+        android:layout_height="@dimen/_150dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_below="@id/dukaanLogo">
+
+        <TextView
+            android:id="@+id/shopRegistration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/_10dp"
+            android:text="@string/shop_registration"
+            android:textAlignment="center"
+            android:textSize="@dimen/_24sp" />
 
 
         <EditText
             android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/shopRegistration"
             android:layout_marginEnd="@dimen/_10dp"
             android:layout_marginRight="@dimen/_10dp"
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="first name"
+            android:hint="@string/first_name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -40,7 +48,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="last name"
+            android:hint="@string/last_name"
             android:inputType="textPersonName" />
 
         <EditText
@@ -53,7 +61,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="username"
+            android:hint="@string/username"
             android:inputType="textPersonName" />
 
         <EditText
@@ -66,7 +74,7 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -79,20 +87,40 @@
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
             android:ems="10"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
-        <Button
+        <LinearLayout
             android:id="@+id/signUp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_56dp"
             android:layout_below="@+id/password"
             android:layout_marginEnd="@dimen/_10dp"
             android:layout_marginLeft="@dimen/_10dp"
             android:layout_marginRight="@dimen/_10dp"
             android:layout_marginStart="@dimen/_10dp"
             android:layout_marginTop="@dimen/_10dp"
-            android:text="Button" />
+            android:background="@drawable/custom_btn_std1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_button"
+                android:textSize="@dimen/_24sp" />
+
+            <ProgressBar
+                android:id="@+id/registerProgress"
+                style="@style/MyProgressBarStyle"
+                android:layout_width="@dimen/_56dp"
+                android:layout_height="@dimen/_56dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
     </RelativeLayout>
+
+
 </RelativeLayout>

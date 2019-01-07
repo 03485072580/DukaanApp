@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
-import com.example.fasih.dukaanapp.home.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 
 /**
  * Created by Fasih on 01/01/19.

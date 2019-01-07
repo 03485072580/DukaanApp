@@ -40,9 +40,9 @@
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/editText2"
-                android:layout_alignStart="@+id/editText2"
                 android:layout_below="@+id/editText2"
+                android:layout_marginEnd="@dimen/_10dp"
+                android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
                 android:text="Login" />
 
@@ -70,6 +70,7 @@
                 android:layout_toRightOf="@id/textView2"
                 android:text="Sign Up"
                 android:textAlignment="center" />
+
         </RelativeLayout>
 
     </ScrollView>

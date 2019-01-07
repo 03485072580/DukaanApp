@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.home;
+package com.example.fasih.dukaanapp.home.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.DrawerHandler;
 import com.example.fasih.dukaanapp.adapter.NavigationHandler;
+import com.example.fasih.dukaanapp.home.fragments.HomeFragment;
 import com.example.fasih.dukaanapp.utils.SectionsPagerStateAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

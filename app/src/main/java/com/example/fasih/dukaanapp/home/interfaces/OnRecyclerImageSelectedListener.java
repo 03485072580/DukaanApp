@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.home;
+package com.example.fasih.dukaanapp.home.interfaces;
 
 import android.view.View;
 

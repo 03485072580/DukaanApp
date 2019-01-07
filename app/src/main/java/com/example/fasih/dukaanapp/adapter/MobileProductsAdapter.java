@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.fragments.MobileFragment;
-import com.example.fasih.dukaanapp.home.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 
 /**
  * Created by Fasih on 01/02/19.

@@ -1,18 +1,16 @@
 <resources>
     <string name="app_name">Dukaan App</string>
-    <!-- Static Constants For UI-->
+    <!--Swipe Tab Constants-->
     <string name="as_user">USER</string>
     <string name="as_shop">SHOP</string>
     <string name="admin">ADMIN</string>
-    <string name="use_options">OPTIONS</string>
 
-    <string name="contentDescription">contentDescription</string>
-
-
-    <string name="username_password">username or email</string>
-    <string name="password">password</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="account_warning">Don\'t Have an Account?</string>
+    <!--Activity Package-->
+    <string name="activity_register">RegisterActivity</string>
+    <string name="activity_product_detail">ProductDetailActivity</string>
+    <string name="activity_login">LoginActivity</string>
+    <string name="activity_home_page">HomePageActivity</string>
+    <string name="activity_unique_category">UniqueCategoryActivity</string>
 
     <!--Fragments Package-->
     <string name="userFragment">UserFragment</string>
@@ -22,5 +20,56 @@
     <string name="clothingFragment">ClothingFragment</string>
     <string name="jewellaryFragment">JewellaryFragment</string>
     <string name="mobileFragment">MobileFragment</string>
+    <string name="user_registration">User Registration</string>
+
+    <!--XML String resources-->
+    <string name="username_password">username or email</string>
+    <string name="don_t_have_an_account">Don\'t Have an Account?</string>
+    <string name="login">Login</string>
+    <string name="password">password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="account_warning">Don\'t Have an Account?</string>
+    <string name="contentDescription">contentDescription</string>
+    <string name="signUp_options">OPTIONS</string>
+    <string name="register_button">REGISTER NOW</string>
+    <string name="first_name">first name</string>
+    <string name="last_name">last name</string>
+    <string name="username">username</string>
+    <string name="email">email</string>
+    <string name="forgot_password">Forgot Password</string>
+
+    <!--Firebase Database Nodes & Fields-->
+    <string name="db_user_profile_settings_node">user_profile_settings</string>
+    <string name="db_users_node">users</string>
+
+    <string name="db_field_user_name">user_name</string>
+    <string name="db_field_email">email</string>
+    <string name="db_field_first_name">first_name</string>
+    <string name="db_field_last_name">last_name</string>
+    <string name="db_field_payment_method">payment_method</string>
+    <string name="db_field_user_id">user_id</string>
+    <string name="db_field_profile_photo">profile_photo</string>
+    <string name="db_field_products">products</string>
+
+
+    <!--Simple Toast Messages-->
+    <string name="warning_required_fields">All Fields are required</string>
+    <string name="email_verification_required">Please verify your account by visiting your Inbox</string>
+    <string name="conflict_username">That User Name is already Existent\nTry Another One</string>
+    <string name="password_length_warning">Password Length Should be Minimum 6</string>
+    <string name="user_email_collsion">Email is already Existent</string>
+    <string name="network_error">There might be a problem with your Internet Connection. Try Reconnecting to the Internet</string>
+    <string name="bad_email_format">Email is not Properly Formatted</string>
+    <string name="bad_email">Bad Email</string>
+    <string name="something_went_wrong">Something Went Wrong</string>
+    <string name="bad_username_password">InValid User Name or Password</string>
+    <string name="shop_registration">Shop Registration</string>
+
+    <!--Facebook Sdk Stuff-->
+    <string name="facebook_app_id">1452855858183981</string>
+    <string name="fb_login_protocol_scheme">fb1452855858183981</string>
+    <!--Google Sdk Stuff-->
+    <string name="web_client_id">1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com</string>
+
 
 </resources>

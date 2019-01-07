@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.HomePageActivity;
+import com.example.fasih.dukaanapp.home.activities.HomePageActivity;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 
 /**
