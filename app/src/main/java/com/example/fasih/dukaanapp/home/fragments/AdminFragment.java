@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.login;
+package com.example.fasih.dukaanapp.home.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,11 @@ import android.widget.TextView;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.activities.HomePageActivity;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
+import com.example.fasih.dukaanapp.utils.FirebaseMethods;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 /**
  * Created by Fasih on 11/07/18.
@@ -22,6 +27,15 @@ public class AdminFragment extends Fragment {
 
     private TextView signUp;
     private Button signIn;
+
+    //Firebase Stuff
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference myRef;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseMethods firebaseMethods;
+    private String currentUserID = null;
+    
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

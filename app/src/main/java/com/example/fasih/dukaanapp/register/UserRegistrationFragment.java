@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.utils.Constants;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.StringManipulations;
 import com.facebook.CallbackManager;
@@ -52,8 +53,11 @@ public class UserRegistrationFragment extends Fragment {
     //facebook Stuff
     private static final String EMAIL = "email";
     private static final String PUBLIC_PROFILE = "public_profile";
+
     private EditText firstName, lastName, userName, email, password;
     private LinearLayout signUp;
+
+    private String scope = Constants.scope = "user";
     private ProgressBar registerProgress;
     private CircleImageView middleLoginFacebook, leftLoginGoogle;
     private GoogleSignInClient googleSignInClient;
@@ -65,6 +69,7 @@ public class UserRegistrationFragment extends Fragment {
     private FirebaseMethods firebaseMethods;
     private String currentUserID = null;
     private CallbackManager callbackManager;
+
 
 
     @Nullable
@@ -113,7 +118,7 @@ public class UserRegistrationFragment extends Fragment {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                firebaseMethods.setupFacebookLoginWithAccessToken(loginResult.getAccessToken());
+                firebaseMethods.setupFacebookLoginWithAccessToken(loginResult.getAccessToken(), scope);
             }
 
             @Override
@@ -201,7 +206,7 @@ public class UserRegistrationFragment extends Fragment {
                     firebaseMethods.updateProgress(registerProgress);
                     firebaseMethods.addNewUser(firstName.getText().toString(), lastName.getText().toString()
                             , username, email.getText().toString(), password.getText().toString()
-                            , "", "");
+                            , "", "", scope, "", "", false);
 
                 }
                 //it will execute only if a match found
@@ -237,7 +242,7 @@ public class UserRegistrationFragment extends Fragment {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseMethods.setupGoogleLoginWithAccount(account);
+                firebaseMethods.setupGoogleLoginWithAccount(account, scope);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("TAG1234", "Google sign in failed", e);

@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="com.example.fasih.dukaanapp.home.activities.NavigationActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--Container For Child Views-->
-
         <RelativeLayout
-            android:id="@+id/container_viewPager_Fragments"
+            android:id="@+id/ads"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/relLayout1"
-            android:orientation="vertical">
-            <!--Material Relevant to the Login Screen-->
-            <include layout="@layout/snippet_center_activity_login" />
-
+            android:layout_height="wrap_content">
+            <!--AdNetwork Integration-->
         </RelativeLayout>
 
         <FrameLayout
-            android:id="@+id/forgotPasswordContainer"
+            android:id="@+id/navigationFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_below="@id/ads">
 
         </FrameLayout>
 
     </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>

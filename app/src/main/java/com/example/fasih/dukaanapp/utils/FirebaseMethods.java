@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.activities.HomePageActivity;
-import com.example.fasih.dukaanapp.login.LoginActivity;
+import com.example.fasih.dukaanapp.login.activity.LoginActivity;
+import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
@@ -38,16 +39,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 /**
  * Created by Fasih on 01/04/19.
  */
 
 public class FirebaseMethods {
 
+
     //Facebook Stuff
     AccessToken accessToken;
     //Google Stuff
     GoogleSignInAccount account;
+    private Boolean isScopeCorrect = false;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference myRef;
@@ -62,9 +67,12 @@ public class FirebaseMethods {
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
     }
+    //Username might be the name of the User or
+    // may be the shop Name depending upon the situation
 
     public void addNewUser(final String firstName, final String lastName, final String userName, final String email
-            , final String password, final String phoneNumber, final String country) {
+            , final String password, final String phoneNumber, final String country, final String scope, final String city
+            , final String shop_address, final Boolean admin_approved) {
 
         //Check if email is not null, then execute the below code
         // else just update the DB
@@ -80,22 +88,38 @@ public class FirebaseMethods {
                     if (task1.isSuccessful()) {
 
                         Users users = new Users(mAuth.getCurrentUser().getUid(), firstName, lastName,
-                                StringManipulations.toLowerCaseUsername(userName), email);
+                                StringManipulations.toLowerCaseUsername(userName), email, scope);
 
-                        UserAccountSettings settings = new UserAccountSettings(mAuth.getCurrentUser().getUid(),
-                                firstName, lastName
-                                , StringManipulations.toLowerCaseUsername(userName)
-                                , email, "");
 
                         myRef
                                 .child(mContext.getString(R.string.db_users_node))
                                 .child(task1.getResult().getUser().getUid())
                                 .setValue(users);
 
-                        myRef
-                                .child(mContext.getString(R.string.db_user_profile_settings_node))
-                                .child(task1.getResult().getUser().getUid())
-                                .setValue(settings);
+                        if (scope.equals(mContext.getString(R.string.scope_user))) {
+
+                            UserAccountSettings settings = new UserAccountSettings(mAuth.getCurrentUser().getUid(),
+                                    firstName, lastName
+                                    , StringManipulations.toLowerCaseUsername(userName)
+                                    , email, "");
+
+
+                            myRef
+                                    .child(mContext.getString(R.string.db_user_profile_settings_node))
+                                    .child(task1.getResult().getUser().getUid())
+                                    .setValue(settings);
+                        } else if (scope.equals(mContext.getString(R.string.scope_shop))) {
+                            ShopProfileSettings settings = new ShopProfileSettings(mAuth.getCurrentUser().getUid(),
+                                    firstName, lastName
+                                    , StringManipulations.toLowerCaseUsername(userName)
+                                    , email, scope, shop_address, city, country, admin_approved);
+
+
+                            myRef
+                                    .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                                    .child(task1.getResult().getUser().getUid())
+                                    .setValue(settings);
+                        }
 
                         task1.getResult().getUser()
                                 .sendEmailVerification()
@@ -137,67 +161,33 @@ public class FirebaseMethods {
         }
     }
 
-    public void authenticateUser(String username, final String email, final String password) {
+    public void authenticateUser(final String username
+            , final String email
+            , final String password
+            , final String fragmentName
+            , final String scope) {
+
+
         if (TextUtils.isEmpty(username)) {
             //Mean Email is provided by the User
-            if (updateProgress != null) {
-                updateProgress.setVisibility(View.VISIBLE);
-                mAuth
-                        .signInWithEmailAndPassword(email, password)
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                if (authResult.getUser().isEmailVerified()) {
-                                    updateProgress.setVisibility(View.GONE);
-                                    if (activityName.equals(mContext.getString(R.string.activity_login))) {
-                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class));
-                                        ((LoginActivity) mContext).finishAffinity();
-                                    }
 
-                                } else {
-                                    updateProgress.setVisibility(View.GONE);
-                                    authResult.getUser().sendEmailVerification();
-                                    Toast.makeText(mContext, mContext.getString(R.string.email_verification_required), Toast.LENGTH_SHORT).show();
-                                }
+            Query query = myRef
+                    .child(mContext.getString(R.string.db_users_node))
+                    .orderByChild(mContext.getString(R.string.db_field_email))
+                    .equalTo(email);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            HashMap<String, Object> hashMap = (HashMap<String, Object>) ds.getValue();
+                            if (hashMap.containsKey("scope")) {
+                                String dbPresentScope = (String) hashMap.get("scope");
+                                isScopeCorrect = dbPresentScope.equals(scope);
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                updateProgress.setVisibility(View.GONE);
-
-                                Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        }
-        if (TextUtils.isEmpty(email)) {
-            //Mean Username is provided by the User
-            if (updateProgress != null) {
-                updateProgress.setVisibility(View.VISIBLE);
-
-                Query query = myRef
-                        .child(mContext.getString(R.string.db_users_node))
-                        .orderByChild(mContext.getString(R.string.db_field_user_name))
-                        .equalTo(username);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        if (!dataSnapshot.exists()) {
-                            //Mean Provided username is not correct
-                            Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
-                            updateProgress.setVisibility(View.GONE);
                         }
-                        if (dataSnapshot.exists()) {
-                            //Mean Found a match
-                            // Now Login with the current users email
-                            String email = null;
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                Users users = ds.getValue(Users.class);
-                                email = users.getEmail();
-                            }
-
+                        if (updateProgress != null && isScopeCorrect) {
+                            updateProgress.setVisibility(View.VISIBLE);
                             mAuth
                                     .signInWithEmailAndPassword(email, password)
                                     .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -206,11 +196,20 @@ public class FirebaseMethods {
                                             if (authResult.getUser().isEmailVerified()) {
                                                 updateProgress.setVisibility(View.GONE);
                                                 if (activityName.equals(mContext.getString(R.string.activity_login))) {
-                                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class));
-                                                    ((LoginActivity) mContext).finishAffinity();
-                                                }
-                                            } else {
+                                                    if (fragmentName.equals(mContext.getString(R.string.userFragment))) {
+                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                                .putExtra(mContext.getString(R.string.userFragment), mContext.getString(R.string.userFragment)));
+                                                        ((LoginActivity) mContext).finishAffinity();
+                                                    }
+                                                    if (fragmentName.equals(mContext.getString(R.string.shopFragment))) {
+                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                                .putExtra(mContext.getString(R.string.shopFragment), mContext.getString(R.string.shopFragment)));
+                                                        ((LoginActivity) mContext).finishAffinity();
+                                                    }
 
+                                                }
+
+                                            } else {
                                                 updateProgress.setVisibility(View.GONE);
                                                 authResult.getUser().sendEmailVerification();
                                                 Toast.makeText(mContext, mContext.getString(R.string.email_verification_required), Toast.LENGTH_SHORT).show();
@@ -225,18 +224,124 @@ public class FirebaseMethods {
                                             Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
                                         }
                                     });
+                        } else {
+                            Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
                         }
-
+                    } else {
+                        Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
                     }
+                }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
 
-                    }
-                });
-            }
 
         }
+        if (TextUtils.isEmpty(email)) {
+            //Mean Username is provided by the User
+
+            Query query_scope = myRef
+                    .child(mContext.getString(R.string.db_users_node))
+                    .orderByChild(mContext.getString(R.string.db_field_user_name))
+                    .equalTo(username);
+            query_scope.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            HashMap<String, Object> hashMap = (HashMap<String, Object>) ds.getValue();
+                            if (hashMap.containsKey("scope")) {
+                                String dbPresentScope = (String) hashMap.get("scope");
+                                isScopeCorrect = dbPresentScope.equals(scope);
+
+                            }
+                            if (updateProgress != null && isScopeCorrect) {
+                                updateProgress.setVisibility(View.VISIBLE);
+
+                                Query query = myRef
+                                        .child(mContext.getString(R.string.db_users_node))
+                                        .orderByChild(mContext.getString(R.string.db_field_user_name))
+                                        .equalTo(username);
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        if (!dataSnapshot.exists()) {
+                                            //Mean Provided username is not correct
+                                            Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
+                                            updateProgress.setVisibility(View.GONE);
+                                        }
+                                        if (dataSnapshot.exists()) {
+                                            //Mean Found a match
+                                            // Now Login with the current users email
+                                            String email = null;
+                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                                Users users = ds.getValue(Users.class);
+                                                email = users.getEmail();
+                                            }
+
+                                            mAuth
+                                                    .signInWithEmailAndPassword(email, password)
+                                                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                                        @Override
+                                                        public void onSuccess(AuthResult authResult) {
+                                                            if (authResult.getUser().isEmailVerified()) {
+                                                                updateProgress.setVisibility(View.GONE);
+                                                                if (activityName.equals(mContext.getString(R.string.activity_login))) {
+                                                                    if (fragmentName.equals(mContext.getString(R.string.userFragment))) {
+                                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                                                .putExtra(mContext.getString(R.string.userFragment), mContext.getString(R.string.userFragment)));
+                                                                        ((LoginActivity) mContext).finishAffinity();
+                                                                    }
+                                                                    if (fragmentName.equals(mContext.getString(R.string.shopFragment))) {
+                                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                                                .putExtra(mContext.getString(R.string.shopFragment), mContext.getString(R.string.shopFragment)));
+                                                                        ((LoginActivity) mContext).finishAffinity();
+                                                                    }
+                                                                }
+                                                            } else {
+
+                                                                updateProgress.setVisibility(View.GONE);
+                                                                authResult.getUser().sendEmailVerification();
+                                                                Toast.makeText(mContext, mContext.getString(R.string.email_verification_required), Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            updateProgress.setVisibility(View.GONE);
+
+                                                            Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                        }
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } else {
+                        Toast.makeText(mContext, mContext.getString(R.string.bad_username_password), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
+
     }
 
     public void updateProgress(ProgressBar registerProgress) {
@@ -246,7 +351,7 @@ public class FirebaseMethods {
         }
     }
 
-    public void setupFacebookLoginWithAccessToken(final AccessToken accessToken) {
+    public void setupFacebookLoginWithAccessToken(final AccessToken accessToken, final String scope) {
         this.accessToken = accessToken;
 
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
@@ -280,7 +385,7 @@ public class FirebaseMethods {
 
                                         Users users = new Users(task.getResult().getUser().getUid(), firstName, lastName,
                                                 StringManipulations.toLowerCaseUsername("")
-                                                , task.getResult().getUser().getEmail());
+                                                , task.getResult().getUser().getEmail(), scope);
 
                                         UserAccountSettings settings = new UserAccountSettings(task.getResult().getUser().getUid(),
                                                 firstName, lastName
@@ -297,7 +402,10 @@ public class FirebaseMethods {
                                                 .child(task.getResult().getUser().getUid())
                                                 .setValue(settings);
                                     }
-                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class));
+                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                            .putExtra(mContext.getString(R.string.userFragment)
+                                                    , mContext.getString(R.string.userFragment)));
+                                    ((RegisterActivity) mContext).finishAffinity();
                                 }
 
                                 @Override
@@ -318,7 +426,7 @@ public class FirebaseMethods {
 
     }
 
-    public void setupGoogleLoginWithAccount(final GoogleSignInAccount account) {
+    public void setupGoogleLoginWithAccount(final GoogleSignInAccount account, final String scope) {
         this.account = account;
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
@@ -352,7 +460,7 @@ public class FirebaseMethods {
 
                                         Users users = new Users(task.getResult().getUser().getUid(), firstName, lastName,
                                                 StringManipulations.toLowerCaseUsername("")
-                                                , task.getResult().getUser().getEmail());
+                                                , task.getResult().getUser().getEmail(), scope);
 
                                         UserAccountSettings settings = new UserAccountSettings(task.getResult().getUser().getUid(),
                                                 firstName, lastName
@@ -370,7 +478,10 @@ public class FirebaseMethods {
                                                 .setValue(settings);
                                     }
 
-                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class));
+                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                            .putExtra(mContext.getString(R.string.userFragment)
+                                                    , mContext.getString(R.string.userFragment)));
+                                    ((RegisterActivity) mContext).finishAffinity();
 
                                 }
 

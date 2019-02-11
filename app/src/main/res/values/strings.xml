@@ -20,14 +20,17 @@
     <string name="clothingFragment">ClothingFragment</string>
     <string name="jewellaryFragment">JewellaryFragment</string>
     <string name="mobileFragment">MobileFragment</string>
-    <string name="user_registration">User Registration</string>
+    <string name="userRegistrationFragment">UserRegistrationFragment</string>
+    <string name="forgotPasswordFragment">ForgotPasswordFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
+    <string name="shop_email">shop name or email</string>
     <string name="don_t_have_an_account">Don\'t Have an Account?</string>
-    <string name="login">Login</string>
+    <string name="login">LOGIN</string>
     <string name="password">password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="user_registration">User Registration</string>
     <string name="account_warning">Don\'t Have an Account?</string>
     <string name="contentDescription">contentDescription</string>
     <string name="signUp_options">OPTIONS</string>
@@ -37,10 +40,14 @@
     <string name="username">username</string>
     <string name="email">email</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="shopAddress">Shop Address</string>
+    <string name="shopName">Shop Name</string>
+    <string name="email_receive_warn">Don\'t Receive An Email?</string>
 
     <!--Firebase Database Nodes & Fields-->
-    <string name="db_user_profile_settings_node">user_profile_settings</string>
     <string name="db_users_node">users</string>
+    <string name="db_user_profile_settings_node">user_profile_settings</string>
+    <string name="db_shop_profile_settings_node">shop_profile_settings</string>
 
     <string name="db_field_user_name">user_name</string>
     <string name="db_field_email">email</string>
@@ -64,12 +71,20 @@
     <string name="something_went_wrong">Something Went Wrong</string>
     <string name="bad_username_password">InValid User Name or Password</string>
     <string name="shop_registration">Shop Registration</string>
+    <string name="shop_already_existent">Shop is Already Present. Try to make your Shop Name Unique. Tip append numbers</string>
 
     <!--Facebook Sdk Stuff-->
     <string name="facebook_app_id">1452855858183981</string>
     <string name="fb_login_protocol_scheme">fb1452855858183981</string>
     <!--Google Sdk Stuff-->
     <string name="web_client_id">1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com</string>
+
+    <!--User login Scopes-->
+    <string name="scope_user">user</string>
+    <string name="scope_shop">shop</string>
+    <string name="recover_password">Please Update Your Password By Visiting Your Inbox</string>
+    <string name="missing_one_field">Please Enter Email</string>
+    <string name="change_password">Recover Password</string>
 
 
 </resources>

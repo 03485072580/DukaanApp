@@ -16,37 +16,41 @@
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_50dp"
                 android:layout_marginEnd="@dimen/_10dp"
                 android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_44dp"
+                android:background="@drawable/editext_std1"
                 android:ems="10"
                 android:hint="@string/username_password"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp"
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_50dp"
                 android:layout_below="@+id/email"
                 android:layout_marginEnd="@dimen/_10dp"
                 android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginTop="10dp"
+                android:background="@drawable/editext_std1"
                 android:ems="10"
                 android:hint="@string/password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingStart="@dimen/_5dp"
+                android:textColor="@color/black" />
 
             <LinearLayout
                 android:id="@+id/login"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_56dp"
+                android:layout_height="@dimen/_70dp"
                 android:layout_below="@+id/password"
-                android:layout_marginEnd="@dimen/_10dp"
-                android:layout_marginLeft="@dimen/_10dp"
-                android:layout_marginRight="@dimen/_10dp"
-                android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:background="@drawable/custom_btn_std1"
+                android:background="@drawable/button"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -55,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_24sp" />
 
                 <ProgressBar
@@ -91,7 +96,8 @@
                 android:layout_marginTop="@dimen/_10dp"
                 android:layout_toRightOf="@id/textView2"
                 android:text="@string/sign_up"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/blackish_red" />
 
             <TextView
                 android:id="@+id/forgotPassword"
@@ -104,7 +110,8 @@
                 android:layout_marginRight="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
                 android:text="@string/forgot_password"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="@color/blackish_red" />
         </RelativeLayout>
 
     </ScrollView>

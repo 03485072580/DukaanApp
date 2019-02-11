@@ -12,4 +12,8 @@
     <color name="light_black">#dd252222</color>
     <color name="line_std">#c8464242</color>
     <color name="orange">#edffb405</color>
+    <color name="blackish_red">#a31b1b</color>
+    <color name="statusBarColor">#808080</color>
+    <!--<color name="statusBarColor">#1fe5b7</color>-->
+    <color name="light_white">#dae7e0e7</color>
 </resources>

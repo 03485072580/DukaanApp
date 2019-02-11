@@ -2,6 +2,8 @@ package com.example.fasih.dukaanapp.models;
 
 /**
  * Created by Fasih on 01/04/19.
+ * Todo if scope is shop then username
+ * Todo simply reflects to the shop name
  */
 
 public class Users {
@@ -11,16 +13,28 @@ public class Users {
     private String last_name;
     private String user_name;
     private String email;
+    private String scope;
 
-    public Users(String user_id, String first_name, String last_name, String user_name, String email) {
+    public Users(String user_id, String first_name, String last_name
+            , String user_name, String email, String scope) {
+
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.user_name = user_name;
         this.email = email;
+        this.scope = scope;
     }
 
     public Users() {
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public String getUser_id() {
@@ -71,6 +85,7 @@ public class Users {
                 ", last_name='" + last_name + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", email='" + email + '\'' +
+                ", scope='" + scope + '\'' +
                 '}';
     }
 }

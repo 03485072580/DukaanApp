@@ -3,124 +3,186 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
-    <ImageView
-        android:id="@+id/dukaanLogo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_150dp" />
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/dukaanLogo">
-
-        <TextView
-            android:id="@+id/shopRegistration"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="@dimen/_10dp"
-            android:text="@string/shop_registration"
-            android:textAlignment="center"
-            android:textSize="@dimen/_24sp" />
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-        <EditText
-            android:id="@+id/first_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/shopRegistration"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:ems="10"
-            android:hint="@string/first_name"
-            android:inputType="textPersonName" />
+                <ImageView
+                    android:id="@+id/dukaanLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:contentDescription="@string/contentDescription"
+                    android:src="@drawable/dukaan_logo" />
 
-        <EditText
-            android:id="@+id/last_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/first_name"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:ems="10"
-            android:hint="@string/last_name"
-            android:inputType="textPersonName" />
+                <ImageView
+                    android:layout_width="@dimen/_150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="45dp"
+                    android:contentDescription="@string/contentDescription"
+                    android:src="@drawable/dukaanapp" />
 
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/last_name"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:ems="10"
-            android:hint="@string/username"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/username"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:ems="10"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/email"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
-
-        <LinearLayout
-            android:id="@+id/signUp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_56dp"
-            android:layout_below="@+id/password"
-            android:layout_marginEnd="@dimen/_10dp"
-            android:layout_marginLeft="@dimen/_10dp"
-            android:layout_marginRight="@dimen/_10dp"
-            android:layout_marginStart="@dimen/_10dp"
-            android:layout_marginTop="@dimen/_10dp"
-            android:background="@drawable/custom_btn_std1"
-            android:gravity="center"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/userRegistration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dukaanLogo"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:text="@string/shop_registration"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_24sp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register_button"
-                android:textSize="@dimen/_24sp" />
+                <EditText
+                    android:id="@+id/first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@id/userRegistration"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/first_name"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
+                    android:textColor="@color/black" />
 
-            <ProgressBar
-                android:id="@+id/registerProgress"
-                style="@style/MyProgressBarStyle"
-                android:layout_width="@dimen/_56dp"
-                android:layout_height="@dimen/_56dp"
-                android:visibility="gone" />
+                <EditText
+                    android:id="@+id/last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@+id/first_name"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/last_name"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
+                    android:textColor="@color/black" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@+id/last_name"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/shopName"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
+                    android:textColor="@color/black" />
 
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@+id/username"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/shopAddress"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
+                    android:textColor="@color/black" />
 
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@+id/address"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@+id/email"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:id="@+id/signUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_70dp"
+                    android:layout_below="@+id/password"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/button"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_button"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_24sp" />
+
+                    <ProgressBar
+                        android:id="@+id/registerProgress"
+                        style="@style/MyProgressBarStyle"
+                        android:layout_width="@dimen/_56dp"
+                        android:layout_height="@dimen/_56dp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

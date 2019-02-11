@@ -1,5 +1,6 @@
 package com.example.fasih.dukaanapp.home.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.fasih.dukaanapp.R;
@@ -40,6 +42,17 @@ public class HomePageActivity extends AppCompatActivity {
         setupToolbar();
         setupViewPager(currentFragmentNumber);
         setupFirebase();
+
+        /**
+         * Debugging Code
+         */
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            Boolean shopFragment = intent.hasExtra(getString(R.string.shopFragment));
+            Log.d("TAG1234", "onCreate: shopFragment" + shopFragment);
+            Boolean userFragment = intent.hasExtra(getString(R.string.userFragment));
+            Log.d("TAG1234", "\nonCreate: userFragment" + userFragment);
+        }
     }
 
     private void setupViewPager(int currentFragmentNumber) throws NullPointerException {
@@ -55,7 +68,6 @@ public class HomePageActivity extends AppCompatActivity {
     private void setupToolbar() {
         try {
             setSupportActionBar(toolbar);
-
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
         } catch (NullPointerException exc) {

@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/first_item"
-        android:title="first_item"></item>
+
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/first_item"
+            android:title="first_item">
+
+        </item>
+
+        <item
+            android:id="@+id/second_item"
+            android:title="second_item">
+
+        </item>
+
+        <item
+            android:id="@+id/third_item"
+            android:title="third_item">
+
+        </item>
+
+        <item
+            android:id="@+id/fourth_item"
+            android:title="fourth_item">
+
+        </item>
+        <item
+            android:id="@+id/fifth_item"
+            android:title="fifth_item">
+
+        </item>
+        <item
+            android:id="@+id/sixth_item"
+            android:title="sixth_item">
+
+        </item>
+        <item
+            android:id="@+id/seventh_item"
+            android:title="seventh_item">
+
+        </item>
+
+    </group>
+
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/adminPanel"
+            android:title="Admin Panel"></item>
+
+        <item
+            android:id="@+id/viewAs"
+            android:title="View As Buyer"
+            android:visible="false"></item>
+    </group>
 </menu>
