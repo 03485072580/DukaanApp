@@ -19,6 +19,7 @@
                 android:id="@+id/continue_as"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/_20dp"
                 android:layout_marginStart="@dimen/_20dp"
                 android:gravity="center"
@@ -47,7 +48,7 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="@dimen/_10dp"
                         android:layout_marginRight="@dimen/_10dp"
-                        android:src="@drawable/test_mall1"
+                        android:src="@drawable/category_mall_img"
                         app:civ_border_color="@color/dark_golden"
                         app:civ_border_width="@dimen/_2dp" />
 
@@ -56,9 +57,7 @@
                         android:layout_width="@dimen/_150dp"
                         android:layout_height="@dimen/_150dp"
                         android:layout_gravity="end"
-                        android:layout_marginLeft="@dimen/_10dp"
-                        android:layout_marginStart="@dimen/_10dp"
-                        android:src="@drawable/test_shop1"
+                        android:src="@drawable/category_shop_img"
                         app:civ_border_color="@color/dark_golden"
                         app:civ_border_width="@dimen/_2dp" />
 
