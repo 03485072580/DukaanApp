@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.activities.HomePageActivity;
+import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +61,7 @@ public class AdminFragment extends Fragment {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HomePageActivity.class);
+                Intent intent = new Intent(getActivity(), UserHomePageActivity.class);
                 startActivity(intent);
             }
         });

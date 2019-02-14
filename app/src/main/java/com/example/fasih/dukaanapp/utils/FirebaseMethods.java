@@ -10,7 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.activities.HomePageActivity;
+import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
+import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
 import com.example.fasih.dukaanapp.login.activity.LoginActivity;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
@@ -197,12 +198,12 @@ public class FirebaseMethods {
                                                 updateProgress.setVisibility(View.GONE);
                                                 if (activityName.equals(mContext.getString(R.string.activity_login))) {
                                                     if (fragmentName.equals(mContext.getString(R.string.userFragment))) {
-                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                        mContext.startActivity(new Intent(mContext, UserHomePageActivity.class)
                                                                 .putExtra(mContext.getString(R.string.userFragment), mContext.getString(R.string.userFragment)));
                                                         ((LoginActivity) mContext).finishAffinity();
                                                     }
                                                     if (fragmentName.equals(mContext.getString(R.string.shopFragment))) {
-                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                        mContext.startActivity(new Intent(mContext, SellerHomePageActivity.class)
                                                                 .putExtra(mContext.getString(R.string.shopFragment), mContext.getString(R.string.shopFragment)));
                                                         ((LoginActivity) mContext).finishAffinity();
                                                     }
@@ -291,12 +292,12 @@ public class FirebaseMethods {
                                                                 updateProgress.setVisibility(View.GONE);
                                                                 if (activityName.equals(mContext.getString(R.string.activity_login))) {
                                                                     if (fragmentName.equals(mContext.getString(R.string.userFragment))) {
-                                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                                        mContext.startActivity(new Intent(mContext, UserHomePageActivity.class)
                                                                                 .putExtra(mContext.getString(R.string.userFragment), mContext.getString(R.string.userFragment)));
                                                                         ((LoginActivity) mContext).finishAffinity();
                                                                     }
                                                                     if (fragmentName.equals(mContext.getString(R.string.shopFragment))) {
-                                                                        mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                                                        mContext.startActivity(new Intent(mContext, SellerHomePageActivity.class)
                                                                                 .putExtra(mContext.getString(R.string.shopFragment), mContext.getString(R.string.shopFragment)));
                                                                         ((LoginActivity) mContext).finishAffinity();
                                                                     }
@@ -402,7 +403,7 @@ public class FirebaseMethods {
                                                 .child(task.getResult().getUser().getUid())
                                                 .setValue(settings);
                                     }
-                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                    mContext.startActivity(new Intent(mContext, UserHomePageActivity.class)
                                             .putExtra(mContext.getString(R.string.userFragment)
                                                     , mContext.getString(R.string.userFragment)));
                                     ((RegisterActivity) mContext).finishAffinity();
@@ -478,7 +479,7 @@ public class FirebaseMethods {
                                                 .setValue(settings);
                                     }
 
-                                    mContext.startActivity(new Intent(mContext, HomePageActivity.class)
+                                    mContext.startActivity(new Intent(mContext, UserHomePageActivity.class)
                                             .putExtra(mContext.getString(R.string.userFragment)
                                                     , mContext.getString(R.string.userFragment)));
                                     ((RegisterActivity) mContext).finishAffinity();

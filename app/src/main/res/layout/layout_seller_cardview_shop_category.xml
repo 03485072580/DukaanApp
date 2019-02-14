@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_250dp"
+        android:layout_margin="@dimen/_10dp"
+        app:cardBackgroundColor="@color/blue_greyish"
+        app:cardCornerRadius="@dimen/_20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/continue_as"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_20dp"
+                android:layout_marginStart="@dimen/_20dp"
+                android:gravity="center"
+                android:text="Continue as:"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_24sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/continue_as">
+
+                <LinearLayout
+                    android:id="@+id/generalCategoryContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/_20dp"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginTop="@dimen/_10dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/mall"
+                        android:layout_width="@dimen/_150dp"
+                        android:layout_height="@dimen/_150dp"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="@dimen/_10dp"
+                        android:layout_marginRight="@dimen/_10dp"
+                        android:src="@drawable/test_mall1"
+                        app:civ_border_color="@color/dark_golden"
+                        app:civ_border_width="@dimen/_2dp" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/shop"
+                        android:layout_width="@dimen/_150dp"
+                        android:layout_height="@dimen/_150dp"
+                        android:layout_gravity="end"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:src="@drawable/test_shop1"
+                        app:civ_border_color="@color/dark_golden"
+                        app:civ_border_width="@dimen/_2dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/generalCategoryContainer"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/_20dp"
+                    android:layout_marginStart="@dimen/_20dp"
+                    android:layout_marginTop="@dimen/_10dp">
+
+                    <TextView
+                        android:id="@+id/tvMall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_50dp"
+                        android:layout_marginLeft="@dimen/_50dp"
+                        android:layout_marginRight="@dimen/_50dp"
+                        android:layout_marginStart="@dimen/_50dp"
+                        android:gravity="center"
+                        android:text="@string/mall"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_24sp" />
+
+                    <TextView
+                        android:id="@+id/tvShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_50dp"
+                        android:layout_marginLeft="@dimen/_50dp"
+                        android:layout_marginRight="@dimen/_50dp"
+                        android:layout_marginStart="@dimen/_50dp"
+                        android:gravity="center"
+                        android:text="@string/shop"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_24sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</merge>

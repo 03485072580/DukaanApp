@@ -16,4 +16,6 @@
     <color name="statusBarColor">#808080</color>
     <!--<color name="statusBarColor">#1fe5b7</color>-->
     <color name="light_white">#dae7e0e7</color>
+    <color name="blue_greyish">#03bfa6</color>
+    <color name="dark_golden">#ff7200</color>
 </resources>

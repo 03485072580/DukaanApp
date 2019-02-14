@@ -1,6 +1,5 @@
 package com.example.fasih.dukaanapp.home.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.fasih.dukaanapp.R;
@@ -21,7 +19,7 @@ import com.example.fasih.dukaanapp.utils.SectionsPagerStateAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class HomePageActivity extends AppCompatActivity {
+public class UserHomePageActivity extends AppCompatActivity {
     //Fragment Numbers
     private static final int currentFragmentNumber = 0;
     private DrawerLayout drawerLayout;
@@ -43,16 +41,7 @@ public class HomePageActivity extends AppCompatActivity {
         setupViewPager(currentFragmentNumber);
         setupFirebase();
 
-        /**
-         * Debugging Code
-         */
-        if (getIntent() != null) {
-            Intent intent = getIntent();
-            Boolean shopFragment = intent.hasExtra(getString(R.string.shopFragment));
-            Log.d("TAG1234", "onCreate: shopFragment" + shopFragment);
-            Boolean userFragment = intent.hasExtra(getString(R.string.userFragment));
-            Log.d("TAG1234", "\nonCreate: userFragment" + userFragment);
-        }
+
     }
 
     private void setupViewPager(int currentFragmentNumber) throws NullPointerException {
@@ -110,7 +99,7 @@ public class HomePageActivity extends AppCompatActivity {
                     userID = currentUser.getUid();
                 } else {
                     //Navigate to the Login Screen
-//                    Intent intent = new Intent(HomePageActivity.this, LoginActivity.class);
+//                    Intent intent = new Intent(UserHomePageActivity.this, LoginActivity.class);
 //                    startActivity(intent);
 //                    finish();
                 }

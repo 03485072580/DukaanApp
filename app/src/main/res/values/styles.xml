@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
+        <!-- Customize your theme here. -->
+    </style>
+
     <style name="FacebookLoginButton">
         <item name="android:background">@drawable/ic_action_name</item>
         <item name="android:layout_marginTop">10dp</item>
@@ -15,8 +19,5 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
-    <style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
-        <!-- Customize your theme here. -->
-    </style>
 
 </resources>

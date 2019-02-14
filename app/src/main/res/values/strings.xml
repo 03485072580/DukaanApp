@@ -85,6 +85,8 @@
     <string name="recover_password">Please Update Your Password By Visiting Your Inbox</string>
     <string name="missing_one_field">Please Enter Email</string>
     <string name="change_password">Recover Password</string>
+    <string name="mall">MALL</string>
+    <string name="shop">SHOP</string>
 
 
 </resources>

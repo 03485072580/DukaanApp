@@ -31,7 +31,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.activities.HomePageActivity" />
+        <activity android:name=".home.activities.UserHomePageActivity" />
         <activity
             android:name=".login.activity.LoginActivity"
             android:windowSoftInputMode="adjustResize">
@@ -46,7 +46,11 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".categories.actvities.UniqueCategoryActivity" />
         <activity android:name=".categories.actvities.ProductDetailActivity" />
-        <activity android:name=".home.activities.NavigationActivity"></activity>
+        <activity android:name=".home.activities.NavigationActivity" />
+        <activity
+            android:name=".home.activities.SellerHomePageActivity"
+            android:resizeableActivity="true"
+            android:theme="@style/SellerAppTheme"></activity>
     </application>
 
 </manifest>
