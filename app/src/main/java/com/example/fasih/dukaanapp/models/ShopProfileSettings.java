@@ -17,13 +17,15 @@ public class ShopProfileSettings {
     private String city;
     private String country;
     private Boolean admin_approved;
+    private String shop_category;
 
 
     public ShopProfileSettings() {
     }
 
-    public ShopProfileSettings(String user_id, String first_name, String last_name, String user_name, String email
-            , String scope, String shop_address, String city, String country, Boolean admin_approved) {
+    public ShopProfileSettings(String user_id, String first_name, String last_name, String user_name, String email, String scope, String shop_address,
+                               String city, String country, Boolean admin_approved,
+                               String shop_category) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -34,6 +36,15 @@ public class ShopProfileSettings {
         this.city = city;
         this.country = country;
         this.admin_approved = admin_approved;
+        this.shop_category = shop_category;
+    }
+
+    public String getShop_category() {
+        return shop_category;
+    }
+
+    public void setShop_category(String shop_category) {
+        this.shop_category = shop_category;
     }
 
     public String getUser_id() {
@@ -129,6 +140,7 @@ public class ShopProfileSettings {
                 ", city='" + city + '\'' +
                 ", country='" + country + '\'' +
                 ", admin_approved=" + admin_approved +
+                ", shop_category='" + shop_category + '\'' +
                 '}';
     }
 }

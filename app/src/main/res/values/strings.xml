@@ -43,6 +43,8 @@
     <string name="shopAddress">Shop Address</string>
     <string name="shopName">Shop Name</string>
     <string name="email_receive_warn">Don\'t Receive An Email?</string>
+    <string name="mall">MALL</string>
+    <string name="shop">SHOP</string>
 
     <!--Firebase Database Nodes & Fields-->
     <string name="db_users_node">users</string>
@@ -57,6 +59,12 @@
     <string name="db_field_user_id">user_id</string>
     <string name="db_field_profile_photo">profile_photo</string>
     <string name="db_field_products">products</string>
+    <string name="db_field_scope">scope</string>
+    <string name="db_field_shop_address">shop_address</string>
+    <string name="db_field_city">city</string>
+    <string name="db_field_country">=country</string>
+    <string name="db_field_admin_approved">admin_approved</string>
+    <string name="db_field_shop_category">shop_category</string>
 
 
     <!--Simple Toast Messages-->
@@ -85,8 +93,6 @@
     <string name="recover_password">Please Update Your Password By Visiting Your Inbox</string>
     <string name="missing_one_field">Please Enter Email</string>
     <string name="change_password">Recover Password</string>
-    <string name="mall">MALL</string>
-    <string name="shop">SHOP</string>
 
 
 </resources>

@@ -113,7 +113,7 @@ public class FirebaseMethods {
                             ShopProfileSettings settings = new ShopProfileSettings(mAuth.getCurrentUser().getUid(),
                                     firstName, lastName
                                     , StringManipulations.toLowerCaseUsername(userName)
-                                    , email, scope, shop_address, city, country, admin_approved);
+                                    , email, scope, shop_address, city, country, admin_approved, "");
 
 
                             myRef
