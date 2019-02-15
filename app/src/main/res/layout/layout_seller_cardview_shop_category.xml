@@ -23,7 +23,7 @@
                 android:layout_marginLeft="@dimen/_20dp"
                 android:layout_marginStart="@dimen/_20dp"
                 android:gravity="center"
-                android:text="Continue as:"
+                android:text="@string/double_tap_to_continue_as"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_24sp" />
 

@@ -6,9 +6,12 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity">
 
+
     <RelativeLayout
+        android:id="@+id/categoryScreenContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <RelativeLayout
             android:id="@+id/topBarImageHolder"
@@ -33,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/supportiveLayout"
                 android:layout_centerHorizontal="true"
-                android:text="Welcome"
+                android:text="@string/welcome"
                 android:textColor="@color/dark_golden"
                 android:textSize="@dimen/_50dp"
                 android:typeface="serif" />
@@ -49,6 +52,21 @@
             <include layout="@layout/layout_seller_cardview_shop_category" />
 
         </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/fragmentFrameHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
 
     </RelativeLayout>
 

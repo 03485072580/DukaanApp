@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.DrawerHandler;
 import com.example.fasih.dukaanapp.adapter.NavigationHandler;
-import com.example.fasih.dukaanapp.home.fragments.HomeFragment;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
 import com.example.fasih.dukaanapp.utils.SectionsPagerStateAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

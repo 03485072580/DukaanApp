@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.home.fragments;
+package com.example.fasih.dukaanapp.home.fragments.userPageResources;
 
 import android.content.Intent;
 import android.os.Bundle;

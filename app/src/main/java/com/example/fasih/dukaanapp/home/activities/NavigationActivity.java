@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.fragments.AdminFragment;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.AdminFragment;
 
 public class NavigationActivity extends AppCompatActivity {
 

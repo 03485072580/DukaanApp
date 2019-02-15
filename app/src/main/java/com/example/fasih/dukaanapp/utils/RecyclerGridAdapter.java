@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.fragments.HomeFragment;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 
 /**

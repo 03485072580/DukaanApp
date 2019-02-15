@@ -49,8 +49,8 @@
         <activity android:name=".home.activities.NavigationActivity" />
         <activity
             android:name=".home.activities.SellerHomePageActivity"
-            android:resizeableActivity="true"
-            android:theme="@style/SellerAppTheme"></activity>
+            android:theme="@style/SellerAppTheme"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

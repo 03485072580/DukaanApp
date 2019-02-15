@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements AttachedFragment
             resolver.setContainerLayout(containerFrameLayout, containerFragmentLayout);
         }
         if (viewPager.getCurrentItem() == 1) {
-            //ShopFragment
+            //CategoryShopFragment
             resolver = (ShopFragment) adapter.getItem(1);
             resolver.setContainerLayout(containerFrameLayout, containerFragmentLayout);
         }
