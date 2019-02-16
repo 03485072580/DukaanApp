@@ -48,6 +48,7 @@
     <string name="mall">MALL</string>
     <string name="shop">SHOP</string>
     <string name="double_tap_to_continue_as">Double Tap to Continue as:</string>
+    <string name="seller_dashboard">Seller DashBoard</string>
 
     <!--Firebase Database Nodes & Fields-->
     <string name="db_users_node">users</string>
@@ -97,6 +98,16 @@
     <string name="missing_one_field">Please Enter Email</string>
     <string name="change_password">Recover Password</string>
     <string name="welcome">Welcome</string>
+    <string name="share">Share</string>
+
+    <!--Spinner entries-->
+    <string-array name="spinner_items">
+        <item>Item1</item>
+        <item>Item2</item>
+        <item>Item3</item>
+        <item>Item4</item>
+        <item>Item5</item>
+    </string-array>
 
 
 </resources>

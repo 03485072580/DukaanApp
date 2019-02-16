@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="1"
+            android:background="#bc363434"
+            android:orientation="vertical"
+            android:weightSum="100">
+
+            <RelativeLayout
+                android:id="@+id/shareImageHolder"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/contentDescription"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test_cart" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/_10dp"
+                android:layout_weight="70">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/sortablePicturesSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_10dp"
+                    android:backgroundTint="@color/white"
+                    android:entries="@array/spinner_items"
+                    tools:targetApi="lollipop">
+
+                </android.support.v7.widget.AppCompatSpinner>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/selectSharableImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/sortablePicturesSpinner"
+                    app:layoutManager="GridLayoutManager">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</merge>
