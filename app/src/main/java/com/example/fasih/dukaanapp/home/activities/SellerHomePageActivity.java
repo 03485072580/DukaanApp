@@ -82,7 +82,7 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.fragmentContainer, new CategoryShopFragment()
                                             , getString(R.string.categoryShopFragment))
-                                    .commit();
+                                    .commitAllowingStateLoss();
                         }
 
 

@@ -20,4 +20,6 @@ public class MyApplication extends Application {
         AppEventsLogger.activateApp(this);
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
+
+
 }

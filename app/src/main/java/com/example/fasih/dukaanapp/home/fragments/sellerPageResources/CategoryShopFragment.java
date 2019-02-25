@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MyExternalPublicStorageDirectoryAdapter;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.File;
@@ -28,7 +28,7 @@ import java.util.List;
  * Created by Fasih on 02/15/19.
  */
 
-public class CategoryShopFragment extends Fragment {
+public class CategoryShopFragment extends Fragment implements OnRecyclerImageSelectedListener {
 
     private ImageView hamburgerDrawerIcon;
     private DrawerLayout drawerLayoutCategoryShop;
@@ -40,6 +40,18 @@ public class CategoryShopFragment extends Fragment {
     private List<String> internalDirectories;
     private MyExternalPublicStorageDirectoryAdapter adapter;
 
+    /**
+     * Called Whenever an item on the RecyclerView (Grid) clicked
+     *
+     * @param position
+     * @param view
+     */
+    @Override
+    public void onClickGridImage(int position, View view) {
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,7 +59,6 @@ public class CategoryShopFragment extends Fragment {
         setupFragmentWidgets(view);
         setupSDCardDirectoryFetching();
         setupSpinner();
-        setupRecyclerGrid();
         return view;
     }
 
@@ -55,10 +66,11 @@ public class CategoryShopFragment extends Fragment {
         internalDirectories = new ArrayList<>();
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/");
         if (file.exists()) {
+
             File[] filesList = file.listFiles();
             if (filesList != null)
                 for (int i = 0; i < filesList.length; i++) {
-                    if (filesList[i].isDirectory()) {
+                    if (filesList[i].isDirectory() && !filesList[i].isHidden()) {
                         internalDirectories.add(filesList[i].getAbsolutePath());
                     }
                 }
@@ -82,8 +94,22 @@ public class CategoryShopFragment extends Fragment {
                     } catch (Exception exc) {
                         exc.printStackTrace();
                     } finally {
-                        if (!urlEndPoints.isEmpty())
+                        if (!urlEndPoints.isEmpty()) {
                             sortablePicturesSpinner.setItems(urlEndPoints);
+                            try {
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        setupRecyclerGrid(internalDirectories.get(sortablePicturesSpinner.getSelectedIndex()));
+                                    }
+                                });
+                            } catch (NullPointerException exc) {
+                                exc.printStackTrace();
+                            }
+
+                        }
+
                     }
 
                 }
@@ -97,9 +123,9 @@ public class CategoryShopFragment extends Fragment {
     }
 
 
-    private void setupRecyclerGrid() {
+    private void setupRecyclerGrid(String imageRootUrl) {
         selectSharableImage.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        adapter = new MyExternalPublicStorageDirectoryAdapter(getActivity(), internalDirectories);
+        adapter = new MyExternalPublicStorageDirectoryAdapter(getActivity(), imageRootUrl, this);
         selectSharableImage.setAdapter(adapter);
     }
 
@@ -126,8 +152,14 @@ public class CategoryShopFragment extends Fragment {
         sortablePicturesSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
-                Log.d("TAG1234", "onItemSelected: " + position);
+                //calling here assure that internalDirectories is not null
+                if (!internalDirectories.isEmpty()) {
+
+                    setupRecyclerGrid(internalDirectories.get(position));
+                }
             }
         });
     }
+
+
 }
