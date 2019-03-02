@@ -39,6 +39,11 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
         startActivity(new Intent(getActivity(), UniqueCategoryActivity.class));
     }
 
+    @Override
+    public void onClickGridImage(int position, View view, String Url) {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -1,24 +1,35 @@
 package com.example.fasih.dukaanapp.home.fragments.sellerPageResources;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MyExternalPublicStorageDirectoryAdapter;
+import com.example.fasih.dukaanapp.home.interfaces.OnContentUriCapturedListner;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,7 +39,8 @@ import java.util.List;
  * Created by Fasih on 02/15/19.
  */
 
-public class CategoryShopFragment extends Fragment implements OnRecyclerImageSelectedListener {
+public class CategoryShopFragment extends Fragment implements OnRecyclerImageSelectedListener, OnContentUriCapturedListner {
+
 
     private ImageView hamburgerDrawerIcon;
     private DrawerLayout drawerLayoutCategoryShop;
@@ -39,6 +51,9 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     private TextView share;
     private List<String> internalDirectories;
     private MyExternalPublicStorageDirectoryAdapter adapter;
+    private BottomNavigationViewEx categoryShopBottomNavigation;
+    private Uri capturedImageUri;
+    private RelativeLayout fragmentFrameHolder, shareFragmentFrameHolder;
 
     /**
      * Called Whenever an item on the RecyclerView (Grid) clicked
@@ -49,7 +64,17 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     @Override
     public void onClickGridImage(int position, View view) {
 
+    }
 
+    /**
+     * Called Whenever an item on the RecyclerView (Grid) clicked with providing the complete Image URL
+     *
+     * @param position
+     * @param view
+     */
+    @Override
+    public void onClickGridImage(int position, View view, String Url) {
+        ImageLoader.getInstance().displayImage("File://" + Url, selectedSharableImage);
     }
 
     @Nullable
@@ -59,7 +84,26 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
         setupFragmentWidgets(view);
         setupSDCardDirectoryFetching();
         setupSpinner();
+        setupUniversalImageLoader();
+        setupCameraPhoto();
+        Log.d("TAG1234", "onCreateView: ");
         return view;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("TAG1234", "onCreateView: ");
+    }
+
+    private void setupCameraPhoto() {
+        if (capturedImageUri != null) {
+            ImageLoader.getInstance().displayImage(capturedImageUri.toString(), selectedSharableImage);
+        }
+    }
+
+    private void setupUniversalImageLoader() {
+        ImageLoader.getInstance().init(UniversalImageLoader.getConfiguration(getActivity()));
     }
 
     private void setupSDCardDirectoryFetching() {
@@ -75,8 +119,6 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                     }
                 }
         }
-
-
     }
 
     private void setupSpinner() {
@@ -124,9 +166,14 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
 
 
     private void setupRecyclerGrid(String imageRootUrl) {
-        selectSharableImage.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        adapter = new MyExternalPublicStorageDirectoryAdapter(getActivity(), imageRootUrl, this);
-        selectSharableImage.setAdapter(adapter);
+        try {
+            selectSharableImage.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            adapter = new MyExternalPublicStorageDirectoryAdapter(getActivity(), imageRootUrl, this, selectedSharableImage);
+            selectSharableImage.setAdapter(adapter);
+
+        } catch (NullPointerException exc) {
+            exc.printStackTrace();
+        }
     }
 
     private void setupFragmentWidgets(View view) {
@@ -137,6 +184,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
         selectedSharableImage = view.findViewById(R.id.selectedSharableImage);
         sortablePicturesSpinner = view.findViewById(R.id.sortablePicturesSpinner);
         share = view.findViewById(R.id.shareImage);
+        categoryShopBottomNavigation = view.findViewById(R.id.categoryShopBottomNavigation);
 
 
         hamburgerDrawerIcon.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +207,69 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                 }
             }
         });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+
+                    fragmentFrameHolder.setVisibility(View.GONE);
+                    shareFragmentFrameHolder.setVisibility(View.VISIBLE);
+                    ShareFragment shareFragment = new ShareFragment();
+                    shareFragment.setXmlResources(fragmentFrameHolder, shareFragmentFrameHolder);
+                    FragmentManager manager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.add(R.id.fragmentContainer2
+                            , shareFragment
+                            , getActivity().getString(R.string.shareFragment));
+                    transaction.addToBackStack(getString(R.string.shareFragment));
+                    transaction.commitAllowingStateLoss();
+                    Log.d("TAG1234", "onClick: " + capturedImageUri);
+
+                } catch (NullPointerException exc) {
+                    exc.printStackTrace();
+                }
+            }
+        });
+        categoryShopBottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.camera) {
+                    try {
+                        CameraFragment cameraFragment = new CameraFragment();
+                        cameraFragment.setCurrentInstance(CategoryShopFragment.this);
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragmentContainer, cameraFragment, getString(R.string.cameraFragment))
+                                .addToBackStack(getString(R.string.cameraFragment))
+                                .commitAllowingStateLoss();
+                    } catch (NullPointerException exc) {
+                        exc.printStackTrace();
+                    }
+                    return true;
+                } else if (item.getItemId() == R.id.sellerHome) {
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
+    @Override
+    public void onImageContentUriCaptured(Uri capturedImageUri) {
 
+        this.capturedImageUri = capturedImageUri;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d("TAG1234", "onSaveInstanceState: ");
+    }
+
+    public void setXmlResources(RelativeLayout fragmentFrameHolder, RelativeLayout shareFragmentFrameHolder) {
+        this.fragmentFrameHolder = fragmentFrameHolder;
+        this.shareFragmentFrameHolder = shareFragmentFrameHolder;
+    }
 }

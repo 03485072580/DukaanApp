@@ -25,7 +25,7 @@
                 <ImageView
                     android:id="@+id/selectedSharableImage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:contentDescription="@string/contentDescription"
                     android:scaleType="centerCrop"
                     android:src="@drawable/test_cart" />
@@ -38,17 +38,6 @@
                 android:layout_margin="@dimen/_10dp"
                 android:layout_weight="70">
 
-
-                <!--<Spinner-->
-                <!--android:id="@+id/sortablePicturesSpinner"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="@dimen/_10dp"-->
-                <!--android:isScrollContainer="true"-->
-                <!--android:backgroundTint="@color/white"-->
-                <!--tools:targetApi="lollipop">-->
-
-                <!--</Spinner>-->
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/sortablePicturesSpinner"
                     android:layout_width="match_parent"

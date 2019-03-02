@@ -29,13 +29,16 @@ public class MyExternalPublicStorageDirectoryAdapter extends RecyclerView.Adapte
     private ArrayList<String> imageRootUrlImages;
     private CategoryShopFragment currentContext;
     private OnRecyclerImageSelectedListener onImageSelectedListener;
+    private ImageView selectedSharableImage;
 
     public MyExternalPublicStorageDirectoryAdapter(Context context
             , String imageRootUrl
-            , CategoryShopFragment currentContext) {
+            , CategoryShopFragment currentContext
+            , ImageView selectedSharableImage) {
         mContext = context;
         this.currentContext = currentContext;
         this.imageRootUrl = imageRootUrl;
+        this.selectedSharableImage = selectedSharableImage;
         imageRootUrlImages = new ArrayList<>();
         ImageLoader.getInstance().init(UniversalImageLoader.getConfiguration(mContext.getApplicationContext()));
         setupImageToLoad(imageRootUrl);
@@ -60,7 +63,8 @@ public class MyExternalPublicStorageDirectoryAdapter extends RecyclerView.Adapte
 
     @Override
     public void onBindViewHolder(@NonNull MyCustomViewHolder holder, int position) {
-        ImageLoader.getInstance().displayImage("File://" + imageRootUrlImages.get(position), holder.selectedProduct);
+        if (imageRootUrlImages.get(position) != null)
+            ImageLoader.getInstance().displayImage("File://" + imageRootUrlImages.get(position), holder.selectedProduct);
     }
 
     @Override
@@ -113,7 +117,7 @@ public class MyExternalPublicStorageDirectoryAdapter extends RecyclerView.Adapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onImageSelectedListener.onClickGridImage(getAdapterPosition(), view);
+                    onImageSelectedListener.onClickGridImage(getAdapterPosition(), view, imageRootUrlImages.get(getAdapterPosition()));
                 }
             });
         }
@@ -131,6 +135,8 @@ public class MyExternalPublicStorageDirectoryAdapter extends RecyclerView.Adapte
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if (!imageRootUrlImages.isEmpty())
+                ImageLoader.getInstance().displayImage("File://" + imageRootUrlImages.get(0), selectedSharableImage);
             notifyDataSetChanged();
         }
     }

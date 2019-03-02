@@ -40,12 +40,27 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
     private DatabaseReference myRef;
     private String currentUserID = null;
     private ShopProfileSettings shopSettings;
+    private Boolean isActivityRestarted = false;
+    private Bundle savedInstanceState;
+    private RelativeLayout shareFragmentFrameHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupFirebase();
+        setupFirebase(savedInstanceState);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        isActivityRestarted = true;
+        setupFirebase(savedInstanceState);
     }
 
     private void setupView() {
@@ -54,6 +69,7 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                     .child(getString(R.string.db_shop_profile_settings_node))
                     .orderByChild(getString(R.string.db_field_user_id))
                     .equalTo(currentUserID);
+
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,25 +78,36 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                                     .child(currentUserID)
                                     .getValue();
                     if (TextUtils.isEmpty((String) shopProfileSettingsMap.get(getString(R.string.db_field_shop_category)))) {
-                        setContentView(R.layout.activity_seller_home_page);
-                        setUpTransluscentStatusBar();
-                        setupActivityWidgets();
+                        if (!isActivityRestarted) {
+                            setContentView(R.layout.activity_seller_home_page);
+                            setUpTransluscentStatusBar();
+                            setupActivityWidgets();
+                        }
+
                     } else {
-                        setContentView(R.layout.activity_seller_home_page);
-                        setUpTransluscentStatusBar();
-                        setupActivityWidgets();
+                        if (!isActivityRestarted) {
+                            setContentView(R.layout.activity_seller_home_page);
+                            setUpTransluscentStatusBar();
+                            setupActivityWidgets();
+                        }
+
                         categoryScreenContainer.setVisibility(View.GONE);
                         //todo there exists either shop or mall
                         if (shopProfileSettingsMap.get(getString(R.string.db_field_shop_category))
                                 .equals(getString(R.string.mall))) {
 
                             getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragmentContainer, new CategoryMallFragment()
+                                    .add(R.id.fragmentContainer, new CategoryMallFragment()
                                             , getString(R.string.categoryMallFragment))
-                                    .commit();
+                                    .commitAllowingStateLoss();
                         } else {
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.fragmentContainer, new CategoryShopFragment()
+
+                            CategoryShopFragment categoryShopFragment = new CategoryShopFragment();
+                            categoryShopFragment.setXmlResources(fragmentFrameHolder, shareFragmentFrameHolder);
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fragmentContainer
+                                            , categoryShopFragment
                                             , getString(R.string.categoryShopFragment))
                                     .commitAllowingStateLoss();
                         }
@@ -106,6 +133,7 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
         shop = findViewById(R.id.shop);
         categoryScreenContainer = findViewById(R.id.categoryScreenContainer);
         fragmentFrameHolder = findViewById(R.id.fragmentFrameHolder);
+        shareFragmentFrameHolder = findViewById(R.id.shareFragmentFrameHolder);
 
 
         //setting up Listners
@@ -207,9 +235,8 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Navigate to the Desired Activity/Fragment
-                                Log.d("TAG1234", "categorySelected: shopSettings onSuccess");
                                 getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.fragmentContainer
+                                        .add(R.id.fragmentContainer
                                                 , new CategoryMallFragment()
                                                 , getString(R.string.categoryMallFragment))
                                         .commit();
@@ -287,10 +314,10 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                             public void onSuccess(Void aVoid) {
                                 //Navigate to the Desired Activity/Fragment
                                 getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.fragmentContainer
+                                        .add(R.id.fragmentContainer
                                                 , new CategoryShopFragment()
                                                 , getString(R.string.categoryShopFragment))
-                                        .commit();
+                                        .commitAllowingStateLoss();
                                 categoryScreenContainer.setVisibility(View.GONE);
                                 fragmentFrameHolder.setVisibility(View.VISIBLE);
                             }
@@ -299,8 +326,7 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
 
     }
 
-
-    private void setupFirebase() {
+    private void setupFirebase(final Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
@@ -311,7 +337,30 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     currentUserID = user.getUid();
-                    setupView();
+                    if (savedInstanceState == null) {
+                        setupView();
+                    } else {
+                        if (!isActivityRestarted) {
+                            setContentView(R.layout.activity_seller_home_page);
+                            setUpTransluscentStatusBar();
+                            setupActivityWidgets();
+                        }
+
+
+                        CategoryShopFragment fragmentByTag = (CategoryShopFragment) getSupportFragmentManager()
+                                .findFragmentByTag(getString(R.string.categoryShopFragment));
+                        if (fragmentByTag != null) {
+                            fragmentByTag.setXmlResources(fragmentFrameHolder, shareFragmentFrameHolder);
+                            categoryScreenContainer.setVisibility(View.GONE);
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .show(fragmentByTag)
+                                    .commitAllowingStateLoss();
+                        }
+
+                        fragmentFrameHolder.setVisibility(View.VISIBLE);
+                    }
+
 
                 }
 
@@ -335,4 +384,5 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
             mAuth.removeAuthStateListener(authStateListener);
         }
     }
+
 }

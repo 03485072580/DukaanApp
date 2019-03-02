@@ -4,8 +4,9 @@
     <group>
 
         <item
-            android:id="@+id/dcim"
-            android:title="DCIM">
+            android:id="@+id/sellerHome"
+            android:icon="@drawable/ic_seller_page"
+            android:title="Home">
 
         </item>
 

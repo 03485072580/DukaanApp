@@ -36,6 +36,11 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
         startActivity(new Intent(getActivity(), ProductDetailActivity.class));
     }
 
+    @Override
+    public void onClickGridImage(int position, View view, String Url) {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -49,10 +49,12 @@
             android:layout_alignParentTop="true">
 
             <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
-                android:id="@+id/bnve"
+                android:id="@+id/categoryShopBottomNavigation"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:background="@color/light_black"
                 android:textAlignment="center"
                 app:itemIconTint="@color/white"

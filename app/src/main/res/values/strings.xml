@@ -24,6 +24,8 @@
     <string name="forgotPasswordFragment">ForgotPasswordFragment</string>
     <string name="categoryMallFragment">CategoryMallFragment</string>
     <string name="categoryShopFragment">CategoryShopFragment</string>
+    <string name="shareFragment">ShareFragment</string>
+    <string name="cameraFragment">CameraFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -49,6 +51,9 @@
     <string name="shop">SHOP</string>
     <string name="double_tap_to_continue_as">Double Tap to Continue as:</string>
     <string name="seller_dashboard">Seller DashBoard</string>
+    <string name="welcome">Welcome</string>
+    <string name="share">Share</string>
+    <string name="next">Next</string>
 
     <!--Firebase Database Nodes & Fields-->
     <string name="db_users_node">users</string>
@@ -97,8 +102,7 @@
     <string name="recover_password">Please Update Your Password By Visiting Your Inbox</string>
     <string name="missing_one_field">Please Enter Email</string>
     <string name="change_password">Recover Password</string>
-    <string name="welcome">Welcome</string>
-    <string name="share">Share</string>
+
 
     <!--Spinner entries-->
     <string-array name="spinner_items">

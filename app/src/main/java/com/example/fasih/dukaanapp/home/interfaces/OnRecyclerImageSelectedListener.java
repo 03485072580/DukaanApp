@@ -9,4 +9,6 @@ import android.view.View;
 public interface OnRecyclerImageSelectedListener {
 
     void onClickGridImage(int position, View view);
+
+    void onClickGridImage(int position, View view, String Url);
 }
