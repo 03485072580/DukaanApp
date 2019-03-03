@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +25,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.interfaces.OnContentUriCapturedListner;
+import com.example.fasih.dukaanapp.utils.MessageEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,9 +46,7 @@ public class CameraFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_CODE = 123;
     private String currentPhotoPath;
-    private Boolean isActivityResultLoadedSuccessfully = false;
     private Uri photoURI;
-    private OnContentUriCapturedListner onContentUriCapturedListner;
 
 
     @Nullable
@@ -102,8 +103,9 @@ public class CameraFragment extends Fragment {
 
                 if (photoFile != null) {
                     photoURI = FileProvider.getUriForFile(getActivity(),
-                            "com.example.android.fileprovider",
+                            "com.example.fasih.dukaanapp.provider",
                             photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
             }
@@ -132,10 +134,24 @@ public class CameraFragment extends Fragment {
     }
 
     private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(currentPhotoPath);
-        mediaScanIntent.setData(Uri.fromFile(f));
-        getActivity().sendBroadcast(mediaScanIntent);
+
+        MediaScannerConnection.scanFile(
+                getActivity().getApplicationContext(),
+                new String[]{currentPhotoPath},
+                null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    @Override
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.v("TAG1234",
+                                "file " + path + " was scanned seccessfully: " + uri);
+                    }
+                });
+//
+//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//        File f = new File(currentPhotoPath);
+//        Uri contentUri = Uri.fromFile(f);
+//        mediaScanIntent.setData(contentUri);
+//        getActivity().sendBroadcast(mediaScanIntent);
 
     }
 
@@ -146,27 +162,30 @@ public class CameraFragment extends Fragment {
 
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             try {
                 galleryAddPic();
-
-                onContentUriCapturedListner.onImageContentUriCaptured(photoURI);
-
-                getActivity()
-                        .getSupportFragmentManager()
-                        .popBackStackImmediate();
+                MessageEvent messageEvent = new MessageEvent();
+                messageEvent.setCapturedImageUri(photoURI);
+                EventBus.getDefault().postSticky(messageEvent);
 
             } catch (NullPointerException exc) {
                 exc.printStackTrace();
             }
+            Log.d("TAG1234", "onActivityResult: ");
         }
     }
 
-
-    public void setCurrentInstance(CategoryShopFragment currentInstance) {
-        onContentUriCapturedListner = currentInstance;
-    }
-
-
+    /**
+     * Managing multiple full-sized images can be tricky with limited memory.
+     * If you find your application running out of memory after displaying just a few images,
+     * you can dramatically reduce the amount of dynamic heap used by expanding the JPEG into
+     * a memory array that's already scaled to match the size of the destination view.
+     * The following example method demonstrates this technique.
+     *
+     * @param cameraPhoto
+     */
     private void setPic(ImageView cameraPhoto) {
         // Get the dimensions of the View
         int targetW = cameraPhoto.getWidth();

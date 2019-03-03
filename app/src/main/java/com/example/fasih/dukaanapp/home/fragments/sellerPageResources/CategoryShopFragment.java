@@ -24,12 +24,17 @@ import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MyExternalPublicStorageDirectoryAdapter;
-import com.example.fasih.dukaanapp.home.interfaces.OnContentUriCapturedListner;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.utils.MessageEvent;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.jsibbold.zoomage.ZoomageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,7 +44,7 @@ import java.util.List;
  * Created by Fasih on 02/15/19.
  */
 
-public class CategoryShopFragment extends Fragment implements OnRecyclerImageSelectedListener, OnContentUriCapturedListner {
+public class CategoryShopFragment extends Fragment implements OnRecyclerImageSelectedListener {
 
 
     private ImageView hamburgerDrawerIcon;
@@ -47,13 +52,18 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     private NavigationView navigationViewCategoryShop;
     private RecyclerView selectSharableImage;
     private MaterialSpinner sortablePicturesSpinner;
-    private ImageView selectedSharableImage;
+    private ZoomageView selectedSharableImage;
     private TextView share;
     private List<String> internalDirectories;
     private MyExternalPublicStorageDirectoryAdapter adapter;
     private BottomNavigationViewEx categoryShopBottomNavigation;
     private Uri capturedImageUri;
     private RelativeLayout fragmentFrameHolder, shareFragmentFrameHolder;
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {/* Do something */
+        capturedImageUri = event.getCapturedImageUri();
+    }
 
     /**
      * Called Whenever an item on the RecyclerView (Grid) clicked
@@ -81,19 +91,19 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_category_shop, container, false);
+        EventBus.getDefault().register(this);
         setupFragmentWidgets(view);
         setupSDCardDirectoryFetching();
         setupSpinner();
         setupUniversalImageLoader();
         setupCameraPhoto();
-        Log.d("TAG1234", "onCreateView: ");
         return view;
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("TAG1234", "onCreateView: ");
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 
     private void setupCameraPhoto() {
@@ -149,9 +159,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                             } catch (NullPointerException exc) {
                                 exc.printStackTrace();
                             }
-
                         }
-
                     }
 
                 }
@@ -185,7 +193,6 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
         sortablePicturesSpinner = view.findViewById(R.id.sortablePicturesSpinner);
         share = view.findViewById(R.id.shareImage);
         categoryShopBottomNavigation = view.findViewById(R.id.categoryShopBottomNavigation);
-
 
         hamburgerDrawerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,13 +238,14 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                 }
             }
         });
-        categoryShopBottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        categoryShopBottomNavigation
+                .setOnNavigationItemSelectedListener
+                        (new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.camera) {
                     try {
                         CameraFragment cameraFragment = new CameraFragment();
-                        cameraFragment.setCurrentInstance(CategoryShopFragment.this);
                         getActivity()
                                 .getSupportFragmentManager()
                                 .beginTransaction()
@@ -257,18 +265,13 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     }
 
     @Override
-    public void onImageContentUriCaptured(Uri capturedImageUri) {
-
-        this.capturedImageUri = capturedImageUri;
-    }
-
-    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.d("TAG1234", "onSaveInstanceState: ");
     }
 
-    public void setXmlResources(RelativeLayout fragmentFrameHolder, RelativeLayout shareFragmentFrameHolder) {
+    public void setXmlResources(RelativeLayout fragmentFrameHolder
+            , RelativeLayout shareFragmentFrameHolder) {
         this.fragmentFrameHolder = fragmentFrameHolder;
         this.shareFragmentFrameHolder = shareFragmentFrameHolder;
     }

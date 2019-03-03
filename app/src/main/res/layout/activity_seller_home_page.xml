@@ -62,10 +62,6 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <!--<FrameLayout-->
-        <!--android:id="@+id/fragmentContainer"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
         <fragment
             android:id="@+id/fragmentContainer"
             class="com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryShopFragment"
@@ -74,8 +70,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
-
-        <!--</FrameLayout>-->
 
     </RelativeLayout>
 
@@ -93,8 +87,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true" />
-
-
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

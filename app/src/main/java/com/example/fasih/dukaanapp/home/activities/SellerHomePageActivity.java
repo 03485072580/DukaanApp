@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SellerHomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CircleImageView mall, shop;
-    private RelativeLayout categoryScreenContainer, fragmentFrameHolder;
+    private RelativeLayout categoryScreenContainer, fragmentFrameHolder, shareFragmentFrameHolder;
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -42,7 +42,6 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
     private ShopProfileSettings shopSettings;
     private Boolean isActivityRestarted = false;
     private Bundle savedInstanceState;
-    private RelativeLayout shareFragmentFrameHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
