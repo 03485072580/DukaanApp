@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -227,6 +228,7 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
     public void onBackPressed() {
         try {
 
+            Log.d("TAG1234", "onBackPressed:222 shareFragment");
             fragmentFrameHolder.setVisibility(View.VISIBLE);
             shareFragmentFrameHolder.setVisibility(View.GONE);
             getFragmentManager().popBackStackImmediate();
@@ -243,7 +245,7 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
-        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.activity_login));
+        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.shareFragment));
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -275,7 +277,7 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
 
     public String getTimeStamp() {
         Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy 'Time' mm:HH:ss aaa", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy 'Time' HH:mm:ss aaa", Locale.US);
         String timeStamp = sdf.format(date);
         return timeStamp;
     }

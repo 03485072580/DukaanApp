@@ -3,6 +3,7 @@ package com.example.fasih.dukaanapp.home.activities;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -390,22 +391,30 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
         this.fragment = fragment;
-        Log.d("TAG1234", "onAttachFragment: " + fragment.getTag());
     }
 
     @Override
     public void onBackPressed() {
         //todo HINT: keep the reference of the previous fragment for Smooth back navigation
         if (fragment instanceof ShareFragment) {
+
             onBackButtonPressedListener = (OnBackButtonPressedListener) fragment;
             onBackButtonPressedListener.onBackPressed();
+            fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.categoryShopFragment));
         } else if (fragment instanceof ZoomImageViewFragment) {
+
             onBackButtonPressedListener = (OnBackButtonPressedListener) fragment;
             onBackButtonPressedListener.onBackPressed();
+            fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.shareFragment));
         } else if (fragment instanceof CurrencyPicker) {
             //do nothing. Let it be handled by the backArrow Button
-            if (getSupportFragmentManager().findFragmentByTag("CURRENCY_PICKER") != null)
+
+            if (getSupportFragmentManager().findFragmentByTag("CURRENCY_PICKER") != null) {
                 getSupportFragmentManager().popBackStack();
+            }
+
+        } else if (fragment instanceof DialogFragment) {
+            fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.shareFragment));
         } else {
             super.onBackPressed();
         }

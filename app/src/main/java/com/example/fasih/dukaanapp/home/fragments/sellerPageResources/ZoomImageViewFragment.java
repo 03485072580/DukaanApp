@@ -24,7 +24,6 @@ public class ZoomImageViewFragment extends DialogFragment implements OnBackButto
 
     private ZoomageView zoomImageView;
     private String Url;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

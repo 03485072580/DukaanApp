@@ -197,6 +197,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
         share = view.findViewById(R.id.shareImage);
         categoryShopBottomNavigation = view.findViewById(R.id.categoryShopBottomNavigation);
 
+        drawerLayoutCategoryShop.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         hamburgerDrawerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,6 +205,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                     drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
                 } else {
                     drawerLayoutCategoryShop.openDrawer(navigationViewCategoryShop, true);
+                    drawerLayoutCategoryShop.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
             }
         });

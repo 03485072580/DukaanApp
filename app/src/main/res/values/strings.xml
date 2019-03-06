@@ -27,6 +27,7 @@
     <string name="shareFragment">ShareFragment</string>
     <string name="cameraFragment">CameraFragment</string>
     <string name="zoomImageViewFragment">ZoomImageViewFragment</string>
+    <string name="dialogFragment">DialogFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -63,11 +64,13 @@
     <string name="product_warranty">Product Warranty</string>
     <string name="available_stock">Available Stock</string>
     <string name="choose_currency">Choose Currency</string>
+    <string name="uploading_please_wait">Uploading... Please Wait</string>
 
     <!--Firebase Database Nodes & Fields-->
     <string name="db_users_node">users</string>
     <string name="db_user_profile_settings_node">user_profile_settings</string>
     <string name="db_shop_profile_settings_node">shop_profile_settings</string>
+    <string name="db_products_node">products</string>
 
     <string name="db_field_user_name">user_name</string>
     <string name="db_field_email">email</string>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +16,16 @@ import android.widget.Toast;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
 import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
+import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ProgressDialogFragment;
 import com.example.fasih.dukaanapp.login.activity.LoginActivity;
+import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,11 +66,11 @@ import java.util.HashMap;
 
 public class FirebaseMethods {
 
-
     //Facebook Stuff
     AccessToken accessToken;
     //Google Stuff
     GoogleSignInAccount account;
+    private ProgressDialogFragment dialogFragment;
     private Boolean isScopeCorrect = false;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -519,14 +523,23 @@ public class FirebaseMethods {
                 });
     }
 
-    public void uploadProduct(String productName
-            , String selectedCategory
+    public void uploadProduct(final String productName
+            , final String selectedCategory
             , String imageLoadingUrl
-            , String productDescription
-            , String productPrice
-            , String productWarranty
-            , String availableStock
-            , String timeStamp) {
+            , final String productDescription
+            , final String productPrice
+            , final String productWarranty
+            , final String availableStock
+            , final String timeStamp) {
+        if (activityName.equals(mContext.getString(R.string.shareFragment))) {
+
+            dialogFragment = new ProgressDialogFragment();
+            dialogFragment.setCancelable(false);
+            dialogFragment.show(((FragmentActivity) mContext)
+                            .getSupportFragmentManager()
+                    , mContext.getString(R.string.dialogFragment));
+        }
+
 
         BufferedInputStream bufferedInputStream = null;
         storageReference = firebaseStorage.getReference(mContext.getPackageName()
@@ -544,7 +557,7 @@ public class FirebaseMethods {
                 bufferedInputStream = new BufferedInputStream(inputStream);
             }
 
-            StorageReference imageUploadReference = storageReference.child(Uri.parse(imageLoadingUrl).getLastPathSegment());
+            final StorageReference imageUploadReference = storageReference.child(Uri.parse(imageLoadingUrl).getLastPathSegment());
             ByteArrayBuffer baf = new ByteArrayBuffer(1024);
             int currentByteCount = 0;
             while ((currentByteCount = bufferedInputStream.read()) != -1) {
@@ -555,17 +568,47 @@ public class FirebaseMethods {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             byte[] data = baos.toByteArray();
             UploadTask uploadTask = imageUploadReference.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                    exception.printStackTrace();
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return imageUploadReference.getDownloadUrl();
                 }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    //upon Successfully uploading image --> setup the product DB
-                    Log.d("TAG1234", "onSuccess: " + taskSnapshot.getUploadSessionUri());
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        String productID = myRef.push().getKey();
+                        productID = productID.substring(3, 13);
+                        Uri downloadUri = task.getResult();
+
+                        Products product = new Products(productName, selectedCategory, downloadUri.toString()
+                                , productDescription, productPrice, productWarranty
+                                , availableStock, timeStamp, productID, -1);
+                        myRef
+                                .child(mContext.getString(R.string.db_products_node))
+                                .child(mAuth.getCurrentUser().getUid())
+                                .child(productID)
+                                .setValue(product)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (activityName.equals(mContext.getString(R.string.shareFragment))) {
+                                            dialogFragment.dismissAllowingStateLoss();
+                                        }
+                                        if (task.isSuccessful()) {
+                                            Log.d("TAG1234", "onComplete: Successfully Created");
+                                        } else {
+                                            task.getException().printStackTrace();
+                                        }
+                                    }
+                                });
+
+                    }
                 }
             });
 
