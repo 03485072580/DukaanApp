@@ -89,4 +89,11 @@
             android:layout_alignParentTop="true" />
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/fragmentContainer3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>

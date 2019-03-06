@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,51 +11,98 @@
 
         <android.support.v7.widget.ActionBarContainer
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_50dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/top_toolbar_standard_2">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/backArrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:contentDescription="@string/contentDescription"
-                        android:src="@drawable/ic_back_arrow"
-                        android:tint="@color/white" />
+                    <RelativeLayout
+                        android:id="@+id/uploadProductToolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/seller_dashboard"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_24sp" />
+                        <ImageView
+                            android:id="@+id/backArrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:contentDescription="@string/contentDescription"
+                            android:src="@drawable/ic_back_arrow"
+                            android:tint="@color/white" />
 
-                    <TextView
-                        android:id="@+id/shareImage"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/uploadProduct"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_24sp" />
+
+                        <TextView
+                            android:id="@+id/shareImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="@dimen/_10dp"
+                            android:layout_marginRight="@dimen/_10dp"
+                            android:text="@string/share"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="@dimen/_10dp"
-                        android:layout_marginRight="@dimen/_10dp"
-                        android:text="@string/share"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_18sp" />
+                        android:layout_below="@id/uploadProductToolbar">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/sharableImage"
+                            android:layout_width="96dp"
+                            android:layout_height="96dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/_10dp"
+                            android:contentDescription="@string/contentDescription"
+                            android:src="@drawable/test_cart" />
+
+                        <EditText
+                            android:id="@+id/productName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/_5dp"
+                            android:layout_toEndOf="@id/sharableImage"
+                            android:layout_toRightOf="@id/sharableImage"
+                            android:backgroundTint="@color/white"
+                            android:hint="@string/product_name"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/light_white"
+                            tools:targetApi="lollipop" />
+
+                        <com.jaredrummler.materialspinner.MaterialSpinner
+                            android:id="@+id/selectedCategory"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/productName"
+                            android:layout_marginEnd="@dimen/_5dp"
+                            android:layout_marginStart="@dimen/_5dp"
+                            android:layout_toEndOf="@id/sharableImage"
+                            android:layout_toRightOf="@id/sharableImage"
+                            app:ms_background_color="@color/spinnerColor"
+                            app:ms_text_color="@color/white" />
+
+                    </RelativeLayout>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
 

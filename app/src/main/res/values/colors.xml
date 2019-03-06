@@ -20,4 +20,5 @@
     <color name="dark_golden">#ff7200</color>
     <color name="light_black_toolbar">#5e5c5c</color>
     <color name="greyishcolor">#818181</color>
+    <color name="spinnerColor">#da96a0a8</color>
 </resources>

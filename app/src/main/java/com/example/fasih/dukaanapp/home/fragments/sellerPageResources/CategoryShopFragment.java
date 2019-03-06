@@ -58,6 +58,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     private MyExternalPublicStorageDirectoryAdapter adapter;
     private BottomNavigationViewEx categoryShopBottomNavigation;
     private Uri capturedImageUri;
+    private String completeImageUrlFromGallery;
     private RelativeLayout fragmentFrameHolder, shareFragmentFrameHolder;
 
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
@@ -85,6 +86,8 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
     @Override
     public void onClickGridImage(int position, View view, String Url) {
         ImageLoader.getInstance().displayImage("File://" + Url, selectedSharableImage);
+        completeImageUrlFromGallery = "File://" + Url;
+        capturedImageUri = null;
     }
 
     @Nullable
@@ -147,12 +150,12 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                         exc.printStackTrace();
                     } finally {
                         if (!urlEndPoints.isEmpty()) {
-                            sortablePicturesSpinner.setItems(urlEndPoints);
                             try {
-
+                                sortablePicturesSpinner.setItems(urlEndPoints);
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+
                                         setupRecyclerGrid(internalDirectories.get(sortablePicturesSpinner.getSelectedIndex()));
                                     }
                                 });
@@ -222,16 +225,33 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
 
                     fragmentFrameHolder.setVisibility(View.GONE);
                     shareFragmentFrameHolder.setVisibility(View.VISIBLE);
-                    ShareFragment shareFragment = new ShareFragment();
-                    shareFragment.setXmlResources(fragmentFrameHolder, shareFragmentFrameHolder);
-                    FragmentManager manager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    transaction.add(R.id.fragmentContainer2
-                            , shareFragment
-                            , getActivity().getString(R.string.shareFragment));
-                    transaction.addToBackStack(getString(R.string.shareFragment));
-                    transaction.commitAllowingStateLoss();
-                    Log.d("TAG1234", "onClick: " + capturedImageUri);
+                    if (capturedImageUri != null) {
+                        //it's comming from the camera Intent todo content uri
+                        ShareFragment shareFragment = new ShareFragment();
+                        shareFragment.setImageLoadingUrl(capturedImageUri.toString());
+                        shareFragment.setXmlResources(fragmentFrameHolder, shareFragmentFrameHolder);
+                        FragmentManager manager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.add(R.id.fragmentContainer2
+                                , shareFragment
+                                , getActivity().getString(R.string.shareFragment));
+                        transaction.addToBackStack(getString(R.string.shareFragment));
+                        transaction.commitAllowingStateLoss();
+
+                    } else {
+                        //it's coming from the Gallery todo File uri
+                        ShareFragment shareFragment = new ShareFragment();
+                        shareFragment.setImageLoadingUrl(completeImageUrlFromGallery);
+                        shareFragment.setXmlResources(fragmentFrameHolder, shareFragmentFrameHolder);
+                        FragmentManager manager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction transaction = manager.beginTransaction();
+                        transaction.add(R.id.fragmentContainer2
+                                , shareFragment
+                                , getActivity().getString(R.string.shareFragment));
+                        transaction.addToBackStack(getString(R.string.shareFragment));
+                        transaction.commitAllowingStateLoss();
+                    }
+
 
                 } catch (NullPointerException exc) {
                     exc.printStackTrace();

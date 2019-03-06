@@ -2,6 +2,9 @@ package com.example.fasih.dukaanapp.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,7 +42,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import org.apache.http.util.ByteArrayBuffer;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -56,6 +70,8 @@ public class FirebaseMethods {
     private Boolean isScopeCorrect = false;
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
     private DatabaseReference myRef;
     private ProgressBar updateProgress;
     private String activityName;
@@ -66,6 +82,7 @@ public class FirebaseMethods {
         this.activityName = activityName;
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
         myRef = firebaseDatabase.getReference();
     }
     //Username might be the name of the User or
@@ -500,5 +517,73 @@ public class FirebaseMethods {
                         // ...
                     }
                 });
+    }
+
+    public void uploadProduct(String productName
+            , String selectedCategory
+            , String imageLoadingUrl
+            , String productDescription
+            , String productPrice
+            , String productWarranty
+            , String availableStock
+            , String timeStamp) {
+
+        BufferedInputStream bufferedInputStream = null;
+        storageReference = firebaseStorage.getReference(mContext.getPackageName()
+                + "/images/" + mAuth.getCurrentUser().getUid() + "/");
+        try {
+
+            if (imageLoadingUrl.toLowerCase().startsWith("file://")) {
+                imageLoadingUrl = imageLoadingUrl.toLowerCase().replace("file://", "");
+                bufferedInputStream = new BufferedInputStream
+                        (new FileInputStream(new File(imageLoadingUrl)));
+            }
+            if (imageLoadingUrl.toLowerCase().startsWith("content://")) {
+                Log.d("TAG1234", "run: " + imageLoadingUrl);
+                FileInputStream inputStream = (FileInputStream) mContext.getContentResolver().openInputStream(Uri.parse(imageLoadingUrl));
+                bufferedInputStream = new BufferedInputStream(inputStream);
+            }
+
+            StorageReference imageUploadReference = storageReference.child(Uri.parse(imageLoadingUrl).getLastPathSegment());
+            ByteArrayBuffer baf = new ByteArrayBuffer(1024);
+            int currentByteCount = 0;
+            while ((currentByteCount = bufferedInputStream.read()) != -1) {
+                baf.append(currentByteCount);
+            }
+            Bitmap bitmap = BitmapFactory.decodeByteArray(baf.toByteArray(), 0, baf.toByteArray().length);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+            UploadTask uploadTask = imageUploadReference.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    exception.printStackTrace();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    //upon Successfully uploading image --> setup the product DB
+                    Log.d("TAG1234", "onSuccess: " + taskSnapshot.getUploadSessionUri());
+                }
+            });
+
+        } catch (NullPointerException exc) {
+            exc.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bufferedInputStream != null) {
+                try {
+                    bufferedInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 }

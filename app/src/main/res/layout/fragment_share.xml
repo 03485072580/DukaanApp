@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -27,19 +28,169 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/topBarHolder">
+        android:layout_below="@id/topBarHolder"
+        android:background="@color/light_black">
 
-        <ImageView
-            android:id="@+id/testImage"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/contentDescription" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/productDescriptionImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_description" />
+
+                    <EditText
+                        android:id="@+id/productDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/productDescriptionImage"
+                        android:layout_toRightOf="@id/productDescriptionImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/product_description"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/productPriceImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_price" />
+
+                    <EditText
+                        android:id="@+id/productPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/productPriceImage"
+                        android:layout_toRightOf="@id/productPriceImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/product_price"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/productWarrantyImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_waranty" />
+
+                    <EditText
+                        android:id="@+id/productWarranty"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/productWarrantyImage"
+                        android:layout_toRightOf="@id/productWarrantyImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/product_warranty"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/availableStockImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_stock" />
+
+                    <EditText
+                        android:id="@+id/availableStock"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/availableStockImage"
+                        android:layout_toRightOf="@id/availableStockImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/available_stock"
+                        android:inputType="number"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <Button
+                        android:id="@+id/currencyPicker"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/button_std1"
+                        android:text="@string/choose_currency"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </RelativeLayout>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.fasih.dukaanapp.home.activities;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,9 @@ import android.widget.RelativeLayout;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryMallFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryShopFragment;
+import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ShareFragment;
+import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ZoomImageViewFragment;
+import com.example.fasih.dukaanapp.home.interfaces.OnBackButtonPressedListener;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mynameismidori.currencypicker.CurrencyPicker;
 
 import java.util.HashMap;
 
@@ -33,6 +38,8 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
 
     private CircleImageView mall, shop;
     private RelativeLayout categoryScreenContainer, fragmentFrameHolder, shareFragmentFrameHolder;
+    private Fragment fragment;
+    private OnBackButtonPressedListener onBackButtonPressedListener;
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -359,14 +366,9 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
 
                         fragmentFrameHolder.setVisibility(View.VISIBLE);
                     }
-
-
                 }
-
             }
         };
-
-
     }
 
     @Override
@@ -384,4 +386,29 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        this.fragment = fragment;
+        Log.d("TAG1234", "onAttachFragment: " + fragment.getTag());
+    }
+
+    @Override
+    public void onBackPressed() {
+        //todo HINT: keep the reference of the previous fragment for Smooth back navigation
+        if (fragment instanceof ShareFragment) {
+            onBackButtonPressedListener = (OnBackButtonPressedListener) fragment;
+            onBackButtonPressedListener.onBackPressed();
+        } else if (fragment instanceof ZoomImageViewFragment) {
+            onBackButtonPressedListener = (OnBackButtonPressedListener) fragment;
+            onBackButtonPressedListener.onBackPressed();
+        } else if (fragment instanceof CurrencyPicker) {
+            //do nothing. Let it be handled by the backArrow Button
+            if (getSupportFragmentManager().findFragmentByTag("CURRENCY_PICKER") != null)
+                getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+
+    }
 }

@@ -22,7 +22,8 @@ import java.util.ArrayList;
  * Created by Fasih on 02/17/19.
  */
 
-public class MyExternalPublicStorageDirectoryAdapter extends RecyclerView.Adapter<MyExternalPublicStorageDirectoryAdapter.MyCustomViewHolder> {
+public class MyExternalPublicStorageDirectoryAdapter
+        extends RecyclerView.Adapter<MyExternalPublicStorageDirectoryAdapter.MyCustomViewHolder> {
 
     private Context mContext;
     private String imageRootUrl;
@@ -137,13 +138,6 @@ public class MyExternalPublicStorageDirectoryAdapter extends RecyclerView.Adapte
             super.onPostExecute(aVoid);
             if (!imageRootUrlImages.isEmpty())
                 ImageLoader.getInstance().displayImage("File://" + imageRootUrlImages.get(0), selectedSharableImage);
-//            else{
-//                if(Build.VERSION.SDK_INT>=21)
-//                selectedSharableImage.setImageDrawable(mContext.getDrawable(R.drawable.test_cart));
-//                else{
-//                    selectedSharableImage.setImageResource(R.drawable.test_cart);
-//                }
-//            }
 
             notifyDataSetChanged();
         }

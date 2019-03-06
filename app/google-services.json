@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "1019843401754",
-    "firebase_url": "https://dukaanapp-9488c.firebaseio.com",
-    "project_id": "dukaanapp-9488c",
-    "storage_bucket": "dukaanapp-9488c.appspot.com"
+    "project_number": "1042298816878",
+    "firebase_url": "https://dukaanapp-5038e.firebaseio.com",
+    "project_id": "dukaanapp-5038e",
+    "storage_bucket": "dukaanapp-5038e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1019843401754:android:648ddef659498f88",
+        "mobilesdk_app_id": "1:1042298816878:android:d2226ed920301a7c",
         "android_client_info": {
-          "package_name": "com.example.fasih.dukaanapp"
+          "package_name": "com.example.fasih.dukaanapp2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1019843401754-68io6mmes1pmqe983ho9sruj8hh3d3gd.apps.googleusercontent.com",
+          "client_id": "1042298816878-t18atp6415t56oi08j95g38dirb4286u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.fasih.dukaanapp",
+            "package_name": "com.example.fasih.dukaanapp2",
             "certificate_hash": "6f01406af3c6e543cd7c2e7927a9bb51b3c04704"
           }
         },
         {
-          "client_id": "1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com",
+          "client_id": "1042298816878-n5e12ggoeiah38525fh3vnu4hec921v0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZHye2VJqrLe3joH_vP13kw2PnSN9hOdY"
+          "current_key": "AIzaSyCXOivrQTfDCgaWtL-NAyjRhJ6er6gkzlM"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com",
+              "client_id": "1042298816878-n5e12ggoeiah38525fh3vnu4hec921v0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

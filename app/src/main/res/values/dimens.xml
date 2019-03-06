@@ -22,4 +22,6 @@
     <dimen name="_220dp">220dp</dimen>
     <dimen name="_250dp">250dp</dimen>
     <dimen name="topBarStandardHeight">22dp</dimen>
+    <dimen name="_35dp">35dp</dimen>
+    <dimen name="_45dp">45dp</dimen>
 </resources>

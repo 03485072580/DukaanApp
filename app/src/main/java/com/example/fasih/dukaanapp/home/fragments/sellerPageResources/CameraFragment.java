@@ -103,7 +103,7 @@ public class CameraFragment extends Fragment {
 
                 if (photoFile != null) {
                     photoURI = FileProvider.getUriForFile(getActivity(),
-                            "com.example.fasih.dukaanapp.provider",
+                            "com.example.fasih.dukaanapp2.provider",
                             photoFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -173,7 +173,6 @@ public class CameraFragment extends Fragment {
             } catch (NullPointerException exc) {
                 exc.printStackTrace();
             }
-            Log.d("TAG1234", "onActivityResult: ");
         }
     }
 

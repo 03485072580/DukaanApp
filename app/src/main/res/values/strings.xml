@@ -26,6 +26,7 @@
     <string name="categoryShopFragment">CategoryShopFragment</string>
     <string name="shareFragment">ShareFragment</string>
     <string name="cameraFragment">CameraFragment</string>
+    <string name="zoomImageViewFragment">ZoomImageViewFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -54,6 +55,14 @@
     <string name="welcome">Welcome</string>
     <string name="share">Share</string>
     <string name="next">Next</string>
+    <string name="uploadProduct">Upload Product</string>
+    <string name="select_product_category">Select Product Category</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_price">Product Price</string>
+    <string name="product_warranty">Product Warranty</string>
+    <string name="available_stock">Available Stock</string>
+    <string name="choose_currency">Choose Currency</string>
 
     <!--Firebase Database Nodes & Fields-->
     <string name="db_users_node">users</string>
@@ -94,7 +103,8 @@
     <string name="facebook_app_id">1452855858183981</string>
     <string name="fb_login_protocol_scheme">fb1452855858183981</string>
     <!--Google Sdk Stuff-->
-    <string name="web_client_id">1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com</string>
+    <!--<string name="web_client_id">1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com</string>-->
+    <string name="web_client_id">1042298816878-n5e12ggoeiah38525fh3vnu4hec921v0.apps.googleusercontent.com</string>
 
     <!--User login Scopes-->
     <string name="scope_user">user</string>
@@ -104,13 +114,15 @@
     <string name="change_password">Recover Password</string>
 
 
+
     <!--Spinner entries-->
     <string-array name="spinner_items">
-        <item>Item1</item>
-        <item>Item2</item>
-        <item>Item3</item>
-        <item>Item4</item>
-        <item>Item5</item>
+        <item>Select Product Category</item>
+        <item>CARS</item>
+        <item>MOBILES</item>
+        <item>CLOTHES</item>
+        <item>JEWELLERY</item>
+        <item>FAST FOOD</item>
     </string-array>
 
 

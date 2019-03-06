@@ -25,7 +25,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.fasih.dukaanapp.provider"
+            android:authorities="com.example.fasih.dukaanapp2.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
