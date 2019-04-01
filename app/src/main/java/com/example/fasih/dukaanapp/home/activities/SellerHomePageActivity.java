@@ -1,5 +1,6 @@
 package com.example.fasih.dukaanapp.home.activities;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryMallFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryShopFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ShareFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ZoomImageViewFragment;
@@ -99,14 +99,17 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                         }
 
                         categoryScreenContainer.setVisibility(View.GONE);
+                        fragmentFrameHolder.setVisibility(View.GONE);
                         //todo there exists either shop or mall
                         if (shopProfileSettingsMap.get(getString(R.string.db_field_shop_category))
                                 .equals(getString(R.string.mall))) {
 
-                            getSupportFragmentManager().beginTransaction()
-                                    .add(R.id.fragmentContainer, new CategoryMallFragment()
-                                            , getString(R.string.categoryMallFragment))
-                                    .commitAllowingStateLoss();
+
+                            Intent intent = new Intent(SellerHomePageActivity.this, MallActivity.class);
+                            intent.putExtra(getString(R.string.db_field_user_id), (String) shopProfileSettingsMap.get(getString(R.string.db_field_user_id)));
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
+                            finish();
                         } else {
 
                             CategoryShopFragment categoryShopFragment = new CategoryShopFragment();
@@ -117,10 +120,9 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                                             , categoryShopFragment
                                             , getString(R.string.categoryShopFragment))
                                     .commitAllowingStateLoss();
+
+                            fragmentFrameHolder.setVisibility(View.VISIBLE);
                         }
-
-
-                        fragmentFrameHolder.setVisibility(View.VISIBLE);
 
                     }
                 }
@@ -161,7 +163,6 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(final View view) {
         showCategoryScreen(view);
-
 
     }
 
@@ -242,13 +243,12 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                             @Override
                             public void onSuccess(Void aVoid) {
                                 //Navigate to the Desired Activity/Fragment
-                                getSupportFragmentManager().beginTransaction()
-                                        .add(R.id.fragmentContainer
-                                                , new CategoryMallFragment()
-                                                , getString(R.string.categoryMallFragment))
-                                        .commit();
-                                categoryScreenContainer.setVisibility(View.GONE);
-                                fragmentFrameHolder.setVisibility(View.VISIBLE);
+
+                                Intent intent = new Intent(SellerHomePageActivity.this, MallActivity.class);
+                                intent.putExtra(getString(R.string.db_field_user_id), shopSettings.getUser_id());
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right);
+                                finish();
                             }
                         });
             }

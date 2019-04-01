@@ -3,21 +3,26 @@
 
     <group>
         <item
+            android:id="@+id/dashBoard"
             android:icon="@drawable/ic_dashboard"
             android:title="DashBoard"></item>
         <item
+            android:id="@+id/profile"
             android:icon="@drawable/ic_profile"
             android:title="Profile"></item>
         <item
+            android:id="@+id/orders"
             android:icon="@drawable/ic_orders"
             android:title="Orders"></item>
     </group>
 
     <group>
         <item
+            android:id="@+id/help"
             android:icon="@drawable/ic_action_name"
             android:title="Help"></item>
         <item
+            android:id="@+id/support"
             android:icon="@drawable/ic_support"
             android:title="Support"></item>
     </group>

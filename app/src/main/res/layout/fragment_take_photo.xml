@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_white"
+    android:padding="@dimen/_20dp">
+
+    <TextView
+        android:id="@+id/pickAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10dp"
+        android:gravity="center"
+        android:text="Pick an Action to Continue"
+        android:textSize="@dimen/_24sp" />
+
+    <TextView
+        android:id="@+id/takePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickAction"
+        android:layout_marginTop="@dimen/_10dp"
+        android:text="1: Take a Photo"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18sp" />
+
+    <TextView
+        android:id="@+id/choosePhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/takePhoto"
+        android:layout_marginTop="@dimen/_10dp"
+        android:text="2: Choose Photo from Gallery"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18sp" />
+
+</RelativeLayout>

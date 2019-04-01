@@ -29,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/topBarHolder"
-        android:background="@color/light_black">
+        android:background="@drawable/seller_bg">
+        <!--android:background="@color/light_black">-->
 
         <ScrollView
             android:layout_width="match_parent"

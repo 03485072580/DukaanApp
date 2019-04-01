@@ -7,6 +7,7 @@ import android.text.TextUtils;
  */
 
 public class StringManipulations {
+
     public static String toLowerCase(String convertString) {
         return convertString.toLowerCase();
     }
@@ -21,5 +22,13 @@ public class StringManipulations {
             return originalString.contains(searchString);
         }
         return null;
+    }
+
+    public static String getFirstName(String displayName) {
+        return displayName.split(" ")[0];
+    }
+
+    public static String getLastName(String displayName) {
+        return displayName.substring(displayName.indexOf(" ") + 1, displayName.length());
     }
 }

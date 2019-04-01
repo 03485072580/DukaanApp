@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 
+import com.example.fasih.dukaanapp.R;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -23,8 +24,10 @@ public class UniversalImageLoader {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .resetViewBeforeLoading(false)  // default
                 .delayBeforeLoading(0)
+                .showImageOnFail(R.drawable.ic_show_person)
+                .showImageForEmptyUri(R.drawable.ic_show_person)
                 .cacheInMemory(true) // default
-                .cacheOnDisk(false) // default
+                .cacheOnDisk(true) // default
                 .imageScaleType(ImageScaleType.EXACTLY) // default
                 .bitmapConfig(Bitmap.Config.RGB_565) // default
                 .displayer(new SimpleBitmapDisplayer())

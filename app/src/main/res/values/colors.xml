@@ -14,6 +14,8 @@
     <color name="orange">#edffb405</color>
     <color name="blackish_red">#a31b1b</color>
     <color name="statusBarColor">#808080</color>
+    <color name="light_pink">#fc647b</color>
+    <color name="greyish">#a8c5cec5</color>
     <!--<color name="statusBarColor">#1fe5b7</color>-->
     <color name="light_white">#dae7e0e7</color>
     <color name="blue_greyish">#03bfa6</color>
@@ -21,4 +23,7 @@
     <color name="light_black_toolbar">#5e5c5c</color>
     <color name="greyishcolor">#818181</color>
     <color name="spinnerColor">#da96a0a8</color>
+    <color name="transparent_black">#5a170f1b</color>
+    <color name="transparent_blue">#3d5ee9d4</color>
+    <color name="white_light">#66f5efef</color>
 </resources>

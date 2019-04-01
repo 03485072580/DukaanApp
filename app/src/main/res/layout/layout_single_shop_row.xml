@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5dp"
+    android:background="@color/greyish"
+    android:paddingBottom="@dimen/_2dp">
+
+    <LinearLayout
+        android:id="@+id/orderBookContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120dp"
+        android:background="@color/white"
+        android:baselineAligned="false"
+        android:weightSum="100">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_120dp"
+            android:layout_weight="100">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120dp"
+                android:background="@color/white"
+                android:weightSum="80">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_120dp"
+                    android:layout_weight="20">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/shopProfileImage"
+                        android:layout_width="@dimen/_56dp"
+                        android:layout_height="@dimen/_56dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="@dimen/_10dp"
+                        android:layout_marginStart="@dimen/_10dp"
+                        android:src="@drawable/ic_launcher_background"
+                        app:civ_border_color="@color/greyish"
+                        app:civ_border_width="0.5dp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_120dp"
+                    android:layout_weight="60">
+
+                    <TextView
+                        android:id="@+id/shopID"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:gravity="start"
+                        android:text="Shop ID : sdredsfeaddfgfdfgdfg" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/shopID"
+                        android:background="@drawable/line" />
+
+                    <TextView
+                        android:id="@+id/brandName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/view"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:gravity="start"
+                        android:text="Shop Name: Creative's One Stop" />
+
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/brandName"
+                        android:layout_marginTop="@dimen/_10dp"
+                        android:gravity="start"
+                        android:text="Email: abc@gmail.com" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent_blue"
+        android:padding="@dimen/_1dp">
+
+        <android.support.v7.widget.ActionBarContainer
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/profile_bg"
+                android:foreground="@color/transparent_black">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_margin="@dimen/_20dp"
+                        android:src="@drawable/test_cart"
+                        app:civ_border_color="@color/dark_golden"
+                        app:civ_border_width="1dp"
+                        app:civ_fill_color="@color/white" />
+
+                    <TextView
+                        android:id="@+id/displayName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20dp"
+                        android:layout_toEndOf="@id/profileImage"
+                        android:layout_toRightOf="@id/profileImage"
+                        android:text="@string/fasih_feroze"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_24sp" />
+
+                    <TextView
+                        android:id="@+id/brandName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/displayName"
+                        android:layout_toEndOf="@id/profileImage"
+                        android:layout_toRightOf="@id/profileImage"
+                        android:text="@string/brandzpoint"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18sp" />
+
+                    <TextView
+                        android:id="@+id/shopAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/brandName"
+                        android:layout_toEndOf="@id/profileImage"
+                        android:layout_toRightOf="@id/profileImage"
+                        android:text="@string/lahore_pakistan"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18sp" />
+
+                    <ImageView
+                        android:id="@+id/approvedStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/displayName"
+                        android:contentDescription="@string/contentDescription"
+                        android:src="@drawable/ic_user_not_verified" />
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.v7.widget.ActionBarContainer>
+    </RelativeLayout>
+</merge>

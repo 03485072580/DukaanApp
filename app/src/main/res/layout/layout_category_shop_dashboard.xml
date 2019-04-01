@@ -13,9 +13,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="1"
-            android:background="#bc363434"
+            android:background="@drawable/seller_bg"
             android:orientation="vertical"
             android:weightSum="100">
+            <!--android:background="#bc363434">-->
 
             <RelativeLayout
                 android:id="@+id/shareImageHolder"

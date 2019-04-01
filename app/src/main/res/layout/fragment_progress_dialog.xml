@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_120dp"
-    android:background="@color/light_black">
+    android:layout_height="wrap_content"
+    android:background="@color/dark_golden"
+    android:padding="@dimen/_20dp">
 
     <ProgressBar
         android:id="@+id/progressDialog"
@@ -12,7 +13,9 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/_20dp"
         android:layout_marginStart="@dimen/_20dp"
-        android:progressTint="@color/dark_golden"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/light_white"
+        android:indeterminateTintMode="src_atop"
         tools:targetApi="lollipop" />
 
     <TextView
@@ -25,6 +28,7 @@
         android:layout_toRightOf="@id/progressDialog"
         android:text="@string/uploading_please_wait"
         android:textColor="@color/white"
-        android:textSize="@dimen/_24sp" />
+        android:textSize="@dimen/_24sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

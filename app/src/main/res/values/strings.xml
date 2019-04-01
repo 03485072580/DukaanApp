@@ -19,6 +19,7 @@
     <string name="carsFragment">CarsFragment</string>
     <string name="clothingFragment">ClothingFragment</string>
     <string name="jewellaryFragment">JewellaryFragment</string>
+    <string name="takePhotoFragment">TakePhotoFragment</string>
     <string name="mobileFragment">MobileFragment</string>
     <string name="userRegistrationFragment">UserRegistrationFragment</string>
     <string name="forgotPasswordFragment">ForgotPasswordFragment</string>
@@ -28,6 +29,11 @@
     <string name="cameraFragment">CameraFragment</string>
     <string name="zoomImageViewFragment">ZoomImageViewFragment</string>
     <string name="dialogFragment">DialogFragment</string>
+    <string name="categoryShopProfileFragment">CategoryShopProfileFragment</string>
+    <string name="categoryShopOrderFragment">CategoryShopOrderFragment</string>
+    <string name="categoryShopHelpFragment">CategoryShopHelpFragment</string>
+    <string name="categoryShopSupportFragment">CategoryShopSupportFragment</string>
+    <string name="shopsListFragment">ShopsListFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -47,7 +53,7 @@
     <string name="email">email</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="shopAddress">Shop Address</string>
-    <string name="shopName">Shop Name</string>
+    <string name="shopName">Shop Name/Mall Name</string>
     <string name="email_receive_warn">Don\'t Receive An Email?</string>
     <string name="mall">MALL</string>
     <string name="shop">SHOP</string>
@@ -65,12 +71,26 @@
     <string name="available_stock">Available Stock</string>
     <string name="choose_currency">Choose Currency</string>
     <string name="uploading_please_wait">Uploading... Please Wait</string>
+    <string name="displayName">Name</string>
+    <string name="city">City</string>
+    <string name="updateProfile">Update Profile</string>
+    <string name="lahore_pakistan">Lahore Pakistan</string>
+    <string name="brandzpoint">BrandzPoint</string>
+    <string name="fasih_feroze">Fasih Feroze</string>
+    <string name="must_provide_name_address"><![CDATA[Seller Name & Shop Address are Required Fields]]></string>
+    <string name="country">Country</string>
+    <string name="Email">Email</string>
+    <string name="cancel_order">CANCEL ORDER</string>
+    <string name="generate_mall_id">Generate Mall ID</string>
+    <string name="mallID">Optional Mall ID</string>
+
 
     <!--Firebase Database Nodes & Fields-->
     <string name="db_users_node">users</string>
     <string name="db_user_profile_settings_node">user_profile_settings</string>
     <string name="db_shop_profile_settings_node">shop_profile_settings</string>
     <string name="db_products_node">products</string>
+    <string name="db_mall_node">mall</string>
 
     <string name="db_field_user_name">user_name</string>
     <string name="db_field_email">email</string>
@@ -83,9 +103,11 @@
     <string name="db_field_scope">scope</string>
     <string name="db_field_shop_address">shop_address</string>
     <string name="db_field_city">city</string>
-    <string name="db_field_country">=country</string>
+    <string name="db_field_country">country</string>
     <string name="db_field_admin_approved">admin_approved</string>
     <string name="db_field_shop_category">shop_category</string>
+    <string name="db_field_profile_image_url">profile_image_url</string>
+    <string name="db_field_mall_id">mall_id</string>
 
 
     <!--Simple Toast Messages-->
@@ -100,7 +122,9 @@
     <string name="something_went_wrong">Something Went Wrong</string>
     <string name="bad_username_password">InValid User Name or Password</string>
     <string name="shop_registration">Shop Registration</string>
-    <string name="shop_already_existent">Shop is Already Present. Try to make your Shop Name Unique. Tip append numbers</string>
+    <string name="shop_already_existent">Shop/Mall is Already Present. Try to make your Shop/MAll Name Unique. Tip append numbers</string>
+    <string name="clipboardToastMsg">MAll ID is copied to the ClipBoard.
+        Please Refer to the ClipBoard and provide this ID to authentic Mall Shops only for Registration</string>
 
     <!--Facebook Sdk Stuff-->
     <string name="facebook_app_id">1452855858183981</string>
@@ -115,7 +139,10 @@
     <string name="recover_password">Please Update Your Password By Visiting Your Inbox</string>
     <string name="missing_one_field">Please Enter Email</string>
     <string name="change_password">Recover Password</string>
-
+    <string name="mall_id">Mall-ID</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="activity_mall">MallActivity</string>
+    <string name="searchUsernameFragment">SearchUsernameFragment</string>
 
 
     <!--Spinner entries-->

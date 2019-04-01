@@ -133,6 +133,8 @@
                     android:ems="10"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
                     android:textColor="@color/black" />
 
                 <EditText
@@ -152,11 +154,28 @@
                     android:paddingStart="@dimen/_5dp"
                     android:textColor="@color/black" />
 
+                <EditText
+                    android:id="@+id/optionalMallID"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:layout_below="@+id/password"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:layout_marginRight="@dimen/_10dp"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:background="@drawable/editext_std1"
+                    android:ems="10"
+                    android:hint="@string/mallID"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/_5dp"
+                    android:paddingStart="@dimen/_5dp"
+                    android:textColor="@color/black" />
+
                 <LinearLayout
                     android:id="@+id/signUp"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_70dp"
-                    android:layout_below="@+id/password"
+                    android:layout_below="@+id/optionalMallID"
                     android:layout_marginTop="@dimen/_10dp"
                     android:background="@drawable/button"
                     android:gravity="center"

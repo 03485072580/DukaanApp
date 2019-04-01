@@ -32,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ShopRegistrationFragment extends Fragment {
 
-    private EditText firstName, lastName, shopName, shopAddress, email, password;
+    private EditText firstName, lastName, shopName, shopAddress, email, password, optionalMallID;
     private LinearLayout registerButton;
     private ProgressBar registerProgress;
     private String scope = Constants.scope = "shop";
@@ -64,6 +64,7 @@ public class ShopRegistrationFragment extends Fragment {
         password = view.findViewById(R.id.password);
         registerButton = view.findViewById(R.id.signUp);
         registerProgress = view.findViewById(R.id.registerProgress);
+        optionalMallID = view.findViewById(R.id.optionalMallID);
 
         //Listeners
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +121,61 @@ public class ShopRegistrationFragment extends Fragment {
         }
     }
 
+    public void isMallIDCorrect(final String mallUniqueID, final String shopName) {
+        registerProgress.setVisibility(View.VISIBLE);
+
+        myRef
+                .child(getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(getString(R.string.db_field_user_id))
+                .equalTo(mallUniqueID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    //means that provided optional ID is correct and
+                    // now check whether it's scope is as mall or not
+
+                    myRef.child(getString(R.string.db_shop_profile_settings_node))
+                            .orderByChild(getString(R.string.db_field_shop_category))
+                            .equalTo("MALL")
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        //This means that our upcoming user is sure to be SHOP
+                                        // because Mall only contains SHOPS inside
+                                        firebaseMethods.addNewUser(firstName.getText().toString(), lastName.getText().toString()
+                                                , shopName, StringManipulations.toLowerCase(email.getText().toString())
+                                                , password.getText().toString()
+                                                , "", "", scope, "", shopAddress.getText().toString()
+                                                , approvedByAdmin, optionalMallID.getText().toString());
+                                    } else {
+                                        firebaseMethods.addNewUser(firstName.getText().toString(), lastName.getText().toString()
+                                                , shopName, StringManipulations.toLowerCase(email.getText().toString()), password.getText().toString()
+                                                , "", "", scope, "", shopAddress.getText().toString(), approvedByAdmin);
+                                    }
+                                    registerProgress.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                } else {
+                    registerProgress.setVisibility(View.GONE);
+                    firebaseMethods.addNewUser(firstName.getText().toString(), lastName.getText().toString()
+                            , shopName, StringManipulations.toLowerCase(email.getText().toString()), password.getText().toString()
+                            , "", "", scope, "", shopAddress.getText().toString(), approvedByAdmin);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void checkIfShopNameAlreadyExists(final String shopName) {
 
         registerProgress.setVisibility(View.VISIBLE);
@@ -135,9 +191,7 @@ public class ShopRegistrationFragment extends Fragment {
 
                 if (!dataSnapshot.exists()) {
                     firebaseMethods.updateProgress(registerProgress);
-                    firebaseMethods.addNewUser(firstName.getText().toString(), lastName.getText().toString()
-                            , shopName, StringManipulations.toLowerCase(email.getText().toString()), password.getText().toString()
-                            , "", "", scope, "", shopAddress.getText().toString(), approvedByAdmin);
+                    isMallIDCorrect(optionalMallID.getText().toString(), shopName);
 
                 }
                 //it will execute only if a match found

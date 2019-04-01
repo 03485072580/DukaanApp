@@ -17,6 +17,7 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
 import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ProgressDialogFragment;
+import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.SearchUsernameFragment;
 import com.example.fasih.dukaanapp.login.activity.LoginActivity;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
@@ -58,7 +59,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
 
 /**
  * Created by Fasih on 01/04/19.
@@ -134,7 +140,8 @@ public class FirebaseMethods {
                             ShopProfileSettings settings = new ShopProfileSettings(mAuth.getCurrentUser().getUid(),
                                     firstName, lastName
                                     , StringManipulations.toLowerCaseUsername(userName)
-                                    , email, scope, shop_address, city, country, admin_approved, "");
+                                    , email, scope, shop_address, city, country, admin_approved
+                                    , "", "", "");
 
 
                             myRef
@@ -182,6 +189,109 @@ public class FirebaseMethods {
             });
         }
     }
+
+    public void addNewUser(final String firstName, final String lastName, final String userName, final String email
+            , final String password, final String phoneNumber, final String country, final String scope, final String city
+            , final String shop_address, final Boolean admin_approved, final String mallUniqueID) {
+
+        //Check if email is not null, then execute the below code
+        // else just update the DB
+
+        //mall Id is responsible for the creation of the new node called as mall_shops
+        Log.d("TAG1234", "addNewUser: " + mallUniqueID);
+
+        if (updateProgress != null) {
+            updateProgress.setVisibility(View.VISIBLE);
+
+            final Task<AuthResult> task = mAuth.createUserWithEmailAndPassword(email, password);
+
+            task.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task1) {
+                    if (task1.isSuccessful()) {
+
+                        Users users = new Users(mAuth.getCurrentUser().getUid(), firstName, lastName,
+                                StringManipulations.toLowerCaseUsername(userName), email, scope);
+
+
+                        myRef
+                                .child(mContext.getString(R.string.db_users_node))
+                                .child(task1.getResult().getUser().getUid())
+                                .setValue(users);
+
+                        if (scope.equals(mContext.getString(R.string.scope_user))) {
+
+                            UserAccountSettings settings = new UserAccountSettings(mAuth.getCurrentUser().getUid(),
+                                    firstName, lastName
+                                    , StringManipulations.toLowerCaseUsername(userName)
+                                    , email, "");
+
+
+                            myRef
+                                    .child(mContext.getString(R.string.db_user_profile_settings_node))
+                                    .child(task1.getResult().getUser().getUid())
+                                    .setValue(settings);
+                        } else if (scope.equals(mContext.getString(R.string.scope_shop))) {
+                            ShopProfileSettings settings = new ShopProfileSettings(mAuth.getCurrentUser().getUid(),
+                                    firstName, lastName
+                                    , StringManipulations.toLowerCaseUsername(userName)
+                                    , email, scope, shop_address, city, country
+                                    , admin_approved, mContext.getString(R.string.shop), "", mallUniqueID);
+
+
+                            myRef
+                                    .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                                    .child(task1.getResult().getUser().getUid())
+                                    .setValue(settings);
+
+                            myRef
+                                    .child(mContext.getString(R.string.db_mall_node))
+                                    .child(mallUniqueID)
+                                    .child(task1.getResult().getUser().getUid())
+                                    .setValue(settings);
+                        }
+
+                        task1.getResult().getUser()
+                                .sendEmailVerification()
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        updateProgress.setVisibility(View.GONE);
+                                        if (activityName.equals(mContext.getString(R.string.activity_register))) {
+
+                                            ((RegisterActivity) mContext).finish();
+                                        }
+
+                                        Toast.makeText(mContext, mContext.getString(R.string.email_verification_required), Toast.LENGTH_LONG).show();
+
+                                    }
+                                });
+
+                    } else {
+                        updateProgress.setVisibility(View.GONE);
+
+                        if (task1.getException() instanceof FirebaseAuthWeakPasswordException) {
+                            Toast.makeText(mContext, R.string.password_length_warning, Toast.LENGTH_SHORT).show();
+                        }
+                        if (task1.getException() instanceof FirebaseAuthEmailException) {
+                            Toast.makeText(mContext, R.string.bad_email, Toast.LENGTH_SHORT).show();
+                        }
+                        if (task1.getException() instanceof FirebaseAuthUserCollisionException) {
+                            Toast.makeText(mContext, R.string.user_email_collsion, Toast.LENGTH_SHORT).show();
+                        }
+                        if (task1.getException() instanceof FirebaseNetworkException) {
+                            Toast.makeText(mContext, mContext.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                        }
+                        if (task1.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(mContext, mContext.getString(R.string.bad_email_format), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            });
+        }
+    }
+
 
     public void authenticateUser(final String username
             , final String email
@@ -627,6 +737,148 @@ public class FirebaseMethods {
                 }
             }
         }
+    }
 
+    public void putBytesToUploadImage(byte[] bytes) {
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+        storageReference = firebaseStorage.getReference(mContext.getPackageName() +
+                "/profile_images/" +
+                FirebaseAuth.getInstance().getCurrentUser().getUid() +
+                "/" + timeStamp + ".jpg");
+        UploadTask uploadTask = storageReference.putBytes(bytes);
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return storageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+
+                    final Uri downloadUrl = task.getResult();
+                    Log.d("TAG1234", "onComplete: " + downloadUrl);
+                    Query query = myRef.child(mContext.getString(R.string.db_shop_profile_settings_node))
+                            .orderByChild(mContext.getString(R.string.db_field_user_id))
+                            .equalTo(mAuth.getCurrentUser().getUid());
+
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                HashMap<String, Object> shopMap = (HashMap<String, Object>) dataSnapshot
+                                        .child(mAuth.getCurrentUser().getUid())
+                                        .getValue();
+                                ShopProfileSettings shopSettings = new ShopProfileSettings(
+                                        (String) shopMap.get(mContext.getString(R.string.db_field_user_id))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_first_name))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_last_name))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_user_name))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_email))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_scope))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_shop_address))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_city))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_country))
+                                        , (Boolean) shopMap.get(mContext.getString(R.string.db_field_admin_approved))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_shop_category))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_profile_image_url))
+                                        , (String) shopMap.get(mContext.getString(R.string.db_field_mall_id))
+                                );
+                                shopSettings.setProfile_image_url(downloadUrl.toString());
+                                myRef.child(mContext.getString(R.string.db_shop_profile_settings_node))
+                                        .child(mAuth.getCurrentUser().getUid())
+                                        .setValue(shopSettings);
+                                Log.d("TAG1234", "onComplete: " + shopSettings.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }
+            }
+        });
+    }
+
+
+    public void searchQueryTextByUsername(String query) {
+        Log.d("TAG1234", "searchQueryTextByUsername: " + query);
+        Query queryDB = myRef
+                .child(mContext.getString(R.string.db_mall_node))
+                .child(mAuth.getCurrentUser().getUid())
+                .orderByChild(mContext.getString(R.string.db_field_user_name))
+                .equalTo(query);
+        queryDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    //there's a shop matching with particular shop name
+                    HashMap<String, Object> hashMap = (HashMap<String, Object>) dataSnapshot.getValue();
+                    Collection<Object> objectCollection = hashMap.values();
+
+                    ShopProfileSettings shopProfileSettings = null;
+
+                    for (Iterator<Object> it = objectCollection.iterator(); it.hasNext(); ) {
+                        /**
+                         *
+                         * Username is always unique.
+                         * So it's always going to return 1 result only
+                         */
+                        HashMap map = (HashMap) it.next();
+                        shopProfileSettings = new ShopProfileSettings(
+                                (String) map.get(mContext.getString(R.string.db_field_user_id))
+                                , (String) map.get(mContext.getString(R.string.db_field_first_name))
+                                , (String) map.get(mContext.getString(R.string.db_field_last_name))
+                                , (String) map.get(mContext.getString(R.string.db_field_user_name))
+                                , (String) map.get(mContext.getString(R.string.db_field_email))
+                                , (String) map.get(mContext.getString(R.string.db_field_scope))
+                                , (String) map.get(mContext.getString(R.string.db_field_shop_address))
+                                , (String) map.get(mContext.getString(R.string.db_field_city))
+                                , (String) map.get(mContext.getString(R.string.db_field_country))
+                                , (Boolean) map.get(mContext.getString(R.string.db_field_admin_approved))
+                                , (String) map.get(mContext.getString(R.string.db_field_shop_category))
+                                , (String) map.get(mContext.getString(R.string.db_field_profile_image_url))
+                                , (String) map.get(mContext.getString(R.string.db_field_mall_id))
+                        );
+                    }
+                    SearchUsernameFragment searchFragment = new SearchUsernameFragment();
+                    searchFragment.setDataSet(shopProfileSettings);
+
+                    if (activityName.equals(mContext.getString(R.string.shopsListFragment))) {
+                        ((FragmentActivity) mContext).getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragmentContainer, searchFragment, mContext.getString(R.string.searchUsernameFragment))
+                                .commitAllowingStateLoss();
+
+                    }
+                } else {
+                    //No Results Found
+
+                    SearchUsernameFragment searchFragment = new SearchUsernameFragment();
+                    if (activityName.equals(mContext.getString(R.string.shopsListFragment))) {
+                        ((FragmentActivity) mContext).getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragmentContainer, searchFragment, mContext.getString(R.string.searchUsernameFragment))
+                                .commitAllowingStateLoss();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

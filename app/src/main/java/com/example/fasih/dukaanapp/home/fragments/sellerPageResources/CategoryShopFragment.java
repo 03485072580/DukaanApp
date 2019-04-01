@@ -1,5 +1,6 @@
 package com.example.fasih.dukaanapp.home.fragments.sellerPageResources;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,7 +14,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MyExternalPublicStorageDirectoryAdapter;
+import com.example.fasih.dukaanapp.home.activities.NavigationActivity;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.utils.MessageEvent;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
@@ -47,6 +48,7 @@ import java.util.List;
 public class CategoryShopFragment extends Fragment implements OnRecyclerImageSelectedListener {
 
 
+    private static SavedState myFragmentSavedState;
     private ImageView hamburgerDrawerIcon;
     private DrawerLayout drawerLayoutCategoryShop;
     private NavigationView navigationViewCategoryShop;
@@ -89,6 +91,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
         completeImageUrlFromGallery = "File://" + Url;
         capturedImageUri = null;
     }
+
 
     @Nullable
     @Override
@@ -263,35 +266,78 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
         categoryShopBottomNavigation
                 .setOnNavigationItemSelectedListener
                         (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                            @Override
+                            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                                if (item.getItemId() == R.id.camera) {
+                                    try {
+                                        CameraFragment cameraFragment = new CameraFragment();
+                                        getActivity()
+                                                .getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .replace(R.id.fragmentContainer, cameraFragment, getString(R.string.cameraFragment))
+                                                .addToBackStack(getString(R.string.cameraFragment))
+                                                .commitAllowingStateLoss();
+                                    } catch (NullPointerException exc) {
+                                        exc.printStackTrace();
+                                    }
+                                    return true;
+                                } else if (item.getItemId() == R.id.sellerHome) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+
+        navigationViewCategoryShop.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.camera) {
-                    try {
-                        CameraFragment cameraFragment = new CameraFragment();
-                        getActivity()
-                                .getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragmentContainer, cameraFragment, getString(R.string.cameraFragment))
-                                .addToBackStack(getString(R.string.cameraFragment))
-                                .commitAllowingStateLoss();
-                    } catch (NullPointerException exc) {
-                        exc.printStackTrace();
+
+                try {
+                    switch (item.getItemId()) {
+                        case R.id.dashBoard:
+                            drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
+                            return true;
+                        case R.id.profile:
+                            drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
+                            Intent intent1 = new Intent(getActivity(), NavigationActivity.class);
+                            intent1.putExtra(getString(R.string.categoryShopProfileFragment)
+                                    , getString(R.string.categoryShopProfileFragment));
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent1);
+                            return true;
+                        case R.id.orders:
+                            drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
+                            Intent intent2 = new Intent(getActivity(), NavigationActivity.class);
+                            intent2.putExtra(getString(R.string.categoryShopOrderFragment)
+                                    , getString(R.string.categoryShopOrderFragment));
+                            intent2.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent2);
+                            return true;
+                        case R.id.help:
+                            drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
+                            Intent intent3 = new Intent(getActivity(), NavigationActivity.class);
+                            intent3.putExtra(getString(R.string.categoryShopHelpFragment)
+                                    , getString(R.string.categoryShopHelpFragment));
+                            intent3.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent3);
+                            break;
+                        case R.id.support:
+                            drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
+                            Intent intent4 = new Intent(getActivity(), NavigationActivity.class);
+                            intent4.putExtra(getString(R.string.categoryShopSupportFragment)
+                                    , getString(R.string.categoryShopSupportFragment));
+                            intent4.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent4);
+                            return true;
                     }
-                    return true;
-                } else if (item.getItemId() == R.id.sellerHome) {
-                    return true;
+
+                } catch (NullPointerException exc) {
+                    exc.printStackTrace();
                 }
                 return false;
             }
         });
     }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d("TAG1234", "onSaveInstanceState: ");
-    }
-
     public void setXmlResources(RelativeLayout fragmentFrameHolder
             , RelativeLayout shareFragmentFrameHolder) {
         this.fragmentFrameHolder = fragmentFrameHolder;

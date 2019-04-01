@@ -4,8 +4,8 @@
     package="com.example.fasih.dukaanapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -31,7 +31,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
@@ -72,7 +72,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/SellerAppTheme"
             android:windowSoftInputMode="adjustResize"
-            tools:targetApi="n">
+            tools:targetApi="n"></activity>
+        <activity
+            android:name=".home.activities.MallActivity"
+            android:theme="@style/SellerAppTheme">
 
         </activity>
     </application>

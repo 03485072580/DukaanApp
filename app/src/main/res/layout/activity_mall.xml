@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/topMallTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/topBarColorSelector"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/topBarStandardHeight"
+                android:layout_alignParentTop="true"
+                android:background="@color/greyishcolor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/topBarColorSelector"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_5dp"
+                android:fontFamily="sans-serif"
+                android:text="Mall"
+                android:textSize="@dimen/_24sp" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/topMallTitle"
+            android:fitsSystemWindows="true">
+
+        </FrameLayout>
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

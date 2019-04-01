@@ -1,13 +1,337 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Category Shop Profile" />
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/topBarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--top section-->
+            <include layout="@layout/layout_shop_profile_top_toolbar" />
+        </RelativeLayout>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/backArrow"
+            android:layout_width="@dimen/_56dp"
+            android:layout_height="@dimen/_56dp"
+            android:layout_margin="@dimen/_10dp"
+            android:src="@drawable/ic_back_arrow"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="0.5dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topBarContainer"
+            android:background="@drawable/profile_bg2"
+            android:foreground="@color/transparent_black">
+            <!--Middle Section-->
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topBarContainer">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/productDescriptionImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_shop_profile" />
+
+                    <EditText
+                        android:id="@+id/displayNameEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/productDescriptionImage"
+                        android:layout_toRightOf="@id/productDescriptionImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/displayName"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/productWarrantyImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_address" />
+
+                    <EditText
+                        android:id="@+id/shopAddressEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/productWarrantyImage"
+                        android:layout_toRightOf="@id/productWarrantyImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/shopAddress"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/availableStockImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_shop_city" />
+
+                    <EditText
+                        android:id="@+id/city"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/availableStockImage"
+                        android:layout_toRightOf="@id/availableStockImage"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/city"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/availableStockImage2"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_country" />
+
+                    <EditText
+                        android:id="@+id/country"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/availableStockImage2"
+                        android:layout_toRightOf="@id/availableStockImage2"
+                        android:background="@drawable/editext_std2"
+                        android:hint="@string/country"
+                        android:inputType="text"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/mallLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <Button
+                        android:id="@+id/updateProfileBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/button_std1"
+                        android:text="@string/updateProfile"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/privateFieldsIcon"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_confidential_info" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/privateFieldsIcon"
+                        android:layout_toRightOf="@id/privateFieldsIcon"
+                        android:gravity="start"
+                        android:text="Warning Confidential Information"
+                        android:textColor="#dcc816"
+                        android:textColorHint="@color/light_black"
+                        android:textSize="@dimen/_18sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/productPriceImage"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_shop" />
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/productPriceImage"
+                        android:layout_toRightOf="@id/productPriceImage"
+                        android:background="@drawable/editext_std2"
+                        android:gravity="center|start"
+                        android:hint="@string/shopName"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black"
+                        android:textSize="@dimen/_18sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/emailIcon"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_email" />
+
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/emailIcon"
+                        android:layout_toRightOf="@id/emailIcon"
+                        android:background="@drawable/editext_std2"
+                        android:gravity="start|center"
+                        android:hint="@string/Email"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black"
+                        android:textSize="@dimen/_18sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/mallIcon"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:src="@drawable/ic_mall_icon" />
+
+                    <TextView
+                        android:id="@+id/tvMall"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/mallIcon"
+                        android:layout_toRightOf="@id/mallIcon"
+                        android:background="@drawable/editext_std2"
+                        android:gravity="start|center"
+                        android:hint="@string/mall_id"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:paddingStart="@dimen/_10dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black"
+                        android:textSize="@dimen/_18sp" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
