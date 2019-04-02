@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5dp"
     android:orientation="vertical">
 
 
@@ -14,9 +15,10 @@
 
     <TextView
         android:id="@+id/imgDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_120dp"
         android:layout_height="wrap_content"
-        android:text="Dummy Image"
+        android:layout_gravity="center"
+        android:text="Cosmetics"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="16sp" />

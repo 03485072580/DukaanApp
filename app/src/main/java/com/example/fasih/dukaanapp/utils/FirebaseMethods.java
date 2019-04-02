@@ -60,6 +60,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,6 +77,7 @@ public class FirebaseMethods {
     AccessToken accessToken;
     //Google Stuff
     GoogleSignInAccount account;
+
     private ProgressDialogFragment dialogFragment;
     private Boolean isScopeCorrect = false;
     private FirebaseAuth mAuth;
@@ -86,6 +88,7 @@ public class FirebaseMethods {
     private ProgressBar updateProgress;
     private String activityName;
     private Context mContext;
+    private ArrayList<Products> userViewProductsList;
 
     public FirebaseMethods(Context context, String activityName) {
         this.mContext = context;
@@ -880,5 +883,56 @@ public class FirebaseMethods {
 
             }
         });
+    }
+
+    public ArrayList<Products> queryProducts(final String queryString) {
+
+        userViewProductsList = new ArrayList<>();
+
+        Query productsNodeQuery = myRef
+                .child(mContext.getString(R.string.db_products_node));
+        Log.d("TAG1234", "queryProducts: querystring" + queryString);
+        productsNodeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                HashMap<String, Object> shopUsersList = (HashMap<String, Object>) dataSnapshot.getValue();
+                if (shopUsersList != null) {
+                    Collection<Object> objectsList = shopUsersList.values();
+                    //obj is representing the list of products placed by the current user in obj
+                    for (Object obj : objectsList) {
+                        HashMap<String, Object> productList = (HashMap<String, Object>) obj;
+                        Collection<Object> particularUserProducts = productList.values();
+                        //product is representing the individual product placed by current user
+                        for (Object product : particularUserProducts) {
+                            HashMap<String, String> productObj = (HashMap<String, String>) product;
+                            Products userProduct = new Products();
+                            userProduct.setProduct_category(productObj.get(mContext.getString(R.string.db_field_product_category)));
+                            userProduct.setProduct_name(productObj.get(mContext.getString(R.string.db_field_product_name)));
+                            userProduct.setProduct_image_url(productObj.get(mContext.getString(R.string.db_field_product_image_url)));
+                            userProduct.setProduct_description(productObj.get(mContext.getString(R.string.db_field_product_description)));
+                            userProduct.setProduct_price(productObj.get(mContext.getString(R.string.db_field_product_price)));
+                            userProduct.setProduct_warranty(productObj.get(mContext.getString(R.string.db_field_product_warranty)));
+                            userProduct.setProduct_stock(productObj.get(mContext.getString(R.string.db_field_product_stock)));
+                            userProduct.setTimeStamp(productObj.get(mContext.getString(R.string.db_field_timeStamp)));
+                            userProduct.setProduct_id(productObj.get(mContext.getString(R.string.db_field_product_id)));
+                            userProduct.setProduct_rating(Long.parseLong(String.valueOf(productObj.get(mContext.getString(R.string.db_field_product_rating)))));
+
+                            if (userProduct.getProduct_category().equals(queryString)) {
+                                //add to the list for displaying to the user
+                                userViewProductsList.add(userProduct);
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("TAG1234", "onCancelled: " + databaseError.getMessage());
+            }
+        });
+        return userViewProductsList;
     }
 }

@@ -10,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.home.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+
+import java.util.ArrayList;
 
 /**
  * Created by Fasih on 11/17/18.
@@ -20,10 +23,15 @@ import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListen
 public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapter.MyViewHolder> {
     private Context mContext;
     private OnRecyclerImageSelectedListener imageSelected;
+    private ArrayList<RecyclerSelectedCategory> currentDataSet;
 
-    public RecyclerGridAdapter(Context mContext, HomeFragment homeFragment) {
+    public RecyclerGridAdapter(Context mContext
+            , HomeFragment homeFragment
+            , ArrayList<RecyclerSelectedCategory> currentDataSet) {
+
         this.mContext = mContext;
         this.imageSelected = homeFragment;
+        this.currentDataSet = currentDataSet;
     }
 
     @Override
@@ -43,7 +51,8 @@ public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
+        holder.imgDescription.setText(currentDataSet.get(position).getCategoryTvText());
+        holder.recycler_grid_image.setImageResource(currentDataSet.get(position).getCategoryImageResource());
     }
 
     //provide given dynamic data size here
