@@ -155,6 +155,9 @@
     <string name="activity_mall">MallActivity</string>
     <string name="searchUsernameFragment">SearchUsernameFragment</string>
 
+    <!--Activity Custom Strings-->
+    <string name="userViewProductsList">userViewProductsList</string>
+
 
     <!--Spinner entries-->
     <string-array name="spinner_items">

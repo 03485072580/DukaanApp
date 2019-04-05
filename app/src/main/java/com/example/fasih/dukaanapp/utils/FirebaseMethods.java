@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
 import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ProgressDialogFragment;
@@ -88,7 +89,7 @@ public class FirebaseMethods {
     private ProgressBar updateProgress;
     private String activityName;
     private Context mContext;
-    private ArrayList<Products> userViewProductsList;
+    private ArrayList<Products> userViewProductsList = new ArrayList<>();
 
     public FirebaseMethods(Context context, String activityName) {
         this.mContext = context;
@@ -885,9 +886,7 @@ public class FirebaseMethods {
         });
     }
 
-    public ArrayList<Products> queryProducts(final String queryString) {
-
-        userViewProductsList = new ArrayList<>();
+    public void queryProducts(final String queryString) {
 
         Query productsNodeQuery = myRef
                 .child(mContext.getString(R.string.db_products_node));
@@ -921,9 +920,19 @@ public class FirebaseMethods {
                             if (userProduct.getProduct_category().equals(queryString)) {
                                 //add to the list for displaying to the user
                                 userViewProductsList.add(userProduct);
+                                //now notify the Home Fragment that new Products are Ready to display to the use
                             }
 
                         }
+                    }
+//                    if (queryString.equals("CARS")) {
+//                        Intent intent = new Intent(mContext, UniqueCategoryActivity.class);
+//                        intent.putExtra(mContext.getString(R.string.carsFragment), mContext.getString(R.string.carsFragment));
+//                        intent.putParcelableArrayListExtra(mContext.getString(R.string.userViewProductsList), userViewProductsList);
+//                        mContext.startActivity(intent);
+//                    }
+                    if (activityName.equals(mContext.getString(R.string.activity_unique_category))) {
+                        ((UniqueCategoryActivity) mContext).setupIntentResources(userViewProductsList);
                     }
                 }
             }
@@ -933,6 +942,5 @@ public class FirebaseMethods {
                 Log.d("TAG1234", "onCancelled: " + databaseError.getMessage());
             }
         });
-        return userViewProductsList;
     }
 }

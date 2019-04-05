@@ -1,10 +1,24 @@
 package com.example.fasih.dukaanapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Fasih on 03/05/19.
  */
 
-public class Products {
+public class Products implements Parcelable {
+    public static final Creator<Products> CREATOR = new Creator<Products>() {
+        @Override
+        public Products createFromParcel(Parcel in) {
+            return new Products(in);
+        }
+
+        @Override
+        public Products[] newArray(int size) {
+            return new Products[size];
+        }
+    };
     private String product_name;
     private String product_category;
     private String product_image_url;
@@ -33,6 +47,19 @@ public class Products {
         this.timeStamp = timeStamp;
         this.product_id = product_id;
         this.product_rating = product_rating;
+    }
+
+    protected Products(Parcel in) {
+        product_name = in.readString();
+        product_category = in.readString();
+        product_image_url = in.readString();
+        product_description = in.readString();
+        product_price = in.readString();
+        product_warranty = in.readString();
+        product_stock = in.readString();
+        timeStamp = in.readString();
+        product_id = in.readString();
+        product_rating = in.readLong();
     }
 
     public long getProduct_rating() {
@@ -129,5 +156,24 @@ public class Products {
                 ", product_id='" + product_id + '\'' +
                 ", product_rating=" + product_rating +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(product_name);
+        parcel.writeString(product_category);
+        parcel.writeString(product_image_url);
+        parcel.writeString(product_description);
+        parcel.writeString(product_price);
+        parcel.writeString(product_warranty);
+        parcel.writeString(product_stock);
+        parcel.writeString(timeStamp);
+        parcel.writeString(product_id);
+        parcel.writeLong(product_rating);
     }
 }

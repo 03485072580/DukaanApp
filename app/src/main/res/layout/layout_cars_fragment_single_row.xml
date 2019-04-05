@@ -1,51 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/blackish_border"
-    android:padding="@dimen/_5dp">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_200dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="4dp"
-        app:contentPadding="10dp">
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white_light"
+        app:cardCornerRadius="@dimen/_5dp"
+        app:cardElevation="@dimen/_5dp"
+        app:cardMaxElevation="@dimen/_10dp"
+        app:contentPadding="@dimen/_5dp">
 
         <LinearLayout
-            android:id="@+id/linLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:weightSum="100">
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="30">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40">
 
-                <!--//android:adjustViewBounds="true"-->
-                <!--android:scaleType="fitCenter"-->
-
-                <ImageView
-                    android:layout_width="@dimen/_130dp"
-                    android:layout_height="@dimen/_200dp"
-                    android:paddingEnd="@dimen/_10dp"
-                    android:paddingStart="@dimen/_10dp"
+                <com.example.fasih.dukaanapp.utils.SquareImageView
+                    android:id="@+id/perfectlySquareImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_220dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/j7" />
-
+                    android:src="@drawable/test_car_image" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="70">
+                android:layout_height="0dp"
+                android:layout_weight="50">
 
                 <TextView
                     android:id="@+id/productTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10dp"
                     android:layout_marginStart="@dimen/_10dp"
@@ -56,26 +50,26 @@
 
                 <TextView
                     android:id="@+id/productDesc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/productTitle"
                     android:layout_marginEnd="@dimen/_10dp"
                     android:layout_marginStart="@dimen/_10dp"
                     android:ellipsize="end"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:text="Blue, 32GB, 3GB"
                     android:textColor="@color/light_black" />
 
                 <TextView
                     android:id="@+id/productPrice"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/productDesc"
                     android:layout_marginEnd="@dimen/_10dp"
                     android:layout_marginStart="@dimen/_10dp"
                     android:text="350 $"
                     android:textColor="@color/light_green"
-                    android:textSize="@dimen/_18sp"
+                    android:textSize="@dimen/_24sp"
                     android:textStyle="bold" />
 
                 <View
@@ -89,7 +83,7 @@
                     android:background="@color/line_std" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/line"
                     android:layout_marginEnd="@dimen/_10dp"
@@ -98,13 +92,17 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/sellerImage"
                             android:layout_width="@dimen/_56dp"
                             android:layout_height="56dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:contentDescription="@string/contentDescription"
                             android:scaleType="centerCrop"
                             android:src="@drawable/logo" />
 
@@ -120,46 +118,50 @@
                             android:text="By Brand ZZZ"
                             android:textColor="@color/light_black" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginLeft="@dimen/_10dp"
-                            android:layout_marginStart="@dimen/_10dp"
-                            android:layout_marginTop="@dimen/_10dp"
-                            android:layout_toEndOf="@id/sellingBy"
-                            android:layout_toRightOf="@id/sellingBy"
-                            android:src="@drawable/ic_cart" />
                     </RelativeLayout>
 
                     <com.willy.ratingbar.ScaleRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/simpleRatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:gravity="start"
                         app:srb_clearRatingEnabled="true"
-                        app:srb_clickable="true"
+                        app:srb_clickable="false"
                         app:srb_drawableEmpty="@drawable/star_empty"
                         app:srb_drawableFilled="@drawable/star_filled"
-                        app:srb_isIndicator="false"
+                        app:srb_isIndicator="true"
                         app:srb_minimumStars="1"
                         app:srb_numStars="5"
                         app:srb_rating="3"
                         app:srb_scrollable="true"
                         app:srb_starHeight="20dp"
-                        app:srb_starWidth="20dp"
+                        app:srb_starWidth="15dp"
                         app:srb_stepSize="1">
 
                     </com.willy.ratingbar.ScaleRatingBar>
-
 
                 </LinearLayout>
 
 
             </RelativeLayout>
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/addCart"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginLeft="@dimen/_10dp"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:src="@drawable/ic_cart" />
 
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

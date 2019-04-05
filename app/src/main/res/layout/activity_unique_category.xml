@@ -10,11 +10,18 @@
         android:layout_height="match_parent">
 
         <!--Container For Child Views-->
+        <RelativeLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_top_bar" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/relLayout1">
+            android:layout_below="@id/topBar">
             <!--Material Relevant to the Login Screen-->
 
             <!--Container for the Different Categories-->

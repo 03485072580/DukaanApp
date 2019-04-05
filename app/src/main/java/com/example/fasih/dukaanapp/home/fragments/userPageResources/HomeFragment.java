@@ -2,7 +2,6 @@ package com.example.fasih.dukaanapp.home.fragments.userPageResources;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,13 +15,8 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.home.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
-import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.RecyclerGridAdapter;
 import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -36,16 +30,8 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
     private static final int CARS_FRAGMENT = 0, CLOTHING_FRAGMENT = 1, JEWELLARY_FRAGMENT = 2, MOBILE_FRAGMENT = 3;
     private RecyclerView recyclerView;
     private RecyclerView saleRecyclerVIew;
-    private String queryString;
 
 
-    //Firebase Stuff
-    private FirebaseAuth mAuth;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference myRef;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseMethods firebaseMethods;
-    private String currentUserID = null;
     /**
      * This method is responsible for
      * keeping track of the click events on the categories items
@@ -56,22 +42,29 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
     @Override
     public void onClickGridImage(int position, View view) {
         if (position == CARS_FRAGMENT) {
-            queryString = "CARS";
-            firebaseMethods.queryProducts(queryString);
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("CARS", "CARS");
+            intent.putExtra(getString(R.string.carsFragment), getString(R.string.carsFragment));
+            startActivity(intent);
         }
         if (position == CLOTHING_FRAGMENT) {
-            queryString = "CLOTHING";
-            firebaseMethods.queryProducts(queryString);
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("CLOTHING", "CLOTHING");
+            intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+            startActivity(intent);
         }
         if (position == JEWELLARY_FRAGMENT) {
-            queryString = "JEWELLARY";
-            firebaseMethods.queryProducts(queryString);
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("JEWELLARY", "JEWELLARY");
+            intent.putExtra(getString(R.string.jewellaryFragment), getString(R.string.jewellaryFragment));
+            startActivity(intent);
         }
         if (position == MOBILE_FRAGMENT) {
-            queryString = "MOBILE";
-            firebaseMethods.queryProducts(queryString);
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("MOBILE", "MOBILE");
+            intent.putExtra(getString(R.string.mobileFragment), getString(R.string.mobileFragment));
+            startActivity(intent);
         }
-        startActivity(new Intent(getActivity(), UniqueCategoryActivity.class));
     }
 
     @Override
@@ -85,7 +78,6 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         setupFragmentWidgets(view);
         setupRecyclerView();
-        setupFirebase();
         return view;
     }
 
@@ -116,39 +108,5 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
         saleRecyclerVIew = view.findViewById(R.id.saleRecyclerView);
     }
 
-
-    private void setupFirebase() {
-        mAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = firebaseDatabase.getReference();
-        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.homeFragment));
-
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    currentUserID = user.getUid();
-                }
-
-            }
-        };
-
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(authStateListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuth != null) {
-            mAuth.removeAuthStateListener(authStateListener);
-        }
-    }
 
 }
