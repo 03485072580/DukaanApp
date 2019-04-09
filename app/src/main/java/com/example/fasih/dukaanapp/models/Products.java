@@ -29,6 +29,7 @@ public class Products implements Parcelable {
     private String timeStamp;
     private String product_id;
     private long product_rating;
+    private String shop_id;
 
     public Products() {
     }
@@ -36,7 +37,8 @@ public class Products implements Parcelable {
     public Products(String product_name, String product_category, String product_image_url, String product_description, String product_price
             , String product_warranty, String product_stock
             , String timeStamp, String product_id
-            , long product_rating) {
+            , long product_rating
+            , String shop_id) {
         this.product_name = product_name;
         this.product_category = product_category;
         this.product_image_url = product_image_url;
@@ -47,6 +49,7 @@ public class Products implements Parcelable {
         this.timeStamp = timeStamp;
         this.product_id = product_id;
         this.product_rating = product_rating;
+        this.shop_id = shop_id;
     }
 
     protected Products(Parcel in) {
@@ -60,6 +63,15 @@ public class Products implements Parcelable {
         timeStamp = in.readString();
         product_id = in.readString();
         product_rating = in.readLong();
+        shop_id = in.readString();
+    }
+
+    public String getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
     }
 
     public long getProduct_rating() {
@@ -155,6 +167,7 @@ public class Products implements Parcelable {
                 ", timeStamp='" + timeStamp + '\'' +
                 ", product_id='" + product_id + '\'' +
                 ", product_rating=" + product_rating +
+                ", shop_id='" + shop_id + '\'' +
                 '}';
     }
 

@@ -18,19 +18,21 @@
             android:id="@+id/linLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="100">
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="30">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <!--//android:adjustViewBounds="true"-->
                 <!--android:scaleType="fitCenter"-->
 
                 <ImageView
+                    android:id="@+id/productImage"
                     android:layout_width="@dimen/_130dp"
                     android:layout_height="@dimen/_200dp"
+                    android:contentDescription="@string/contentDescription"
                     android:paddingEnd="@dimen/_10dp"
                     android:paddingStart="@dimen/_10dp"
                     android:scaleType="centerCrop"
@@ -40,8 +42,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="70">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/productTitle"
@@ -49,6 +50,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10dp"
                     android:layout_marginStart="@dimen/_10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="Samsung Galaxy J7 Pro"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/_18sp" />
@@ -73,6 +76,8 @@
                     android:layout_below="@id/productDesc"
                     android:layout_marginEnd="@dimen/_10dp"
                     android:layout_marginStart="@dimen/_10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="350 $"
                     android:textColor="@color/light_green"
                     android:textSize="@dimen/_18sp"
@@ -80,16 +85,16 @@
 
                 <View
                     android:id="@+id/line"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="1dp"
                     android:layout_below="@id/productPrice"
                     android:layout_marginEnd="@dimen/_10dp"
                     android:layout_marginStart="@dimen/_10dp"
                     android:layout_marginTop="@dimen/_10dp"
-                    android:background="@color/line_std" />
+                    android:foreground="@color/line_std" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/line"
                     android:layout_marginEnd="@dimen/_10dp"
@@ -98,13 +103,14 @@
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <ImageView
                             android:id="@+id/sellerImage"
                             android:layout_width="@dimen/_56dp"
                             android:layout_height="56dp"
+                            android:contentDescription="@string/contentDescription"
                             android:scaleType="centerCrop"
                             android:src="@drawable/logo" />
 
@@ -116,18 +122,23 @@
                             android:layout_marginStart="@dimen/_10dp"
                             android:layout_marginTop="@dimen/_10dp"
                             android:layout_toEndOf="@id/sellerImage"
+                            android:layout_toLeftOf="@id/cartAdd"
                             android:layout_toRightOf="@id/sellerImage"
+                            android:layout_toStartOf="@id/cartAdd"
+                            android:ellipsize="end"
+                            android:maxLines="1"
                             android:text="By Brand ZZZ"
                             android:textColor="@color/light_black" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/cartAdd"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
                             android:layout_marginLeft="@dimen/_10dp"
                             android:layout_marginStart="@dimen/_10dp"
                             android:layout_marginTop="@dimen/_10dp"
-                            android:layout_toEndOf="@id/sellingBy"
-                            android:layout_toRightOf="@id/sellingBy"
                             android:src="@drawable/ic_cart" />
                     </RelativeLayout>
 
@@ -136,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srb_clearRatingEnabled="true"
-                        app:srb_clickable="true"
+                        app:srb_clickable="false"
                         app:srb_drawableEmpty="@drawable/star_empty"
                         app:srb_drawableFilled="@drawable/star_filled"
                         app:srb_isIndicator="false"

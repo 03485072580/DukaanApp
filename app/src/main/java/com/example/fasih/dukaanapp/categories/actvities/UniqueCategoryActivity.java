@@ -32,16 +32,24 @@ public class UniqueCategoryActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseMethods firebaseMethods;
     private String currentUserID = null;
+    private ArrayList<Products> userViewProductsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unique_category);
+        if (savedInstanceState != null) {
+            //Coming after the Screen Rotation
+            userViewProductsList = savedInstanceState
+                    .getParcelableArrayList(getString(R.string.userViewProductsList));
+            setupIntentResources(userViewProductsList);
+        }
         setupFirebase(getIntent());
     }
 
     public void setupIntentResources(ArrayList<Products> userViewProductsList) {
-        Log.d("TAG1234", "setupIntentResources: ");
+        this.userViewProductsList = userViewProductsList;
+
         if (getIntent() != null) {
             Intent intent = getIntent();
             if (intent.hasExtra(getString(R.string.carsFragment))) {
@@ -88,9 +96,14 @@ public class UniqueCategoryActivity extends AppCompatActivity {
             if (intent.hasExtra(getString(R.string.mobileFragment))) {
                 if (intent.getStringExtra(getString(R.string.mobileFragment)).equals(getString(R.string.mobileFragment))) {
                     FragmentManager manager = getSupportFragmentManager();
+                    MobileFragment mobileFragment = new MobileFragment();
+                    Bundle myArrayListHolderBundle = new Bundle();
+                    myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
+                            , userViewProductsList);
+                    mobileFragment.setArguments(myArrayListHolderBundle);
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentContainer
-                            , new MobileFragment()
+                            , mobileFragment
                             , getString(R.string.mobileFragment));
                     transaction.commit();
 
@@ -118,7 +131,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
 
             }
         };
-        if (intent != null) {
+        if (intent != null && userViewProductsList.isEmpty()) {
             String queryString = null;
             if (intent.hasExtra("CARS")) {
                 if (intent.getStringExtra("CARS").equals("CARS")) {
@@ -126,8 +139,20 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     firebaseMethods.queryProducts(queryString);
                 }
             }
+            if (intent.hasExtra("MOBILES")) {
+                if (intent.getStringExtra("MOBILES").equals("MOBILES")) {
+                    queryString = intent.getStringExtra("MOBILES");
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
         }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(getString(R.string.userViewProductsList), userViewProductsList);
     }
 
     @Override

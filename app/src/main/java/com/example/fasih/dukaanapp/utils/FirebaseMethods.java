@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
+import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
 import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ProgressDialogFragment;
@@ -78,6 +80,8 @@ public class FirebaseMethods {
     AccessToken accessToken;
     //Google Stuff
     GoogleSignInAccount account;
+
+    private KeepHandleRecyclerList currentChildReference;
 
     private ProgressDialogFragment dialogFragment;
     private Boolean isScopeCorrect = false;
@@ -644,7 +648,8 @@ public class FirebaseMethods {
             , final String productPrice
             , final String productWarranty
             , final String availableStock
-            , final String timeStamp) {
+            , final String timeStamp
+            , final String shop_id) {
         if (activityName.equals(mContext.getString(R.string.shareFragment))) {
 
             dialogFragment = new ProgressDialogFragment();
@@ -666,7 +671,6 @@ public class FirebaseMethods {
                         (new FileInputStream(new File(imageLoadingUrl)));
             }
             if (imageLoadingUrl.toLowerCase().startsWith("content://")) {
-                Log.d("TAG1234", "run: " + imageLoadingUrl);
                 FileInputStream inputStream = (FileInputStream) mContext.getContentResolver().openInputStream(Uri.parse(imageLoadingUrl));
                 bufferedInputStream = new BufferedInputStream(inputStream);
             }
@@ -702,7 +706,7 @@ public class FirebaseMethods {
 
                         Products product = new Products(productName, selectedCategory, downloadUri.toString()
                                 , productDescription, productPrice, productWarranty
-                                , availableStock, timeStamp, productID, -1);
+                                , availableStock, timeStamp, productID, -1, shop_id);
                         myRef
                                 .child(mContext.getString(R.string.db_products_node))
                                 .child(mAuth.getCurrentUser().getUid())
@@ -890,7 +894,6 @@ public class FirebaseMethods {
 
         Query productsNodeQuery = myRef
                 .child(mContext.getString(R.string.db_products_node));
-        Log.d("TAG1234", "queryProducts: querystring" + queryString);
         productsNodeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -915,6 +918,7 @@ public class FirebaseMethods {
                             userProduct.setProduct_stock(productObj.get(mContext.getString(R.string.db_field_product_stock)));
                             userProduct.setTimeStamp(productObj.get(mContext.getString(R.string.db_field_timeStamp)));
                             userProduct.setProduct_id(productObj.get(mContext.getString(R.string.db_field_product_id)));
+                            userProduct.setShop_id(productObj.get(mContext.getString(R.string.db_field_shop_id)));
                             userProduct.setProduct_rating(Long.parseLong(String.valueOf(productObj.get(mContext.getString(R.string.db_field_product_rating)))));
 
                             if (userProduct.getProduct_category().equals(queryString)) {
@@ -925,12 +929,7 @@ public class FirebaseMethods {
 
                         }
                     }
-//                    if (queryString.equals("CARS")) {
-//                        Intent intent = new Intent(mContext, UniqueCategoryActivity.class);
-//                        intent.putExtra(mContext.getString(R.string.carsFragment), mContext.getString(R.string.carsFragment));
-//                        intent.putParcelableArrayListExtra(mContext.getString(R.string.userViewProductsList), userViewProductsList);
-//                        mContext.startActivity(intent);
-//                    }
+
                     if (activityName.equals(mContext.getString(R.string.activity_unique_category))) {
                         ((UniqueCategoryActivity) mContext).setupIntentResources(userViewProductsList);
                     }
@@ -942,5 +941,102 @@ public class FirebaseMethods {
                 Log.d("TAG1234", "onCancelled: " + databaseError.getMessage());
             }
         });
+    }
+
+    /**
+     * userViewProductsList refers to the previous ArrayList (may contain some Data Already)
+     *
+     * @param queryString
+     * @param userViewProductsList
+     */
+    public void queryProducts(final String queryString, final ArrayList<Products> userViewProductsList) {
+
+        final ArrayList<Products> tempUserViewProductList = new ArrayList<>();
+        tempUserViewProductList.clear();
+        Query productsNodeQuery = myRef
+                .child(mContext.getString(R.string.db_products_node));
+        productsNodeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, Object> shopUsersList = (HashMap<String, Object>) dataSnapshot.getValue();
+                if (shopUsersList != null) {
+                    Collection<Object> objectsList = shopUsersList.values();
+                    //obj is representing the list of products placed by the current user in obj
+                    for (Object obj : objectsList) {
+                        HashMap<String, Object> productList = (HashMap<String, Object>) obj;
+                        Collection<Object> particularUserProducts = productList.values();
+                        //product is representing the individual product placed by current user
+                        for (Object product : particularUserProducts) {
+                            HashMap<String, String> productObj = (HashMap<String, String>) product;
+                            Products userProduct = new Products();
+                            userProduct.setProduct_category(productObj.get(mContext.getString(R.string.db_field_product_category)));
+                            userProduct.setProduct_name(productObj.get(mContext.getString(R.string.db_field_product_name)));
+                            userProduct.setProduct_image_url(productObj.get(mContext.getString(R.string.db_field_product_image_url)));
+                            userProduct.setProduct_description(productObj.get(mContext.getString(R.string.db_field_product_description)));
+                            userProduct.setProduct_price(productObj.get(mContext.getString(R.string.db_field_product_price)));
+                            userProduct.setProduct_warranty(productObj.get(mContext.getString(R.string.db_field_product_warranty)));
+                            userProduct.setProduct_stock(productObj.get(mContext.getString(R.string.db_field_product_stock)));
+                            userProduct.setTimeStamp(productObj.get(mContext.getString(R.string.db_field_timeStamp)));
+                            userProduct.setProduct_id(productObj.get(mContext.getString(R.string.db_field_product_id)));
+                            userProduct.setProduct_rating(Long.parseLong(String.valueOf(productObj.get(mContext.getString(R.string.db_field_product_rating)))));
+
+                            if (userProduct.getProduct_category().equals(queryString)) {
+                                //add to the list for displaying to the user
+                                tempUserViewProductList.add(userProduct);
+                                //now notify the Home Fragment that new Products are Ready to display to the use
+                            }
+
+                        }
+                    }
+                    //Here Always a request come from the Fragments
+                    if (activityName.equals(mContext.getString(R.string.carsFragment))) {
+
+                        if (userViewProductsList.equals(tempUserViewProductList)) {
+                            return;
+                        }
+
+                    } else {
+                        userViewProductsList.clear();
+
+                        int previousProductsListSize = userViewProductsList.size();
+                        int currentProductsListSize = tempUserViewProductList.size();
+                        if (currentProductsListSize > previousProductsListSize)
+                            for (int i = 0; i < currentProductsListSize; i++) {
+                                if (!userViewProductsList.get(i).equals(tempUserViewProductList.get(i))) {
+                                    userViewProductsList.add(tempUserViewProductList.get(i));
+                                }
+                            }
+                        if (currentProductsListSize < previousProductsListSize)
+                            for (int i = 0; i < currentProductsListSize; i++) {
+                                if (!userViewProductsList.get(i).equals(tempUserViewProductList.get(i))) {
+                                    userViewProductsList.add(tempUserViewProductList.get(i));
+                                }
+                            }
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                currentChildReference.onUpdateRecyclerList(userViewProductsList);
+                            }
+                        }, 2000);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("TAG1234", "onCancelled: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    public void setListenerForUpdatingRecyclerView(KeepHandleRecyclerList currentChildReference) {
+        this.currentChildReference = currentChildReference;
+
+//        if(currentChildReference instanceof CarsFragment){
+//
+//        }
+
     }
 }

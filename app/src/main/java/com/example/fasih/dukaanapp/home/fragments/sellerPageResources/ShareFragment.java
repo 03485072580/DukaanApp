@@ -196,7 +196,8 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
                         , productPrice.getText().toString()
                         , productWarranty.getText().toString()
                         , availableStock.getText().toString()
-                        , getTimeStamp());
+                        , getTimeStamp()
+                        , currentUserID);
 
             } else {
                 try {

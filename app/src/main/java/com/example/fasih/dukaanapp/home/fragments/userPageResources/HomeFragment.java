@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements OnRecyclerImageSelectedListener {
 
     private static final int currentFragmentNumber = 0;
-    private static final int CARS_FRAGMENT = 0, CLOTHING_FRAGMENT = 1, JEWELLARY_FRAGMENT = 2, MOBILE_FRAGMENT = 3;
+    private static final int CARS_FRAGMENT = 0, CLOTHING_FRAGMENT = 1, JEWELLARY_FRAGMENT = 2, MOBILE_FRAGMENT = 3, ELECTRONICS_FRAGMENT = 4, COSMETICS_FRAGMENT = 5, FRAGRANCES_FRAGMENT = 6;
     private RecyclerView recyclerView;
     private RecyclerView saleRecyclerVIew;
 
@@ -61,8 +61,27 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
         }
         if (position == MOBILE_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("MOBILE", "MOBILE");
+            intent.putExtra("MOBILES", "MOBILES");
             intent.putExtra(getString(R.string.mobileFragment), getString(R.string.mobileFragment));
+            startActivity(intent);
+        }
+        if (position == ELECTRONICS_FRAGMENT) {
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("ELECTRONICS", "ELECTRONICS");
+            intent.putExtra(getString(R.string.electronicsFragment), getString(R.string.electronicsFragment));
+            startActivity(intent);
+        }
+
+        if (position == COSMETICS_FRAGMENT) {
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("COSMETICS", "COSMETICS");
+            intent.putExtra(getString(R.string.cosmeticsFragment), getString(R.string.cosmeticsFragment));
+            startActivity(intent);
+        }
+        if (position == FRAGRANCES_FRAGMENT) {
+            Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
+            intent.putExtra("FRAGRANCES", "FRAGRANCES");
+            intent.putExtra(getString(R.string.fragrancesFragment), getString(R.string.fragrancesFragment));
             startActivity(intent);
         }
     }
@@ -90,7 +109,7 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
         selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Electronics"));
         selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Cosmetics"));
         selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Fragrances"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Cars"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Hot Deals"));
         RecyclerGridAdapter adapter = new RecyclerGridAdapter(getActivity(), this, selectedCategories);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setLayoutManager(manager);

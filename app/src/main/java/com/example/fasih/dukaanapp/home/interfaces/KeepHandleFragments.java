@@ -7,4 +7,5 @@ package com.example.fasih.dukaanapp.home.interfaces;
 public interface KeepHandleFragments {
 
     void onCustomAttachFragment(String previousFragment, String currentAttachedFragment);
+
 }

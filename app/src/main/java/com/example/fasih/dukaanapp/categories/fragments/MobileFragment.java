@@ -14,21 +14,28 @@ import android.view.ViewGroup;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
+import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
+import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 /**
  * Created by Fasih on 01/01/19.
  */
 
-public class MobileFragment extends Fragment implements OnRecyclerImageSelectedListener {
+public class MobileFragment extends Fragment implements OnRecyclerImageSelectedListener
+        , LoadDynamicData
+        , KeepHandleRecyclerList {
 
     private RecyclerView productsContainer;
-
+    private MobileProductsAdapter mobileProductsAdapter;
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -36,6 +43,18 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseMethods firebaseMethods;
     private String currentUserID = null;
+
+    @Override
+    public void onUpdateRecyclerList(ArrayList<Products> userViewProductsList) {
+        mobileProductsAdapter.notifyDataSetChanged();
+        mobileProductsAdapter.setLoading();
+    }
+
+    @Override
+    public void onRequestData(ArrayList<Products> userViewProductsList) {
+        firebaseMethods.setListenerForUpdatingRecyclerView(this);
+        firebaseMethods.queryProducts("MOBILE", userViewProductsList);
+    }
 
     /**
      * This method is responsible for
@@ -59,16 +78,20 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mobile, container, false);
-        setupRecyclerView(view);
+        setupFragmentWidgets(view);
+        setupRecyclerView(getBundleData(getArguments()));
         setupFirebase();
         return view;
     }
 
-    private void setupRecyclerView(View view) {
+    private void setupRecyclerView(ArrayList<Products> userViewProductsList) {
 
-        productsContainer = view.findViewById(R.id.products_container);
+
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
-        productsContainer.setAdapter(new MobileProductsAdapter(getActivity(), this));
+        mobileProductsAdapter = new MobileProductsAdapter(getActivity(), this, userViewProductsList, productsContainer);
+        mobileProductsAdapter.setLoading();
+        mobileProductsAdapter.setLoadDynamicData(this);
+        productsContainer.setAdapter(mobileProductsAdapter);
     }
 
 
@@ -104,6 +127,19 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
         if (mAuth != null) {
             mAuth.removeAuthStateListener(authStateListener);
         }
+    }
+
+
+    private ArrayList<Products> getBundleData(Bundle arguments) {
+        ArrayList<Products> userViewProductsList = null;
+        if (arguments != null) {
+            userViewProductsList = arguments.getParcelableArrayList(getString(R.string.userViewProductsList));
+        }
+        return userViewProductsList;
+    }
+
+    public void setupFragmentWidgets(View view) {
+        productsContainer = view.findViewById(R.id.products_container);
     }
 
 }

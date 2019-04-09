@@ -34,7 +34,9 @@
     <string name="categoryShopHelpFragment">CategoryShopHelpFragment</string>
     <string name="categoryShopSupportFragment">CategoryShopSupportFragment</string>
     <string name="shopsListFragment">ShopsListFragment</string>
-    <string name="homeFragment">HomeFragment</string>
+    <string name="cosmeticsFragment">CosmeticsFragment</string>
+    <string name="electronicsFragment">ElectronicsFragment</string>
+    <string name="fragrancesFragment">FragrancesFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -119,6 +121,7 @@
     <string name="db_field_timeStamp">timeStamp</string>
     <string name="db_field_product_id">product_id</string>
     <string name="db_field_product_rating">product_rating</string>
+    <string name="db_field_shop_id">shop_id</string>
 
 
     <!--Simple Toast Messages-->
@@ -157,6 +160,9 @@
 
     <!--Activity Custom Strings-->
     <string name="userViewProductsList">userViewProductsList</string>
+
+    <!--Query String-->
+    <string name="query_CARS">CARS</string>
 
 
     <!--Spinner entries-->
