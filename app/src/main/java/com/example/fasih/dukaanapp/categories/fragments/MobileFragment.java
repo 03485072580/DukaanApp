@@ -53,7 +53,7 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     @Override
     public void onRequestData(ArrayList<Products> userViewProductsList) {
         firebaseMethods.setListenerForUpdatingRecyclerView(this);
-        firebaseMethods.queryProducts("MOBILE", userViewProductsList);
+        firebaseMethods.queryProducts("MOBILES", userViewProductsList);
     }
 
     /**
@@ -85,7 +85,6 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     }
 
     private void setupRecyclerView(ArrayList<Products> userViewProductsList) {
-
 
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
         mobileProductsAdapter = new MobileProductsAdapter(getActivity(), this, userViewProductsList, productsContainer);

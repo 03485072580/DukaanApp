@@ -79,7 +79,6 @@ public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandl
 
         if (userViewProductsList != null)
             if (!userViewProductsList.isEmpty()) {
-//            userViewProductsList.add(null);
                 adapter = new CarsFragmentAdapter(userViewProductsList, carsProductsContainer);
                 adapter.setInitialLoadingProgress();
                 adapter.setLoadDynamicData(this);
@@ -111,6 +110,20 @@ public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandl
             }
         };
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuth != null) {
+            mAuth.removeAuthStateListener(authStateListener);
+        }
     }
 
 }

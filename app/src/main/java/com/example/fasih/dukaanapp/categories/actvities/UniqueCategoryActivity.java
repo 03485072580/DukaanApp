@@ -71,12 +71,17 @@ public class UniqueCategoryActivity extends AppCompatActivity {
 
             if (intent.hasExtra(getString(R.string.clothingFragment))) {
                 if (intent.getStringExtra(getString(R.string.clothingFragment)).equals(getString(R.string.clothingFragment))) {
+                    ClothingFragment clothingFragment = new ClothingFragment();
+                    Bundle myArrayListHolder = new Bundle();
+                    myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
+                            , userViewProductsList);
+                    clothingFragment.setArguments(myArrayListHolder);
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentContainer
-                            , new ClothingFragment()
+                            , clothingFragment
                             , getString(R.string.clothingFragment));
-                    transaction.commit();
+                    transaction.commitAllowingStateLoss();
 
                 }
             }
@@ -105,7 +110,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     transaction.replace(R.id.fragmentContainer
                             , mobileFragment
                             , getString(R.string.mobileFragment));
-                    transaction.commit();
+                    transaction.commitAllowingStateLoss();
 
                 }
             }
@@ -133,15 +138,22 @@ public class UniqueCategoryActivity extends AppCompatActivity {
         };
         if (intent != null && userViewProductsList.isEmpty()) {
             String queryString = null;
-            if (intent.hasExtra("CARS")) {
-                if (intent.getStringExtra("CARS").equals("CARS")) {
-                    queryString = intent.getStringExtra("CARS");
+            if (intent.hasExtra(getString(R.string.query_CARS))) {
+                if (getString(R.string.query_CARS).equals(getString(R.string.query_CARS))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_CARS));
                     firebaseMethods.queryProducts(queryString);
                 }
             }
-            if (intent.hasExtra("MOBILES")) {
-                if (intent.getStringExtra("MOBILES").equals("MOBILES")) {
-                    queryString = intent.getStringExtra("MOBILES");
+            if (intent.hasExtra(getString(R.string.query_MOBILES))) {
+                if (intent.getStringExtra(getString(R.string.query_MOBILES)).equals(getString(R.string.query_MOBILES))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_MOBILES));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_CLOTHES))) {
+                if (intent.getStringExtra(getString(R.string.query_CLOTHES)).equals(getString(R.string.query_CLOTHES))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_CLOTHES));
                     firebaseMethods.queryProducts(queryString);
                 }
             }

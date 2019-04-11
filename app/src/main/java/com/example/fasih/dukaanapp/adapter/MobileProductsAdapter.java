@@ -1,6 +1,7 @@
 package com.example.fasih.dukaanapp.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,8 +32,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    private final int threshHold = 5;
     private final int VIEW_TYPE_PROGRESS_LOADING = 0, VIEW_TYPE_CURRENT_LAYOUT = 1;
+    private final int threshHold = 5;
     private Context mContext;
     private OnRecyclerImageSelectedListener imageSelected;
     private ArrayList<Products> userViewProductsList;
@@ -50,33 +51,31 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         setupScrollListner((LinearLayoutManager) recyclerView.getLayoutManager(), recyclerView);
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-//        if (viewType == VIEW_TYPE_CURRENT_LAYOUT) {
-//
-//            View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-//                    .inflate(R.layout.layout_single_mobile_row, parent, false);
-//            return new MyViewHolder(view);
-//        }
-//        if (viewType == VIEW_TYPE_PROGRESS_LOADING) {
-//
-//            View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-//                    .inflate(R.layout.layout_recycler_progress, parent, false);
-//            return new RecyclerProgressUpdater(view);
-//        }
-//        return null;
-        View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
-                .inflate(R.layout.layout_single_mobile_row, parent, false);
-        return new MyViewHolder(view);
+        if (viewType == VIEW_TYPE_CURRENT_LAYOUT) {
+
+            View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                    .inflate(R.layout.layout_single_mobile_row, parent, false);
+            return new MyViewHolder(view);
+        }
+        if (viewType == VIEW_TYPE_PROGRESS_LOADING) {
+
+            View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                    .inflate(R.layout.layout_recycler_progress, parent, false);
+            return new RecyclerProgressUpdater(view);
+        }
+        return null;
     }
 
     @Override
     public int getItemViewType(int position) {
-//        if (position == userViewProductsList.size() - 1) {
-//            return VIEW_TYPE_PROGRESS_LOADING;
-//        }
-        return super.getItemViewType(position);
+        if (position == userViewProductsList.size() - 1) {
+            return VIEW_TYPE_PROGRESS_LOADING;
+        }
+        return VIEW_TYPE_CURRENT_LAYOUT;
     }
 
     @Override

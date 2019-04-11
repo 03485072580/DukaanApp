@@ -891,6 +891,7 @@ public class FirebaseMethods {
     }
 
     public void queryProducts(final String queryString) {
+        Log.d("TAG1234", "queryProducts: " + queryString);
 
         Query productsNodeQuery = myRef
                 .child(mContext.getString(R.string.db_products_node));
@@ -996,7 +997,6 @@ public class FirebaseMethods {
                         }
 
                     } else {
-                        userViewProductsList.clear();
 
                         int previousProductsListSize = userViewProductsList.size();
                         int currentProductsListSize = tempUserViewProductList.size();
