@@ -30,7 +30,7 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_CURRENT = 0, VIEW_TYPE_RECYCLER_PROGRESS_BAR = 1;
     private ArrayList<Products> userViewProductsList;
     private Boolean isLoading;
-    private int visibleThreshHold = 5;
+    private int visibleThreshHold = 1;
     private LoadDynamicData loadData;
 
 
@@ -86,10 +86,14 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageLoader.getInstance().init(UniversalImageLoader.getConfiguration(context));
     }
 
+
     public void setInitialLoadingProgress() {
         isLoading = false;
     }
 
+    public void setInitialLoadingProgress(Boolean isLoading) {
+        this.isLoading = isLoading;
+    }
     public void updateDataSet(ArrayList<Products> userViewProductsList) {
         this.userViewProductsList = userViewProductsList;
     }
@@ -131,6 +135,12 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemCount() {
         return userViewProductsList.size();
+    }
+
+    public void setFilteredList(ArrayList<Products> filteredList) {
+        userViewProductsList.clear();
+        userViewProductsList.addAll(filteredList);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

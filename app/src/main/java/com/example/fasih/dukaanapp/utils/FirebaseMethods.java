@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.adapter.CarsFragmentAdapter;
+import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
+import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
@@ -950,7 +954,9 @@ public class FirebaseMethods {
      * @param queryString
      * @param userViewProductsList
      */
-    public void queryProducts(final String queryString, final ArrayList<Products> userViewProductsList) {
+    public void queryProducts(final String queryString
+            , final ArrayList<Products> userViewProductsList
+            , final RecyclerView.Adapter adapter) {
 
         final ArrayList<Products> tempUserViewProductList = new ArrayList<>();
         tempUserViewProductList.clear();
@@ -959,6 +965,9 @@ public class FirebaseMethods {
         productsNodeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (updateProgress != null)
+                    updateProgress.setVisibility(View.VISIBLE);
+
                 HashMap<String, Object> shopUsersList = (HashMap<String, Object>) dataSnapshot.getValue();
                 if (shopUsersList != null) {
                     Collection<Object> objectsList = shopUsersList.values();
@@ -990,36 +999,55 @@ public class FirebaseMethods {
                         }
                     }
                     //Here Always a request come from the Fragments
-                    if (activityName.equals(mContext.getString(R.string.carsFragment))) {
-
-                        if (userViewProductsList.equals(tempUserViewProductList)) {
-                            return;
-                        }
-
-                    } else {
+                    if (activityName.equals(mContext.getString(R.string.carsFragment))
+                            || activityName.equals(mContext.getString(R.string.mobileFragment))
+                            || activityName.equals(mContext.getString(R.string.clothingFragment))
+                            || activityName.equals(mContext.getString(R.string.cosmeticsFragment))
+                            || activityName.equals(mContext.getString(R.string.electronicsFragment))
+                            || activityName.equals(mContext.getString(R.string.fragrancesFragment))
+                            || activityName.equals(mContext.getString(R.string.jewellaryFragment))) {
+                        Log.d("TAG1234", "onDataChange: Here it comes");
 
                         int previousProductsListSize = userViewProductsList.size();
                         int currentProductsListSize = tempUserViewProductList.size();
-                        if (currentProductsListSize > previousProductsListSize)
-                            for (int i = 0; i < currentProductsListSize; i++) {
-                                if (!userViewProductsList.get(i).equals(tempUserViewProductList.get(i))) {
-                                    userViewProductsList.add(tempUserViewProductList.get(i));
+                        if (currentProductsListSize == previousProductsListSize) {
+                            Log.d("TAG1234", "onDataChange: Similar Arrays");
+                            if (adapter instanceof ClothingProductsAdapter) {
+                                ((ClothingProductsAdapter) adapter).setLoading();
+                                }
+                            if (adapter instanceof CarsFragmentAdapter) {
+                                ((CarsFragmentAdapter) adapter).setInitialLoadingProgress();
+                            }
+                            if (adapter instanceof MobileProductsAdapter) {
+                                ((MobileProductsAdapter) adapter).setLoading();
+                                }
+                            if (updateProgress != null)
+                                updateProgress.setVisibility(View.GONE);
+                            }
+                        if (currentProductsListSize > previousProductsListSize) {
+                            for (int i = 0; i < previousProductsListSize; i++) {
+                                for (int j = 0; j < currentProductsListSize; j++) {
+                                    if (userViewProductsList.get(i).getProduct_id().equals(tempUserViewProductList.get(j).getProduct_id())) {
+                                        tempUserViewProductList.remove(j);
+                                        break;
+                                    }
                                 }
                             }
-                        if (currentProductsListSize < previousProductsListSize)
-                            for (int i = 0; i < currentProductsListSize; i++) {
-                                if (!userViewProductsList.get(i).equals(tempUserViewProductList.get(i))) {
-                                    userViewProductsList.add(tempUserViewProductList.get(i));
+                            userViewProductsList.addAll(tempUserViewProductList);
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (updateProgress != null)
+                                        updateProgress.setVisibility(View.GONE);
+                                    currentChildReference.onUpdateRecyclerList(userViewProductsList);
                                 }
-                            }
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+                            }, 2000);
 
-                                currentChildReference.onUpdateRecyclerList(userViewProductsList);
-                            }
-                        }, 2000);
+                            Log.d("TAG1234", "onDataChange: isEqual"
+                                    + userViewProductsList.equals(tempUserViewProductList));
+                        }
+
                     }
                 }
             }
@@ -1027,6 +1055,7 @@ public class FirebaseMethods {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("TAG1234", "onCancelled: " + databaseError.getMessage());
+                updateProgress.setVisibility(View.GONE);
             }
         });
     }
@@ -1037,6 +1066,23 @@ public class FirebaseMethods {
 //        if(currentChildReference instanceof CarsFragment){
 //
 //        }
+
+
+        //                            if (currentProductsListSize < previousProductsListSize)
+//                                for (int i = 0; i < currentProductsListSize; i++) {
+//                                    if (!userViewProductsList.get(i).equals(tempUserViewProductList.get(i))) {
+//                                        userViewProductsList.add(tempUserViewProductList.get(i));
+//                                    }
+//                                }
+//                            Handler handler = new Handler();
+//                            handler.postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if (updateProgress != null)
+//                                        updateProgress.setVisibility(View.GONE);
+//                                    currentChildReference.onUpdateRecyclerList(userViewProductsList);
+//                                }
+//                            }, 2000);
 
     }
 }

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.categories.fragments.MobileFragment;
+import com.example.fasih.dukaanapp.categories.fragments.CosmeticsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
@@ -26,11 +26,10 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by Fasih on 01/02/19.
+ * Created by Fasih on 04/13/19.
  */
 
-public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class CosmeticsProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_PROGRESS_LOADING = 0, VIEW_TYPE_CURRENT_LAYOUT = 1;
     private final int threshHold = 5;
@@ -40,12 +39,12 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
 
-    public MobileProductsAdapter(Context context
-            , MobileFragment mobileFragment
+    public CosmeticsProductsAdapter(Context context
+            , CosmeticsFragment cosmeticsFragment
             , ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.mContext = context;
-        this.imageSelected = mobileFragment;
+        this.imageSelected = cosmeticsFragment;
         this.userViewProductsList = userViewProductsList;
         setupUniversalImageLoader(UniversalImageLoader.getConfiguration(context));
         setupScrollListner((LinearLayoutManager) recyclerView.getLayoutManager(), recyclerView);
@@ -59,7 +58,7 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             View view = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                     .inflate(R.layout.layout_single_mobile_row, parent, false);
-            return new MyViewHolder(view);
+            return new CosmeticsProductsAdapter.MyViewHolder(view);
         }
         if (viewType == VIEW_TYPE_PROGRESS_LOADING) {
 
@@ -85,8 +84,8 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof MyViewHolder) {
-            MyViewHolder viewHolder = (MyViewHolder) holder;
+        if (holder instanceof CosmeticsProductsAdapter.MyViewHolder) {
+            CosmeticsProductsAdapter.MyViewHolder viewHolder = (CosmeticsProductsAdapter.MyViewHolder) holder;
             ImageLoader.getInstance().displayImage(userViewProductsList.get(position).getProduct_image_url()
                     , viewHolder.productImage);
             viewHolder.productTitle.setText(userViewProductsList.get(position).getProduct_name());
@@ -169,5 +168,3 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 }
-
-

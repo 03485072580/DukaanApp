@@ -6,11 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.fragments.CarsFragment;
 import com.example.fasih.dukaanapp.categories.fragments.ClothingFragment;
+import com.example.fasih.dukaanapp.categories.fragments.CosmeticsFragment;
+import com.example.fasih.dukaanapp.categories.fragments.ElectronicsFragment;
+import com.example.fasih.dukaanapp.categories.fragments.FragrancesFragment;
 import com.example.fasih.dukaanapp.categories.fragments.JewellaryFragment;
 import com.example.fasih.dukaanapp.categories.fragments.MobileFragment;
 import com.example.fasih.dukaanapp.models.Products;
@@ -23,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class UniqueCategoryActivity extends AppCompatActivity {
+
+    private SearchView search;
 
 
     //Firebase Stuff
@@ -38,6 +44,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unique_category);
+        setupActivityWidgets();
         if (savedInstanceState != null) {
             //Coming after the Screen Rotation
             userViewProductsList = savedInstanceState
@@ -45,6 +52,10 @@ public class UniqueCategoryActivity extends AppCompatActivity {
             setupIntentResources(userViewProductsList);
         }
         setupFirebase(getIntent());
+    }
+
+    private void setupActivityWidgets() {
+        search = findViewById(R.id.search);
     }
 
     public void setupIntentResources(ArrayList<Products> userViewProductsList) {
@@ -55,6 +66,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
             if (intent.hasExtra(getString(R.string.carsFragment))) {
                 if (intent.getStringExtra(getString(R.string.carsFragment)).equals(getString(R.string.carsFragment))) {
                     CarsFragment carsFragment = new CarsFragment();
+                    carsFragment.setSearchView(search);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -72,6 +84,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
             if (intent.hasExtra(getString(R.string.clothingFragment))) {
                 if (intent.getStringExtra(getString(R.string.clothingFragment)).equals(getString(R.string.clothingFragment))) {
                     ClothingFragment clothingFragment = new ClothingFragment();
+                    clothingFragment.setSearchView(search);
                     Bundle myArrayListHolder = new Bundle();
                     myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -88,10 +101,16 @@ public class UniqueCategoryActivity extends AppCompatActivity {
 
             if (intent.hasExtra(getString(R.string.jewellaryFragment))) {
                 if (intent.getStringExtra(getString(R.string.jewellaryFragment)).equals(getString(R.string.jewellaryFragment))) {
+                    JewellaryFragment jewellaryFragment = new JewellaryFragment();
+                    jewellaryFragment.setSearchView(search);
+                    Bundle myArrayListHolder = new Bundle();
+                    myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
+                            , userViewProductsList);
+                    jewellaryFragment.setArguments(myArrayListHolder);
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     transaction.replace(R.id.fragmentContainer
-                            , new JewellaryFragment()
+                            , jewellaryFragment
                             , getString(R.string.jewellaryFragment));
                     transaction.commit();
 
@@ -102,6 +121,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                 if (intent.getStringExtra(getString(R.string.mobileFragment)).equals(getString(R.string.mobileFragment))) {
                     FragmentManager manager = getSupportFragmentManager();
                     MobileFragment mobileFragment = new MobileFragment();
+                    mobileFragment.setSearchView(search);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -110,6 +130,60 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     transaction.replace(R.id.fragmentContainer
                             , mobileFragment
                             , getString(R.string.mobileFragment));
+                    transaction.commitAllowingStateLoss();
+
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.fragrancesFragment))) {
+                if (intent.getStringExtra(getString(R.string.fragrancesFragment)).equals(getString(R.string.fragrancesFragment))) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragrancesFragment fragrancesFragment = new FragrancesFragment();
+                    fragrancesFragment.setSearchView(search);
+                    Bundle myArrayListHolderBundle = new Bundle();
+                    myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
+                            , userViewProductsList);
+                    fragrancesFragment.setArguments(myArrayListHolderBundle);
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.fragmentContainer
+                            , fragrancesFragment
+                            , getString(R.string.fragrancesFragment));
+                    transaction.commitAllowingStateLoss();
+
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.cosmeticsFragment))) {
+                if (intent.getStringExtra(getString(R.string.cosmeticsFragment)).equals(getString(R.string.cosmeticsFragment))) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    CosmeticsFragment cosmeticsFragment = new CosmeticsFragment();
+                    cosmeticsFragment.setSearchView(search);
+                    Bundle myArrayListHolderBundle = new Bundle();
+                    myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
+                            , userViewProductsList);
+                    cosmeticsFragment.setArguments(myArrayListHolderBundle);
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.fragmentContainer
+                            , cosmeticsFragment
+                            , getString(R.string.cosmeticsFragment));
+                    transaction.commitAllowingStateLoss();
+
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.electronicsFragment))) {
+                if (intent.getStringExtra(getString(R.string.electronicsFragment)).equals(getString(R.string.electronicsFragment))) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    ElectronicsFragment electronicsFragment = new ElectronicsFragment();
+                    electronicsFragment.setSearchView(search);
+                    Bundle myArrayListHolderBundle = new Bundle();
+                    myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
+                            , userViewProductsList);
+                    electronicsFragment.setArguments(myArrayListHolderBundle);
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    transaction.replace(R.id.fragmentContainer
+                            , electronicsFragment
+                            , getString(R.string.electronicsFragment));
                     transaction.commitAllowingStateLoss();
 
                 }
@@ -154,6 +228,32 @@ public class UniqueCategoryActivity extends AppCompatActivity {
             if (intent.hasExtra(getString(R.string.query_CLOTHES))) {
                 if (intent.getStringExtra(getString(R.string.query_CLOTHES)).equals(getString(R.string.query_CLOTHES))) {
                     queryString = intent.getStringExtra(getString(R.string.query_CLOTHES));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_JEWELLERY))) {
+                if (intent.getStringExtra(getString(R.string.query_JEWELLERY)).equals(getString(R.string.query_JEWELLERY))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_JEWELLERY));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_FRAGRANCES))) {
+                if (intent.getStringExtra(getString(R.string.query_FRAGRANCES)).equals(getString(R.string.query_FRAGRANCES))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_FRAGRANCES));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_COSMETICS))) {
+                if (intent.getStringExtra(getString(R.string.query_COSMETICS)).equals(getString(R.string.query_COSMETICS))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_COSMETICS));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_ELECTRONICS))) {
+                if (intent.getStringExtra(getString(R.string.query_ELECTRONICS)).equals(getString(R.string.query_ELECTRONICS))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_ELECTRONICS));
                     firebaseMethods.queryProducts(queryString);
                 }
             }

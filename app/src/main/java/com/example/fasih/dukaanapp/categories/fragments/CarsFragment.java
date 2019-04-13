@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
+import com.example.fasih.dukaanapp.utils.StringManipulations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -27,9 +29,13 @@ import java.util.ArrayList;
  * Created by Fasih on 01/01/19.
  */
 
-public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandleRecyclerList {
+public class CarsFragment extends Fragment implements LoadDynamicData
+        , KeepHandleRecyclerList
+        , SearchView.OnQueryTextListener {
     //Load Data from Firebase Dynamically here
 
+    private SearchView searchView;
+    private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
     private RecyclerView carsProductsContainer;
     private CarsFragmentAdapter adapter;
     //Firebase Stuff
@@ -39,6 +45,32 @@ public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandl
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseMethods firebaseMethods;
     private String currentUserID = null;
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.setInitialLoadingProgress(true);
+        filteredList.clear();
+
+        if (newText.equals("")) {
+            filteredList.addAll(backupUserViewProductsList);
+            adapter.setInitialLoadingProgress(false);
+        }
+
+        for (Products product : backupUserViewProductsList) {
+
+            if (StringManipulations.toLowerCase(product.getProduct_name())
+                    .contains(StringManipulations.toLowerCase(newText))) {
+                filteredList.add(product);
+            }
+        }
+        adapter.setFilteredList(filteredList);
+        return true;
+    }
 
     /**
      * Response for fetching the Cars List from The Firebase DB
@@ -54,7 +86,9 @@ public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandl
     @Override
     public void onRequestData(ArrayList<Products> userViewProductsList) {
         firebaseMethods.setListenerForUpdatingRecyclerView(this);
-        firebaseMethods.queryProducts(getString(R.string.query_CARS), userViewProductsList);
+        firebaseMethods.queryProducts(getString(R.string.query_CARS)
+                , userViewProductsList
+                , adapter);
     }
 
     @Nullable
@@ -79,6 +113,9 @@ public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandl
 
         if (userViewProductsList != null)
             if (!userViewProductsList.isEmpty()) {
+                backupUserViewProductsList = new ArrayList<>();
+                backupUserViewProductsList.addAll(userViewProductsList);
+                this.userViewProductsList = userViewProductsList;
                 adapter = new CarsFragmentAdapter(userViewProductsList, carsProductsContainer);
                 adapter.setInitialLoadingProgress();
                 adapter.setLoadDynamicData(this);
@@ -125,5 +162,12 @@ public class CarsFragment extends Fragment implements LoadDynamicData, KeepHandl
             mAuth.removeAuthStateListener(authStateListener);
         }
     }
+
+    public void setSearchView(SearchView searchView) {
+        this.searchView = searchView;
+        this.searchView.setOnQueryTextListener(this);
+        filteredList = new ArrayList<>();
+    }
+
 
 }

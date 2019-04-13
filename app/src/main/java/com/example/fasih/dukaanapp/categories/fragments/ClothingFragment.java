@@ -5,11 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
@@ -17,6 +18,7 @@ import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
+import com.example.fasih.dukaanapp.utils.StringManipulations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -28,11 +30,15 @@ import java.util.ArrayList;
  * Created by Fasih on 01/01/19.
  */
 
-public class ClothingFragment extends Fragment implements LoadDynamicData, KeepHandleRecyclerList {
+public class ClothingFragment extends Fragment implements LoadDynamicData
+        , KeepHandleRecyclerList
+        , SearchView.OnQueryTextListener {
 
-
+    private SearchView searchView;
+    private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
     private ClothingProductsAdapter adapter;
     private RecyclerView clothingContainer;
+    private ProgressBar categoriesProgress;
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -42,12 +48,44 @@ public class ClothingFragment extends Fragment implements LoadDynamicData, KeepH
     private String currentUserID = null;
 
     @Override
-    public void onRequestData(ArrayList<Products> userViewProductsList) {
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.setLoading(true);
+        filteredList.clear();
+
+        if (newText.equals("")) {
+            filteredList.addAll(backupUserViewProductsList);
+            adapter.setLoading(false);
+        }
+
+        for (Products product : backupUserViewProductsList) {
+
+            if (StringManipulations.toLowerCase(product.getProduct_name())
+                    .contains(StringManipulations.toLowerCase(newText))) {
+                filteredList.add(product);
+            }
+        }
+        adapter.setFilteredList(filteredList);
+        return true;
+    }
+
+    @Override
+    public void onRequestData(ArrayList<Products> userViewProductsList) {
+        //display Progress Bar
+        firebaseMethods.setListenerForUpdatingRecyclerView(this);
+        firebaseMethods.updateProgress(categoriesProgress);
+        firebaseMethods.queryProducts(getString(R.string.query_CLOTHES), userViewProductsList, adapter);
     }
 
     @Override
     public void onUpdateRecyclerList(ArrayList<Products> userViewProductsList) {
+        //Hide Progress Bar
+        adapter.notifyDataSetChanged();
+        adapter.setLoading();
 
     }
 
@@ -63,6 +101,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData, KeepH
 
     private void setupFragmentWidgets(View view) {
         clothingContainer = view.findViewById(R.id.clothingContainer);
+        categoriesProgress = view.findViewById(R.id.categoriesProgress);
     }
 
     private ArrayList<Products> getBundleData(Bundle arguments) {
@@ -77,11 +116,13 @@ public class ClothingFragment extends Fragment implements LoadDynamicData, KeepH
 
         if (userViewProductsList != null)
             if (!userViewProductsList.isEmpty()) {
-                Log.d("TAG1234", "setupRecyclerView: ");
+
+                backupUserViewProductsList = new ArrayList<>();
+                backupUserViewProductsList.addAll(userViewProductsList);
                 adapter = new ClothingProductsAdapter(getActivity(), userViewProductsList, clothingContainer);
                 adapter.setLoading();
                 adapter.setLoadDynamicData(this);
-                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, RecyclerView.VERTICAL);
+                StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
                 clothingContainer.setLayoutManager(layoutManager);
                 clothingContainer.setAdapter(adapter);
 
@@ -92,7 +133,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData, KeepH
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
-        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.carsFragment));
+        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.clothingFragment));
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -119,6 +160,12 @@ public class ClothingFragment extends Fragment implements LoadDynamicData, KeepH
         if (mAuth != null) {
             mAuth.removeAuthStateListener(authStateListener);
         }
+    }
+
+    public void setSearchView(SearchView searchView) {
+        this.searchView = searchView;
+        this.searchView.setOnQueryTextListener(this);
+        filteredList = new ArrayList<>();
     }
 
 }

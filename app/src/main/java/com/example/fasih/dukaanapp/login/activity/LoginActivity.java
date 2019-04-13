@@ -16,6 +16,7 @@ import com.example.fasih.dukaanapp.login.fragment.ShopFragment;
 import com.example.fasih.dukaanapp.login.fragment.UserFragment;
 import com.example.fasih.dukaanapp.login.interfaces.AttachedFragment;
 import com.example.fasih.dukaanapp.login.interfaces.ResolveContainerConflicts;
+import com.google.android.gms.ads.MobileAds;
 
 public class LoginActivity extends AppCompatActivity implements AttachedFragment {
 
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements AttachedFragment
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        MobileAds.initialize(this, getString(R.string.ADMOB_APP_ID));
         setupActivityWidgets();
         setupViewPager();
         keepTrackOfFragments();

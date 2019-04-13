@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
+import com.example.fasih.dukaanapp.utils.StringManipulations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -32,8 +34,11 @@ import java.util.ArrayList;
 
 public class MobileFragment extends Fragment implements OnRecyclerImageSelectedListener
         , LoadDynamicData
-        , KeepHandleRecyclerList {
+        , KeepHandleRecyclerList
+        , SearchView.OnQueryTextListener {
 
+    private SearchView searchView;
+    private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
     private RecyclerView productsContainer;
     private MobileProductsAdapter mobileProductsAdapter;
     //Firebase Stuff
@@ -45,6 +50,32 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     private String currentUserID = null;
 
     @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mobileProductsAdapter.setLoading(true);
+        filteredList.clear();
+
+        if (newText.equals("")) {
+            filteredList.addAll(backupUserViewProductsList);
+            mobileProductsAdapter.setLoading(false);
+        }
+
+        for (Products product : backupUserViewProductsList) {
+
+            if (StringManipulations.toLowerCase(product.getProduct_name())
+                    .contains(StringManipulations.toLowerCase(newText))) {
+                filteredList.add(product);
+            }
+        }
+        mobileProductsAdapter.setFilteredList(filteredList);
+        return true;
+    }
+
+    @Override
     public void onUpdateRecyclerList(ArrayList<Products> userViewProductsList) {
         mobileProductsAdapter.notifyDataSetChanged();
         mobileProductsAdapter.setLoading();
@@ -53,7 +84,9 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     @Override
     public void onRequestData(ArrayList<Products> userViewProductsList) {
         firebaseMethods.setListenerForUpdatingRecyclerView(this);
-        firebaseMethods.queryProducts("MOBILES", userViewProductsList);
+        firebaseMethods.queryProducts(getString(R.string.query_MOBILES)
+                , userViewProductsList
+                , mobileProductsAdapter);
     }
 
     /**
@@ -86,6 +119,8 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
 
     private void setupRecyclerView(ArrayList<Products> userViewProductsList) {
 
+        backupUserViewProductsList = new ArrayList<>();
+        backupUserViewProductsList.addAll(userViewProductsList);
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
         mobileProductsAdapter = new MobileProductsAdapter(getActivity(), this, userViewProductsList, productsContainer);
         mobileProductsAdapter.setLoading();
@@ -139,6 +174,12 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
 
     public void setupFragmentWidgets(View view) {
         productsContainer = view.findViewById(R.id.products_container);
+    }
+
+    public void setSearchView(SearchView searchView) {
+        this.searchView = searchView;
+        this.searchView.setOnQueryTextListener(this);
+        filteredList = new ArrayList<>();
     }
 
 }

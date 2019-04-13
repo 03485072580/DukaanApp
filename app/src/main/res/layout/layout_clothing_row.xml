@@ -21,7 +21,51 @@
             android:elevation="@dimen/_10dp"
             android:padding="@dimen/_2dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/test_car_image"
+            tools:targetApi="lollipop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/contentDescription"
+            android:elevation="@dimen/_10dp"
+            android:foreground="#50000000"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:id="@+id/tvTitle0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_marginStart="@dimen/_5dp"
+            android:contentDescription="@string/contentDescription"
+            android:elevation="@dimen/_10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/_2dp"
+            android:text="Honda City"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16sp"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:id="@+id/tvPrice0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_5dp"
+            android:layout_marginLeft="@dimen/_5dp"
+            android:layout_marginStart="@dimen/_5dp"
+            android:contentDescription="@string/contentDescription"
+            android:elevation="@dimen/_10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/_2dp"
+            android:text="300$"
+            android:textColor="@color/white"
+            android:textSize="12sp"
             tools:targetApi="lollipop" />
 
     </RelativeLayout>
@@ -56,16 +100,69 @@
                         app:layout_constraintEnd_toStartOf="@id/constraint2"
                         app:layout_constraintStart_toStartOf="parent">
 
-                        <ImageView
-                            android:id="@+id/productImage1"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/contentDescription"
-                            android:elevation="@dimen/_10dp"
-                            android:padding="@dimen/_1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/test_car_image"
-                            tools:targetApi="lollipop" />
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/productImage1"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:padding="@dimen/_1dp"
+                                android:scaleType="centerCrop"
+                                app:layout_constraintStart_toStartOf="parent"
+                                tools:targetApi="lollipop" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50dp"
+                                android:layout_alignParentBottom="true"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:foreground="#50000000"
+                                tools:targetApi="lollipop" />
+
+                            <TextView
+                                android:id="@+id/tvTitle1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="25dp"
+                                android:layout_marginLeft="@dimen/_5dp"
+                                android:layout_marginStart="@dimen/_5dp"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:ellipsize="end"
+                                android:gravity="end"
+                                android:maxLines="1"
+                                android:padding="@dimen/_2dp"
+                                android:text="Honda City"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_16sp"
+                                tools:targetApi="lollipop" />
+
+                            <TextView
+                                android:id="@+id/tvPrice1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="@dimen/_5dp"
+                                android:layout_marginLeft="@dimen/_5dp"
+                                android:layout_marginStart="@dimen/_5dp"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:ellipsize="end"
+                                android:gravity="end"
+                                android:maxLines="1"
+                                android:padding="@dimen/_2dp"
+                                android:text="300$"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:targetApi="lollipop" />
+
+                        </RelativeLayout>
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -76,16 +173,66 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/constraint1">
 
-                        <ImageView
-                            android:id="@+id/productImage2"
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:contentDescription="@string/contentDescription"
-                            android:elevation="@dimen/_10dp"
-                            android:padding="@dimen/_1dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/test_car_image"
-                            tools:targetApi="lollipop" />
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/productImage2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:padding="@dimen/_1dp"
+                                android:scaleType="centerCrop"
+                                tools:targetApi="lollipop" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_50dp"
+                                android:layout_alignParentBottom="true"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:foreground="#50000000"
+                                tools:targetApi="lollipop" />
+
+                            <TextView
+                                android:id="@+id/tvTitle2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="25dp"
+                                android:layout_marginLeft="@dimen/_5dp"
+                                android:layout_marginStart="@dimen/_5dp"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:padding="@dimen/_2dp"
+                                android:text="Honda City"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_16sp"
+                                tools:targetApi="lollipop" />
+
+                            <TextView
+                                android:id="@+id/tvPrice2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="@dimen/_5dp"
+                                android:layout_marginLeft="@dimen/_5dp"
+                                android:layout_marginStart="@dimen/_5dp"
+                                android:contentDescription="@string/contentDescription"
+                                android:elevation="@dimen/_10dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:padding="@dimen/_2dp"
+                                android:text="300$"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                tools:targetApi="lollipop" />
+
+                        </RelativeLayout>
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -100,15 +247,66 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/_2dp">
 
-                <ImageView
-                    android:id="@+id/productImage3"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/contentDescription"
-                    android:elevation="@dimen/_10dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/test_car_image"
-                    tools:targetApi="lollipop" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/productImage3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/contentDescription"
+                        android:elevation="@dimen/_10dp"
+                        android:scaleType="centerCrop"
+                        tools:targetApi="lollipop" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50dp"
+                        android:layout_alignParentBottom="true"
+                        android:contentDescription="@string/contentDescription"
+                        android:elevation="@dimen/_10dp"
+                        android:foreground="#50000000"
+                        tools:targetApi="lollipop" />
+
+                    <TextView
+                        android:id="@+id/tvTitle3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="25dp"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:contentDescription="@string/contentDescription"
+                        android:elevation="@dimen/_10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="@dimen/_2dp"
+                        android:text="Honda City"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_16sp"
+                        tools:targetApi="lollipop" />
+
+                    <TextView
+                        android:id="@+id/tvPrice3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/_5dp"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:contentDescription="@string/contentDescription"
+                        android:elevation="@dimen/_10dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:padding="@dimen/_2dp"
+                        android:text="300$"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        tools:targetApi="lollipop" />
+
+                </RelativeLayout>
 
 
             </LinearLayout>

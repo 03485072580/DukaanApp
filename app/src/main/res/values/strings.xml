@@ -161,6 +161,9 @@
     <!--Activity Custom Strings-->
     <string name="userViewProductsList">userViewProductsList</string>
 
+    <!--ADMOB-->
+    <string name="ADMOB_APP_ID">ca-app-pub-3472430968894362~5901622546</string>
+
     <!--Query String-->
     <string name="query_CARS">CARS</string>
     <string name="query_MOBILES">MOBILES</string>
