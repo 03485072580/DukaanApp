@@ -1,9 +1,10 @@
 package com.example.fasih.dukaanapp.home.fragments.userPageResources;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -111,13 +112,13 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
         selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Fragrances"));
         selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Hot Deals"));
         RecyclerGridAdapter adapter = new RecyclerGridAdapter(getActivity(), this, selectedCategories);
-        GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+        GridLayoutManager manager = new GridLayoutManager(getActivity(), 4);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
 
         RecyclerLinearAdapter saleAdapter = new RecyclerLinearAdapter(getActivity());
-        LinearLayoutManager manager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager manager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         saleRecyclerVIew.setLayoutManager(manager1);
         saleRecyclerVIew.setAdapter(saleAdapter);
     }

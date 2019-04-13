@@ -1,7 +1,12 @@
 package com.example.fasih.dukaanapp.home.activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -9,15 +14,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.DrawerHandler;
 import com.example.fasih.dukaanapp.adapter.NavigationHandler;
+import com.example.fasih.dukaanapp.home.fragments.chat.Chat_Fragment;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
 import com.example.fasih.dukaanapp.utils.SectionsPagerStateAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class UserHomePageActivity extends AppCompatActivity {
     //Fragment Numbers
@@ -32,27 +44,89 @@ public class UserHomePageActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authStateStateListener;
     private String userID;
 
+    ArrayList<String> mylist;
+    BottomNavigationView navigation;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    replaceFragment(new HomeFragment(), "Home");
+//                    mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_dashboard:
+//                    replaceFragment(new Chat_Fragment(), "Profile");
+//                    mTextMessage.setText(R.string.title_dashboard);
+                    return true;
+                case R.id.navigation_notifications:
+                    replaceFragment(new Chat_Fragment(), "chat");
+//                    mTextMessage.setText(R.string.title_notifications);
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    private void replaceFragment(Fragment targetFragment, String name) {
+
+//        drawer.closeDrawers();
+
+//        titletxt.setText(name);
+        mylist.add(name);
+
+
+        View view = this.getCurrentFocus();
+        FragmentManager fm = getFragmentManager();
+        if (view != null) {
+
+            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
+
+//        Log.d("TAG", targetFragment.getTag());
+//        Addparent.setVisibility(View.GONE);
+//        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        fm.beginTransaction()
+                .replace(R.id.container, targetFragment, "fragment")
+                .addToBackStack(name)
+                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
+
+        Log.i("MYLIST", mylist.toString());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_home);
-        setupActivityWidgets();
-        setupToolbar();
-        setupViewPager(currentFragmentNumber);
+//        setupActivityWidgets();
+//        setupToolbar();
+//        setupViewPager(currentFragmentNumber);
         setupFirebase();
 
+        mylist = new ArrayList<String>();
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        replaceFragment(new HomeFragment(), "Home");
+
 
     }
 
-    private void setupViewPager(int currentFragmentNumber) throws NullPointerException {
-        SectionsPagerStateAdapter adapter = new SectionsPagerStateAdapter(getSupportFragmentManager());
-        adapter.setFragment(new HomeFragment());
-        container_view.setAdapter(adapter);
-        container_view.setCurrentItem(currentFragmentNumber);
-
-        tabLayout.setupWithViewPager(container_view);
-        tabLayout.getTabAt(0).setText("Beranda");
-    }
+//    private void setupViewPager(int currentFragmentNumber) throws NullPointerException {
+//        SectionsPagerStateAdapter adapter = new SectionsPagerStateAdapter(getSupportFragmentManager());
+//        adapter.setFragment(new HomeFragment());
+//        container_view.setAdapter(adapter);
+//        container_view.setCurrentItem(currentFragmentNumber);
+//
+////        tabLayout.setupWithViewPager(container_view);
+////        tabLayout.getTabAt(0).setText("Beranda");
+//    }
 
     private void setupToolbar() {
         try {
@@ -65,28 +139,28 @@ public class UserHomePageActivity extends AppCompatActivity {
     }
 
 
-    private void setupActivityWidgets() {
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.home_nav_view);
-        container_view = findViewById(R.id.container_view);
-        tabLayout = findViewById(R.id.tabLayout);
-
-        //Listener's
-        navigationView.setNavigationItemSelectedListener(new NavigationHandler(this));
-        drawerLayout.addDrawerListener(new DrawerHandler(this));
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    private void setupActivityWidgets() {
+//        toolbar = findViewById(R.id.toolbar);
+//        drawerLayout = findViewById(R.id.drawerLayout);
+//        navigationView = findViewById(R.id.home_nav_view);
+//        container_view = findViewById(R.id.container_view);
+//        tabLayout = findViewById(R.id.tabLayout);
+//
+//        //Listener's
+//        navigationView.setNavigationItemSelectedListener(new NavigationHandler(this));
+//        drawerLayout.addDrawerListener(new DrawerHandler(this));
+//
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                drawerLayout.openDrawer(GravityCompat.START);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void setupFirebase() {
         mAuth = FirebaseAuth.getInstance();
