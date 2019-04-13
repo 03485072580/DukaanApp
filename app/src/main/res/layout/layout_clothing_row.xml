@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_280dp"
+        android:layout_weight="50">
+
+        <ImageView
+            android:id="@+id/productImage0"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_280dp"
+            android:contentDescription="@string/contentDescription"
+            android:elevation="@dimen/_10dp"
+            android:padding="@dimen/_2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/test_car_image"
+            tools:targetApi="lollipop" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_280dp"
+        android:layout_weight="50"
+        android:contentDescription="@string/contentDescription">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="50">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                android:orientation="horizontal">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/_2dp">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/constraint1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toStartOf="@id/constraint2"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <ImageView
+                            android:id="@+id/productImage1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/contentDescription"
+                            android:elevation="@dimen/_10dp"
+                            android:padding="@dimen/_1dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/test_car_image"
+                            tools:targetApi="lollipop" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/constraint2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/constraint1">
+
+                        <ImageView
+                            android:id="@+id/productImage2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/contentDescription"
+                            android:elevation="@dimen/_10dp"
+                            android:padding="@dimen/_1dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/test_car_image"
+                            tools:targetApi="lollipop" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="25"
+                android:orientation="horizontal"
+                android:padding="@dimen/_2dp">
+
+                <ImageView
+                    android:id="@+id/productImage3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/contentDescription"
+                    android:elevation="@dimen/_10dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/test_car_image"
+                    tools:targetApi="lollipop" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

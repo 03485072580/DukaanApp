@@ -163,6 +163,13 @@
 
     <!--Query String-->
     <string name="query_CARS">CARS</string>
+    <string name="query_MOBILES">MOBILES</string>
+    <string name="query_CLOTHES">CLOTHES</string>
+    <string name="query_JEWELLERY">JEWELLERY</string>
+    <string name="query_COSMETICS">COSMETICS</string>
+    <string name="query_ELECTRONICS">ELECTRONICS</string>
+    <string name="query_FRAGRANCES">FRAGRANCES</string>
+    <!--<string name="query_MOBILES">MOBILES</string>-->
 
 
     <!--Spinner entries-->
@@ -173,6 +180,9 @@
         <item>CLOTHES</item>
         <item>JEWELLERY</item>
         <item>FAST FOOD</item>
+        <item>COSMETICS</item>
+        <item>ELECTRONICS</item>
+        <item>FRAGRANCES</item>
     </string-array>
 
 

@@ -44,44 +44,44 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
     public void onClickGridImage(int position, View view) {
         if (position == CARS_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("CARS", "CARS");
+            intent.putExtra(getString(R.string.query_CARS), getString(R.string.query_CARS));
             intent.putExtra(getString(R.string.carsFragment), getString(R.string.carsFragment));
             startActivity(intent);
         }
         if (position == CLOTHING_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("CLOTHING", "CLOTHING");
+            intent.putExtra(getString(R.string.query_CLOTHES), getString(R.string.query_CLOTHES));
             intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
             startActivity(intent);
         }
         if (position == JEWELLARY_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("JEWELLARY", "JEWELLARY");
+            intent.putExtra(getString(R.string.query_JEWELLERY), getString(R.string.query_JEWELLERY));
             intent.putExtra(getString(R.string.jewellaryFragment), getString(R.string.jewellaryFragment));
             startActivity(intent);
         }
         if (position == MOBILE_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("MOBILES", "MOBILES");
+            intent.putExtra(getString(R.string.query_MOBILES), getString(R.string.query_MOBILES));
             intent.putExtra(getString(R.string.mobileFragment), getString(R.string.mobileFragment));
             startActivity(intent);
         }
         if (position == ELECTRONICS_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("ELECTRONICS", "ELECTRONICS");
+            intent.putExtra(getString(R.string.query_ELECTRONICS), getString(R.string.query_ELECTRONICS));
             intent.putExtra(getString(R.string.electronicsFragment), getString(R.string.electronicsFragment));
             startActivity(intent);
         }
 
         if (position == COSMETICS_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("COSMETICS", "COSMETICS");
+            intent.putExtra(getString(R.string.query_COSMETICS), getString(R.string.query_COSMETICS));
             intent.putExtra(getString(R.string.cosmeticsFragment), getString(R.string.cosmeticsFragment));
             startActivity(intent);
         }
         if (position == FRAGRANCES_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
-            intent.putExtra("FRAGRANCES", "FRAGRANCES");
+            intent.putExtra(getString(R.string.query_FRAGRANCES), getString(R.string.query_FRAGRANCES));
             intent.putExtra(getString(R.string.fragrancesFragment), getString(R.string.fragrancesFragment));
             startActivity(intent);
         }
