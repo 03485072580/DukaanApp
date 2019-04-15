@@ -194,5 +194,6 @@ public class Products implements Parcelable {
         parcel.writeString(timeStamp);
         parcel.writeString(product_id);
         parcel.writeLong(product_rating);
+        parcel.writeString(shop_id);
     }
 }

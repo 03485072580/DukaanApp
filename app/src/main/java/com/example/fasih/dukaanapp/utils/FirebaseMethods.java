@@ -30,6 +30,7 @@ import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
+import com.example.fasih.dukaanapp.models.Views;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -988,6 +989,7 @@ public class FirebaseMethods {
                             userProduct.setProduct_stock(productObj.get(mContext.getString(R.string.db_field_product_stock)));
                             userProduct.setTimeStamp(productObj.get(mContext.getString(R.string.db_field_timeStamp)));
                             userProduct.setProduct_id(productObj.get(mContext.getString(R.string.db_field_product_id)));
+                            userProduct.setShop_id(productObj.get(mContext.getString(R.string.db_field_shop_id)));
                             userProduct.setProduct_rating(Long.parseLong(String.valueOf(productObj.get(mContext.getString(R.string.db_field_product_rating)))));
 
                             if (userProduct.getProduct_category().equals(queryString)) {
@@ -1014,16 +1016,16 @@ public class FirebaseMethods {
                             Log.d("TAG1234", "onDataChange: Similar Arrays");
                             if (adapter instanceof ClothingProductsAdapter) {
                                 ((ClothingProductsAdapter) adapter).setLoading();
-                                }
+                            }
                             if (adapter instanceof CarsFragmentAdapter) {
                                 ((CarsFragmentAdapter) adapter).setInitialLoadingProgress();
                             }
                             if (adapter instanceof MobileProductsAdapter) {
                                 ((MobileProductsAdapter) adapter).setLoading();
-                                }
+                            }
                             if (updateProgress != null)
                                 updateProgress.setVisibility(View.GONE);
-                            }
+                        }
                         if (currentProductsListSize > previousProductsListSize) {
                             for (int i = 0; i < previousProductsListSize; i++) {
                                 for (int j = 0; j < currentProductsListSize; j++) {
@@ -1058,6 +1060,55 @@ public class FirebaseMethods {
                 updateProgress.setVisibility(View.GONE);
             }
         });
+    }
+
+    public void initializeProductViews(final String currentUserID, final Products product) {
+        myRef
+                .child(mContext.getString(R.string.db_users_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(currentUserID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            HashMap<String, Object> map = (HashMap<String, Object>) ds.getValue();
+                            Users users = new Users();
+                            users.setUser_id((String) map.get(mContext.getString(R.string.db_field_user_id)));
+                            users.setUser_name((String) map.get(mContext.getString(R.string.db_field_user_name)));
+
+                            Views views = new Views(users.getUser_id(), users.getUser_name());
+                            myRef
+                                    .child(mContext.getString(R.string.db_views_node))
+                                    .child(product.getProduct_id())
+                                    .child(currentUserID)
+                                    .setValue(views);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void initializeAddToCart(String currentUserID, Products product) {
+
+        myRef
+                .child(mContext.getString(R.string.db_cart_node))
+                .child(currentUserID)
+                .child(myRef.push().getKey())
+                .setValue(product)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(mContext, mContext.getString(R.string.addedCart), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 
     public void setListenerForUpdatingRecyclerView(KeepHandleRecyclerList currentChildReference) {

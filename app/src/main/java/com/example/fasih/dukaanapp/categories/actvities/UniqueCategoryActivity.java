@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 public class UniqueCategoryActivity extends AppCompatActivity {
 
+
     private SearchView search;
 
 
@@ -280,5 +281,6 @@ public class UniqueCategoryActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(authStateListener);
         }
     }
+
 
 }

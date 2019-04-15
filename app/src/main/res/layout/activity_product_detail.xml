@@ -7,20 +7,26 @@
 
 
     <RelativeLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <!--Toolbar-->
         <RelativeLayout
+            android:id="@+id/relLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <include layout="@layout/layout_top_toolbar_product_details" />
 
         </RelativeLayout>
         <!--Snippet Mid Section-->
         <RelativeLayout
             android:id="@+id/relLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relLayout1"
+            android:layout_marginBottom="@dimen/_50dp">
 
             <include layout="@layout/snippet_product_detail_mid_section" />
 
@@ -28,8 +34,18 @@
         <!--Snippet After Mid Section-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/relLayout2"></RelativeLayout>
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/addToCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_2dp"
+                android:background="@drawable/button_std1"
+                android:text="ADD TO CART" />
+
+        </RelativeLayout>
 
 
     </RelativeLayout>

@@ -163,7 +163,7 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageSelected.onClickGridImage(getAdapterPosition(), itemView);
+                    imageSelected.onClickGridImage(getAdapterPosition(), itemView, userViewProductsList.get(getAdapterPosition()));
                 }
             });
         }

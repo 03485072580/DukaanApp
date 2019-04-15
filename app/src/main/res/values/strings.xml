@@ -94,6 +94,8 @@
     <string name="db_shop_profile_settings_node">shop_profile_settings</string>
     <string name="db_products_node">products</string>
     <string name="db_mall_node">mall</string>
+    <string name="db_cart_node">cart</string>
+    <string name="db_views_node">views</string>
 
     <string name="db_field_user_name">user_name</string>
     <string name="db_field_email">email</string>
@@ -132,8 +134,10 @@
     <string name="user_email_collsion">Email is already Existent</string>
     <string name="network_error">There might be a problem with your Internet Connection. Try Reconnecting to the Internet</string>
     <string name="bad_email_format">Email is not Properly Formatted</string>
+    <string name="Already_Added_to_the_Cart">Already Added to the Cart</string>
     <string name="bad_email">Bad Email</string>
     <string name="something_went_wrong">Something Went Wrong</string>
+    <string name="addedCart">Product is Successfully Added to the Cart</string>
     <string name="bad_username_password">InValid User Name or Password</string>
     <string name="shop_registration">Shop Registration</string>
     <string name="shop_already_existent">Shop/Mall is Already Present. Try to make your Shop/MAll Name Unique. Tip append numbers</string>
@@ -172,6 +176,8 @@
     <string name="query_COSMETICS">COSMETICS</string>
     <string name="query_ELECTRONICS">ELECTRONICS</string>
     <string name="query_FRAGRANCES">FRAGRANCES</string>
+    <string name="product_details">Product Details</string>
+    <string name="currentSelectedProduct">CurrentSelectedProduct</string>
     <!--<string name="query_MOBILES">MOBILES</string>-->
 
 

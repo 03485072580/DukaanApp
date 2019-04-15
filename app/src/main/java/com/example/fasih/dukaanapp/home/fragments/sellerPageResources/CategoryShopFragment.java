@@ -26,6 +26,7 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MyExternalPublicStorageDirectoryAdapter;
 import com.example.fasih.dukaanapp.home.activities.NavigationActivity;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.MessageEvent;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
@@ -75,7 +76,7 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
      * @param view
      */
     @Override
-    public void onClickGridImage(int position, View view) {
+    public void onClickGridImage(int position, View view, Products products) {
 
     }
 

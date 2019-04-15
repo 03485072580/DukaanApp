@@ -162,7 +162,9 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageSelected.onClickGridImage(getAdapterPosition(), itemView);
+                    imageSelected.onClickGridImage(getAdapterPosition()
+                            , itemView
+                            , userViewProductsList.get(getAdapterPosition()));
                 }
             });
         }

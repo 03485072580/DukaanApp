@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,13 +12,15 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="30">
+            android:layout_weight="40">
 
 
             <ImageView
+                android:id="@+id/productImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/contentDescription"
                 android:scaleType="fitCenter"
                 android:src="@drawable/j7" />
 
@@ -27,12 +29,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="70">
+            android:layout_weight="60">
 
             <TextView
                 android:id="@+id/productTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Samsung Jalaxy J7 Pro"
                 android:textAlignment="center"
                 android:textColor="@color/light_black"
@@ -61,14 +68,15 @@
                 android:layout_marginEnd="@dimen/_10dp"
                 android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:text="350 $"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="0 $"
                 android:textAlignment="center"
                 android:textColor="@color/orange"
                 android:textSize="@dimen/_24sp" />
 
-
             <TextView
-                android:id="@+id/productReviews"
+                android:id="@+id/productViews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -77,10 +85,80 @@
                 android:layout_marginEnd="@dimen/_10dp"
                 android:layout_marginStart="@dimen/_10dp"
                 android:layout_marginTop="@dimen/_10dp"
-                android:text="300+ Product Reviews >"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Views :0"
                 android:textAlignment="center"
-                android:textColor="@color/light_black"
+                android:textColor="@color/orange"
                 android:textSize="@dimen/_18sp" />
+
+            <com.willy.ratingbar.ScaleRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/simpleRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timeStamp"
+                android:layout_centerHorizontal="true"
+                app:srb_clearRatingEnabled="true"
+                app:srb_clickable="false"
+                app:srb_drawableEmpty="@drawable/star_empty"
+                app:srb_drawableFilled="@drawable/star_filled"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="0"
+                app:srb_numStars="5"
+                app:srb_rating="-1"
+                app:srb_scrollable="true"
+                app:srb_starHeight="30dp"
+                app:srb_starWidth="30dp"
+                app:srb_stepSize="1" />
+
+            <TextView
+                android:id="@+id/productWarranty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/productViews"
+                android:layout_marginEnd="@dimen/_10dp"
+                android:layout_marginStart="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Warranty :1 year"
+                android:textAlignment="center"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_18sp" />
+
+            <TextView
+                android:id="@+id/timeStamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/productWarranty"
+                android:layout_marginEnd="@dimen/_10dp"
+                android:layout_marginStart="@dimen/_10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Date Created :"
+                android:textAlignment="center"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_18sp" />
+
+
+            <!--<TextView-->
+            <!--android:id="@+id/productReviews"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_below="@id/productDesc"-->
+            <!--android:layout_marginEnd="@dimen/_10dp"-->
+            <!--android:layout_marginStart="@dimen/_10dp"-->
+            <!--android:layout_marginTop="@dimen/_10dp"-->
+            <!--android:text="300+ Product Reviews >"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textColor="@color/light_black"-->
+            <!--android:textSize="@dimen/_18sp" />-->
 
         </RelativeLayout>
 

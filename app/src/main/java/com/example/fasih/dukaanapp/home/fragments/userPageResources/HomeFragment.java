@@ -15,6 +15,7 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.home.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.RecyclerGridAdapter;
 import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
 
@@ -40,7 +41,7 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
      * @param view
      */
     @Override
-    public void onClickGridImage(int position, View view) {
+    public void onClickGridImage(int position, View view, Products products) {
         if (position == CARS_FRAGMENT) {
             Intent intent = new Intent(getActivity(), UniqueCategoryActivity.class);
             intent.putExtra(getString(R.string.query_CARS), getString(R.string.query_CARS));

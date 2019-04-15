@@ -98,8 +98,11 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
      *                 layout clicked
      */
     @Override
-    public void onClickGridImage(int position, View view) {
-        startActivity(new Intent(getActivity(), ProductDetailActivity.class));
+    public void onClickGridImage(int position, View view, Products currentSelectedProduct) {
+
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        intent.putExtra(getString(R.string.currentSelectedProduct), currentSelectedProduct);
+        startActivity(intent);
     }
 
     @Override
@@ -122,7 +125,9 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
         backupUserViewProductsList = new ArrayList<>();
         backupUserViewProductsList.addAll(userViewProductsList);
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mobileProductsAdapter = new MobileProductsAdapter(getActivity(), this, userViewProductsList, productsContainer);
+        mobileProductsAdapter = new MobileProductsAdapter(getActivity()
+                , this
+                , userViewProductsList, productsContainer);
         mobileProductsAdapter.setLoading();
         mobileProductsAdapter.setLoadDynamicData(this);
         productsContainer.setAdapter(mobileProductsAdapter);

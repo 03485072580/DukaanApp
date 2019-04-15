@@ -13,6 +13,7 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.models.Products;
 
 import java.util.ArrayList;
 
@@ -76,7 +77,7 @@ public class RecyclerGridAdapter extends RecyclerView.Adapter<RecyclerGridAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageSelected.onClickGridImage(getAdapterPosition(), itemView);
+                    imageSelected.onClickGridImage(getAdapterPosition(), itemView, new Products());
                 }
             });
         }
