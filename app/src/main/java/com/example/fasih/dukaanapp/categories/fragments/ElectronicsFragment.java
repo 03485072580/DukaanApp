@@ -124,7 +124,10 @@ public class ElectronicsFragment extends Fragment implements KeepHandleRecyclerL
         backupUserViewProductsList = new ArrayList<>();
         backupUserViewProductsList.addAll(userViewProductsList);
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
-        electronicsProductsAdapter = new ElectronicsProductsAdapter(getActivity(), this, userViewProductsList, productsContainer);
+        electronicsProductsAdapter = new ElectronicsProductsAdapter(getActivity()
+                , userViewProductsList
+                , productsContainer);
+        electronicsProductsAdapter.setupOnItemClickListener(this);
         electronicsProductsAdapter.setLoading();
         electronicsProductsAdapter.setLoadDynamicData(this);
         productsContainer.setAdapter(electronicsProductsAdapter);

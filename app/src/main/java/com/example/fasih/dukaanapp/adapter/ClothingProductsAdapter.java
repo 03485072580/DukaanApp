@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,6 +34,9 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
     private int currentPositionParsed = -1;
+
+
+    private OnRecyclerImageSelectedListener imageSelected;
 
     public ClothingProductsAdapter(Context context
             , ArrayList<Products> userViewProductsList
@@ -233,6 +237,12 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
         userViewProductsList.clear();
         userViewProductsList.addAll(filteredList);
         notifyDataSetChanged();
+    }
+
+    public void setupOnItemClickListener(OnRecyclerImageSelectedListener onRecyclerImageSelectedListener) {
+
+        this.imageSelected = onRecyclerImageSelectedListener;
+
     }
 
     public class ClothingViewHolder extends RecyclerView.ViewHolder {

@@ -1,5 +1,6 @@
 package com.example.fasih.dukaanapp.categories.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,8 +15,10 @@ import android.widget.ProgressBar;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
+import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.StringManipulations;
@@ -32,7 +35,8 @@ import java.util.ArrayList;
 
 public class JewellaryFragment extends Fragment implements KeepHandleRecyclerList
         , LoadDynamicData
-        , SearchView.OnQueryTextListener {
+        , SearchView.OnQueryTextListener
+        , OnRecyclerImageSelectedListener {
 
     private SearchView searchView;
     private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
@@ -86,6 +90,27 @@ public class JewellaryFragment extends Fragment implements KeepHandleRecyclerLis
         //Hide Progress Bar
         adapter.notifyDataSetChanged();
         adapter.setLoading();
+
+    }
+
+    /**
+     * This method is responsible for
+     * keeping track of the click events on the categories items
+     *
+     * @param position
+     * @param view     Here view helps to determine which item on the
+     *                 layout clicked
+     */
+    @Override
+    public void onClickGridImage(int position, View view, Products currentSelectedProduct) {
+
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        intent.putExtra(getString(R.string.currentSelectedProduct), currentSelectedProduct);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickGridImage(int position, View view, String Url) {
 
     }
 
@@ -166,6 +191,5 @@ public class JewellaryFragment extends Fragment implements KeepHandleRecyclerLis
         this.searchView.setOnQueryTextListener(this);
         filteredList = new ArrayList<>();
     }
-
 }
 

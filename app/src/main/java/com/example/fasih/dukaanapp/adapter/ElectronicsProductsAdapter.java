@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.categories.fragments.ElectronicsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
@@ -40,11 +39,9 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
     private Boolean isLoading;
 
     public ElectronicsProductsAdapter(Context context
-            , ElectronicsFragment electronicsFragment
             , ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.mContext = context;
-        this.imageSelected = electronicsFragment;
         this.userViewProductsList = userViewProductsList;
         setupUniversalImageLoader(UniversalImageLoader.getConfiguration(context));
         setupScrollListner((LinearLayoutManager) recyclerView.getLayoutManager(), recyclerView);
@@ -138,6 +135,12 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
         userViewProductsList.clear();
         userViewProductsList.addAll(filteredList);
         notifyDataSetChanged();
+    }
+
+    public void setupOnItemClickListener(OnRecyclerImageSelectedListener onRecyclerImageSelectedListener) {
+
+        this.imageSelected = onRecyclerImageSelectedListener;
+
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

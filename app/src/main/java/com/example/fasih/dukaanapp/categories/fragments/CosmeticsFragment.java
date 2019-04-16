@@ -124,7 +124,10 @@ public class CosmeticsFragment extends Fragment implements KeepHandleRecyclerLis
         backupUserViewProductsList = new ArrayList<>();
         backupUserViewProductsList.addAll(userViewProductsList);
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
-        cosmeticsProductsAdapter = new CosmeticsProductsAdapter(getActivity(), this, userViewProductsList, productsContainer);
+        cosmeticsProductsAdapter = new CosmeticsProductsAdapter(getActivity()
+                , userViewProductsList
+                , productsContainer);
+        cosmeticsProductsAdapter.setupOnItemClickListener(this);
         cosmeticsProductsAdapter.setLoading();
         cosmeticsProductsAdapter.setLoadDynamicData(this);
         productsContainer.setAdapter(cosmeticsProductsAdapter);

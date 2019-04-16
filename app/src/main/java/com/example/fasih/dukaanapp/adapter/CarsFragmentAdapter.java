@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.fragments.CarsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.RecyclerProgressUpdater;
 import com.example.fasih.dukaanapp.utils.SquareImageView;
@@ -27,14 +28,17 @@ import java.util.ArrayList;
  */
 
 public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private final int VIEW_TYPE_CURRENT = 0, VIEW_TYPE_RECYCLER_PROGRESS_BAR = 1;
     private ArrayList<Products> userViewProductsList;
     private Boolean isLoading;
     private int visibleThreshHold = 1;
     private LoadDynamicData loadData;
+    private OnRecyclerImageSelectedListener imageSelected;
 
 
-    public CarsFragmentAdapter(final ArrayList<Products> userViewProductsList, RecyclerView recyclerView) {
+    public CarsFragmentAdapter(final ArrayList<Products> userViewProductsList
+            , RecyclerView recyclerView) {
         this.userViewProductsList = userViewProductsList;
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -143,6 +147,12 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
+    public void setupOnItemClickListener(OnRecyclerImageSelectedListener onRecyclerImageSelectedListener) {
+
+        this.imageSelected = onRecyclerImageSelectedListener;
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private SquareImageView perfectlySquareImage;
@@ -150,7 +160,7 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private TextView productTitle, productDesc, productPrice, sellingBy;
         private ScaleRatingBar simpleRatingBar;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             perfectlySquareImage = itemView.findViewById(R.id.perfectlySquareImage);
             sellerImage = itemView.findViewById(R.id.sellerImage);
@@ -159,6 +169,13 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             productPrice = itemView.findViewById(R.id.productPrice);
             sellingBy = itemView.findViewById(R.id.sellingBy);
             simpleRatingBar = itemView.findViewById(R.id.simpleRatingBar);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageSelected.onClickGridImage(getAdapterPosition(), itemView, userViewProductsList.get(getAdapterPosition()));
+                }
+            });
         }
     }
 }

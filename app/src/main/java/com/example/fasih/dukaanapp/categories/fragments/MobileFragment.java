@@ -126,8 +126,9 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
         backupUserViewProductsList.addAll(userViewProductsList);
         productsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
         mobileProductsAdapter = new MobileProductsAdapter(getActivity()
-                , this
-                , userViewProductsList, productsContainer);
+                , userViewProductsList
+                , productsContainer);
+        mobileProductsAdapter.setupOnItemClickListener(this);
         mobileProductsAdapter.setLoading();
         mobileProductsAdapter.setLoadDynamicData(this);
         productsContainer.setAdapter(mobileProductsAdapter);

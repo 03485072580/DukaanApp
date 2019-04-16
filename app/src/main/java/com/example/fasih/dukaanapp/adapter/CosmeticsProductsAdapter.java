@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.categories.fragments.CosmeticsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
@@ -40,11 +39,9 @@ public class CosmeticsProductsAdapter extends RecyclerView.Adapter<RecyclerView.
     private Boolean isLoading;
 
     public CosmeticsProductsAdapter(Context context
-            , CosmeticsFragment cosmeticsFragment
             , ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.mContext = context;
-        this.imageSelected = cosmeticsFragment;
         this.userViewProductsList = userViewProductsList;
         setupUniversalImageLoader(UniversalImageLoader.getConfiguration(context));
         setupScrollListner((LinearLayoutManager) recyclerView.getLayoutManager(), recyclerView);
@@ -139,6 +136,13 @@ public class CosmeticsProductsAdapter extends RecyclerView.Adapter<RecyclerView.
         userViewProductsList.addAll(filteredList);
         notifyDataSetChanged();
     }
+
+    public void setupOnItemClickListener(OnRecyclerImageSelectedListener onRecyclerImageSelectedListener) {
+
+        this.imageSelected = onRecyclerImageSelectedListener;
+
+    }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
