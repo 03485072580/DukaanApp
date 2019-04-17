@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,13 +85,15 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
 
             if (holder instanceof ClothingViewHolder) {
                 ClothingViewHolder viewHolder = (ClothingViewHolder) holder;
-                updateRecyclerViews(currentPositionParsed + 1, viewHolder);
+//                updateRecyclerViews(currentPositionParsed + 1, viewHolder);
+                updateRecyclerViews(position * 4, viewHolder);
 
             }
 
             if (holder instanceof ClothingInvertViewHolder) {
                 ClothingInvertViewHolder viewHolder = (ClothingInvertViewHolder) holder;
-                updateRecyclerViews(currentPositionParsed + 1, viewHolder);
+//                updateRecyclerViews(currentPositionParsed + 1, viewHolder);
+                updateRecyclerViews(position * 4, viewHolder);
             }
         } catch (IndexOutOfBoundsException exc) {
             exc.printStackTrace();
@@ -250,7 +253,7 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
         private ImageView productImage0, productImage1, productImage2, productImage3;
         private TextView tvTitle0, tvTitle1, tvTitle2, tvTitle3, tvPrice0, tvPrice1, tvPrice2, tvPrice3;
 
-        public ClothingViewHolder(View itemView) {
+        public ClothingViewHolder(final View itemView) {
             super(itemView);
             productImage0 = itemView.findViewById(R.id.productImage0);
             productImage1 = itemView.findViewById(R.id.productImage1);
@@ -264,6 +267,78 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
             tvPrice1 = itemView.findViewById(R.id.tvPrice1);
             tvPrice2 = itemView.findViewById(R.id.tvPrice2);
             tvPrice3 = itemView.findViewById(R.id.tvPrice3);
+
+            try {
+
+                setupImageClickListeners(itemView);
+            } catch (IndexOutOfBoundsException exc) {
+                exc.printStackTrace();
+            }
+        }
+
+        private void setupImageClickListeners(final View itemView) {
+            productImage0.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("TAG1234", "onClick: " + getAdapterPosition());
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4));
+
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
+
+            productImage1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4 + 1));
+
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
+
+            productImage2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4 + 2));
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
+
+            productImage3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4 + 3));
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
         }
     }
 
@@ -286,6 +361,74 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
             tvPrice1 = itemView.findViewById(R.id.tvPrice1);
             tvPrice2 = itemView.findViewById(R.id.tvPrice2);
             tvPrice3 = itemView.findViewById(R.id.tvPrice3);
+
+            setupImageClickListeners(itemView);
+
+        }
+
+        private void setupImageClickListeners(final View itemView) {
+            productImage0.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("TAG1234", "onClick: " + getAdapterPosition());
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4));
+
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
+
+            productImage1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4 + 1));
+
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
+
+            productImage2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4 + 2));
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
+
+            productImage3.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+
+                        imageSelected.onClickGridImage(getAdapterPosition()
+                                , itemView
+                                , userViewProductsList.get(getAdapterPosition() * 4 + 3));
+                    } catch (IndexOutOfBoundsException exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            });
         }
     }
 }

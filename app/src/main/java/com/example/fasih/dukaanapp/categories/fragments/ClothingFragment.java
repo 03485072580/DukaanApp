@@ -146,6 +146,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
                 backupUserViewProductsList.addAll(userViewProductsList);
                 adapter = new ClothingProductsAdapter(getActivity(), userViewProductsList, clothingContainer);
                 adapter.setLoading();
+                adapter.setupOnItemClickListener(this);
                 adapter.setLoadDynamicData(this);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
                 clothingContainer.setLayoutManager(layoutManager);

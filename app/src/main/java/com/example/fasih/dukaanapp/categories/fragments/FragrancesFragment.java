@@ -146,6 +146,7 @@ public class FragrancesFragment extends Fragment implements KeepHandleRecyclerLi
                 backupUserViewProductsList.addAll(userViewProductsList);
                 adapter = new ClothingProductsAdapter(getActivity(), userViewProductsList, fragrancesContainer);
                 adapter.setLoading();
+                adapter.setupOnItemClickListener(this);
                 adapter.setLoadDynamicData(this);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
                 fragrancesContainer.setLayoutManager(layoutManager);

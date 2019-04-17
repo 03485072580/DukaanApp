@@ -145,6 +145,7 @@ public class JewellaryFragment extends Fragment implements KeepHandleRecyclerLis
                 backupUserViewProductsList.addAll(userViewProductsList);
                 adapter = new ClothingProductsAdapter(getActivity(), userViewProductsList, jewellaryContainer);
                 adapter.setLoading();
+                adapter.setupOnItemClickListener(this);
                 adapter.setLoadDynamicData(this);
                 StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
                 jewellaryContainer.setLayoutManager(layoutManager);
