@@ -1,7 +1,9 @@
 package com.example.fasih.dukaanapp.utils;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,15 +12,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.PermissionChecker;
+import android.util.Log;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.activities.NavigationActivity;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryMapsFragment;
+import com.example.fasih.dukaanapp.home.fragments.services.GeofenceTransitionsIntentService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
+import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,6 +32,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
@@ -100,11 +108,13 @@ public class GoogleMapsMethods {
                             Location currentLocation = task.getResult();
                             if (currentLocation != null) {
 
-                                if(activityOrFragmentName.equals(mContext.getString(R.string.categoryMapsFragment))){
+                                if (activityOrFragmentName.equals(mContext.getString(R.string.categoryMapsFragment))) {
 
                                     double currentLat = currentLocation.getLatitude();
                                     double currentLng = currentLocation.getLongitude();
-                                    ((CategoryMapsFragment)currentFragment).notifyUpdateMaps(currentLat, currentLng);
+
+                                    ((CategoryMapsFragment) currentFragment).notifyCreateGeofence(currentLat, currentLng);
+                                    ((CategoryMapsFragment) currentFragment).notifyUpdateMaps(currentLat, currentLng);
                                 }
 
                             }
@@ -116,23 +126,96 @@ public class GoogleMapsMethods {
         return true;
     }
 
-    public void createGeofence(){
-//        geofenceList = new ArrayList();
-//
-//        geofenceList.add(new Geofence.Builder()
-//                // Set the request ID of the geofence. This is a string to identify this
-//                // geofence.
-//                .setRequestId(entry.getKey())
-//
-//                .setCircularRegion(
-//                        entry.getValue().latitude,
-//                        entry.getValue().longitude,
-//                        Constants.GEOFENCE_RADIUS_IN_METERS
-//                )
-//                .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
-//                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-//                        Geofence.GEOFENCE_TRANSITION_EXIT)
-//                .build());
+    public void createGeofenceList(String currentUserID
+            , double currentLat
+            , double currentLng) {
+
+        Log.d("TAG1234", "createGeofenceList: currentUserID" + currentUserID +
+                "\n currentLat" + currentLat +
+                "\n currentLng" + currentLng);
+
+        geofenceList = new ArrayList();
+
+        geofenceList.add(new Geofence.Builder()
+                // Set the request ID of the geofence. This is a string to identify this
+                // geofence.
+                .setRequestId(currentUserID)
+
+                .setCircularRegion(
+                        currentLat,
+                        currentLng,
+                        Constants.GEOFENCE_RADIUS_IN_METERS
+                )
+                .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                        Geofence.GEOFENCE_TRANSITION_EXIT)
+                .build());
+
+        Log.d("TAG1234", "createGeofenceList: END");
     }
+
+    /**
+     *
+     * First call createGeofenceList(...) method, then call this method
+     */
+
+    public void addGeofence() {
+
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        geofencingClient.addGeofences(getGeofencingRequest()
+                , GeofenceMonitoringHelper.getGeofencePendingIntent(mContext))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Geofences added
+                        // ...
+                        Log.d("TAG1234", "onSuccess: addGeofence()");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Failed to add geofences
+                        // ...
+                        Log.d("TAG1234", "onFailure: addGeofence()");
+                    }
+                });
+
+    }
+
+    /**
+     *
+     * This example shows the use of two geofence triggers.
+     * The GEOFENCE_TRANSITION_ENTER transition triggers when a device enters a geofence,
+     * and the GEOFENCE_TRANSITION_EXIT transition triggers when a device exits a geofence.
+     * Specifying INITIAL_TRIGGER_ENTER tells Location services that GEOFENCE_TRANSITION_ENTER
+     * should be triggered if the device is already inside the geofence.
+     *
+     * In many cases, it may be preferable to use instead INITIAL_TRIGGER_DWELL,
+     * which triggers events only when the user stops for a defined duration within a geofence.
+     * This approach can help reduce "alert spam" resulting from large numbers notifications
+     * when a device briefly enters and exits geofences.
+     * Another strategy for getting best results from your geofences is to set a minimum radius of 100 meters.
+     * This helps account for the location accuracy of typical Wi-Fi networks,
+     * and also helps reduce device power consumption.
+     * @return
+     */
+    private GeofencingRequest getGeofencingRequest() {
+        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.addGeofences(geofenceList);
+        return builder.build();
+    }
+
 
 }

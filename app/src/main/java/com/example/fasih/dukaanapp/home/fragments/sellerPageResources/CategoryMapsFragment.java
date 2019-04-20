@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -38,8 +35,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,8 +51,10 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
-    private GoogleMapsMethods googleMapsMethods;
     private BroadcastReceiver resultReceiver;
+
+    //Always initialize it when Map gets ready
+    private GoogleMapsMethods googleMapsMethods;
 
     //Firebase Stuff
     private FirebaseAuth mAuth;
@@ -97,16 +94,13 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
 //            displayAddressOutput();
 
                 // Show a toast message if an address was found.
-                if (intent.getIntExtra(Constants.RESULT_CODE,404) == Constants.SUCCESS_RESULT) {
+                if (intent.getIntExtra(Constants.RESULT_CODE, 404) == Constants.SUCCESS_RESULT) {
 
                     //update the DB with Current Shop Coordinates
 
 
-
-
-
                     fetchDBPreviousShopData(intent.getStringExtra(getString(R.string.city))
-                            , intent.getStringExtra(getString(R.string.country)) );
+                            , intent.getStringExtra(getString(R.string.country)));
                 }
             }
         };
@@ -124,8 +118,8 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        for(DataSnapshot singleShot: dataSnapshot.getChildren()){
-                            Map<String,Object> map= (HashMap<String,Object>)singleShot.getValue();
+                        for (DataSnapshot singleShot : dataSnapshot.getChildren()) {
+                            Map<String, Object> map = (HashMap<String, Object>) singleShot.getValue();
                             shopProfileSettings[0] = new ShopProfileSettings();
                             shopProfileSettings[0].setUser_id((String) map.get(getString(R.string.db_field_user_id)));
                             shopProfileSettings[0].setFirst_name((String) map.get(getString(R.string.db_field_first_name)));
@@ -191,24 +185,11 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
         mapsFragment.getMapAsync(this);
     }
 
-
-    public void notifyUpdateMaps(double currentLat, double currentLng) {
-
-        startIntentService(currentLat,currentLng);
-
-        LatLng latLng = new LatLng(currentLat, currentLng);
-
-        LatLngBounds bounds = new LatLngBounds(latLng, latLng);
-        mMap.setLatLngBoundsForCameraTarget(bounds);
-        CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds,0);
-        mMap.animateCamera(update);
-    }
-
     protected void startIntentService(double currentLat, double currentLng) {
 
 
-        Intent intent = new Intent(getActivity(),FetchAddressIntentService.class);
-        intent.putExtra(getString(R.string.currentLat),currentLat);
+        Intent intent = new Intent(getActivity(), FetchAddressIntentService.class);
+        intent.putExtra(getString(R.string.currentLat), currentLat);
         intent.putExtra(getString(R.string.currentLng), currentLng);
         getActivity().startService(intent);
     }
@@ -222,11 +203,11 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
-        Log.d("TAG1234", "onMapReady: ");
+
         googleMapsMethods = new GoogleMapsMethods(CategoryMapsFragment.this.getActivity()
                 , CategoryMapsFragment.this
-                ,getString(R.string.categoryMapsFragment)
-                ,mMap);
+                , getString(R.string.categoryMapsFragment)
+                , mMap);
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
@@ -284,5 +265,25 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(resultReceiver);
 
 
+    }
+
+
+
+    public void notifyUpdateMaps(double currentLat, double currentLng) {
+
+        startIntentService(currentLat, currentLng);
+
+        LatLng latLng = new LatLng(currentLat, currentLng);
+
+        LatLngBounds bounds = new LatLngBounds(latLng, latLng);
+        mMap.setLatLngBoundsForCameraTarget(bounds);
+        CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, 0);
+        mMap.animateCamera(update);
+    }
+
+    public void notifyCreateGeofence(double currentLat, double currentLng) {
+
+        googleMapsMethods.createGeofenceList(currentUserID, currentLat,currentLng);
+        googleMapsMethods.addGeofence();
     }
 }

@@ -5,7 +5,7 @@ package com.example.fasih.dukaanapp.utils;
  */
 
 public class Constants {
-    public static final float GEOFENCE_RADIUS_IN_METERS =100 ;
+    public static final float GEOFENCE_RADIUS_IN_METERS = 200 ;
     public static final long GEOFENCE_EXPIRATION_IN_MILLISECONDS = 24000 * 60 * 60;
 
     public static final int SUCCESS_RESULT = 1;
