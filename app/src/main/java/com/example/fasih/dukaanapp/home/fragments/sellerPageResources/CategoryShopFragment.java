@@ -330,6 +330,15 @@ public class CategoryShopFragment extends Fragment implements OnRecyclerImageSel
                             intent4.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent4);
                             return true;
+
+                        case R.id.maps:
+                            drawerLayoutCategoryShop.closeDrawer(navigationViewCategoryShop);
+                            Intent intent5 = new Intent(getActivity(), NavigationActivity.class);
+                            intent5.putExtra(getString(R.string.categoryMapsFragment)
+                                    , getString(R.string.categoryMapsFragment));
+                            intent5.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(intent5);
+                            return true;
                     }
 
                 } catch (NullPointerException exc) {

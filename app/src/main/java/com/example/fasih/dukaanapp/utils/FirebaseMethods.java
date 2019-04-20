@@ -1114,12 +1114,37 @@ public class FirebaseMethods {
     public void setListenerForUpdatingRecyclerView(KeepHandleRecyclerList currentChildReference) {
         this.currentChildReference = currentChildReference;
 
+    }
+
+    public void updateShopProfileSettingsNode(ShopProfileSettings shopProfileSettings) {
+
+        myRef.child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .child(mAuth.getCurrentUser().getUid())
+                .setValue(shopProfileSettings);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //        if(currentChildReference instanceof CarsFragment){
 //
 //        }
 
 
-        //                            if (currentProductsListSize < previousProductsListSize)
+//                            if (currentProductsListSize < previousProductsListSize)
 //                                for (int i = 0; i < currentProductsListSize; i++) {
 //                                    if (!userViewProductsList.get(i).equals(tempUserViewProductList.get(i))) {
 //                                        userViewProductsList.add(tempUserViewProductList.get(i));
@@ -1134,6 +1159,3 @@ public class FirebaseMethods {
 //                                    currentChildReference.onUpdateRecyclerList(userViewProductsList);
 //                                }
 //                            }, 2000);
-
-    }
-}

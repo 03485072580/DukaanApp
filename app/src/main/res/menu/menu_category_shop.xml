@@ -14,6 +14,11 @@
             android:id="@+id/orders"
             android:icon="@drawable/ic_orders"
             android:title="Orders"></item>
+
+        <item
+            android:id="@+id/maps"
+            android:icon="@drawable/ic_maps"
+            android:title="Maps"></item>
     </group>
 
     <group>

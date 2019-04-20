@@ -37,6 +37,7 @@
     <string name="cosmeticsFragment">CosmeticsFragment</string>
     <string name="electronicsFragment">ElectronicsFragment</string>
     <string name="fragrancesFragment">FragrancesFragment</string>
+    <string name="categoryMapsFragment">CategoryMapsFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -151,6 +152,10 @@
     <!--<string name="web_client_id">1019843401754-tbmkvms3paksd69ig4l26j98492oqni9.apps.googleusercontent.com</string>-->
     <string name="web_client_id">1042298816878-n5e12ggoeiah38525fh3vnu4hec921v0.apps.googleusercontent.com</string>
 
+    <!--Google Maps SDK Stuff-->
+    <string name="google_maps_api_key">AIzaSyBhw2T6T59OuPOLq4Ywc6cT1dm8hHkhbws</string>
+
+
     <!--User login Scopes-->
     <string name="scope_user">user</string>
     <string name="scope_shop">shop</string>
@@ -178,7 +183,12 @@
     <string name="query_FRAGRANCES">FRAGRANCES</string>
     <string name="product_details">Product Details</string>
     <string name="currentSelectedProduct">CurrentSelectedProduct</string>
+
     <!--<string name="query_MOBILES">MOBILES</string>-->
+
+    <!--Google Maps Stuff-->
+    <string name="currentLat">currentLat</string>
+    <string name="currentLng">currentLng</string>
 
 
     <!--Spinner entries-->
