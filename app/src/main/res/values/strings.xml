@@ -38,6 +38,9 @@
     <string name="electronicsFragment">ElectronicsFragment</string>
     <string name="fragrancesFragment">FragrancesFragment</string>
     <string name="categoryMapsFragment">CategoryMapsFragment</string>
+    <string name="homeFragment">HomeFragment</string>
+    <string name="userLocationTrackerFragment">UserLocationTrackerFragment</string>
+    <string name="chatFragment">ChatFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>

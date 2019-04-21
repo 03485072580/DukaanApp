@@ -1,6 +1,6 @@
 package com.example.fasih.dukaanapp.home.activities;
 
-import android.app.Fragment;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -21,11 +21,9 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.adapter.DrawerHandler;
-import com.example.fasih.dukaanapp.adapter.NavigationHandler;
 import com.example.fasih.dukaanapp.home.fragments.chat.Chat_Fragment;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
-import com.example.fasih.dukaanapp.utils.SectionsPagerStateAdapter;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.UserLocationTrackerFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -54,7 +52,7 @@ public class UserHomePageActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    replaceFragment(new HomeFragment(), "Home");
+                    replaceSupportFragment(new HomeFragment(), getString(R.string.homeFragment));
 //                    mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_dashboard:
@@ -62,43 +60,70 @@ public class UserHomePageActivity extends AppCompatActivity {
 //                    mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_notifications:
-                    replaceFragment(new Chat_Fragment(), "chat");
+                    replaceSupportFragment(new Chat_Fragment(), getString(R.string.chatFragment));
 //                    mTextMessage.setText(R.string.title_notifications);
+                    return true;
+                case R.id.location:
+                    replaceSupportFragment(new UserLocationTrackerFragment(), getString(R.string.userLocationTrackerFragment));
                     return true;
             }
             return false;
         }
     };
 
-    private void replaceFragment(Fragment targetFragment, String name) {
-
-//        drawer.closeDrawers();
-
-//        titletxt.setText(name);
+    private void replaceSupportFragment(Fragment targetFragment
+            , String name) {
         mylist.add(name);
 
 
         View view = this.getCurrentFocus();
-        FragmentManager fm = getFragmentManager();
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         if (view != null) {
 
-            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            InputMethodManager inputManager = (InputMethodManager)
+                    this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(view.getWindowToken()
+                    , InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
-
-//        Log.d("TAG", targetFragment.getTag());
-//        Addparent.setVisibility(View.GONE);
-//        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         fm.beginTransaction()
-                .replace(R.id.container, targetFragment, "fragment")
+                .replace(R.id.container, targetFragment, name)
                 .addToBackStack(name)
                 .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
 
-        Log.i("MYLIST", mylist.toString());
     }
+
+//    private void replaceFragment(Fragment targetFragment, String name) {
+//
+////        drawer.closeDrawers();
+//
+////        titletxt.setText(name);
+//        mylist.add(name);
+//
+//
+//        View view = this.getCurrentFocus();
+//        FragmentManager fm = getFragmentManager();
+//        if (view != null) {
+//
+//            InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+//            inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+//        }
+//
+//
+////        Log.d("TAG", targetFragment.getTag());
+////        Addparent.setVisibility(View.GONE);
+////        ((InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//        fm.beginTransaction()
+//                .replace(R.id.container, targetFragment, "fragment")
+//                .addToBackStack(name)
+//                .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//                .commit();
+//
+//        Log.i("MYLIST", mylist.toString());
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +135,10 @@ public class UserHomePageActivity extends AppCompatActivity {
         setupFirebase();
 
         mylist = new ArrayList<String>();
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        replaceFragment(new HomeFragment(), "Home");
+        replaceSupportFragment(new HomeFragment(), getString(R.string.homeFragment));
 
 
     }
@@ -128,15 +153,15 @@ public class UserHomePageActivity extends AppCompatActivity {
 ////        tabLayout.getTabAt(0).setText("Beranda");
 //    }
 
-    private void setupToolbar() {
-        try {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
-        } catch (NullPointerException exc) {
-            exc.printStackTrace();
-        }
-    }
+//    private void setupToolbar() {
+//        try {
+//            setSupportActionBar(toolbar);
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_hamburger);
+//        } catch (NullPointerException exc) {
+//            exc.printStackTrace();
+//        }
+//    }
 
 
 //    private void setupActivityWidgets() {

@@ -23,6 +23,7 @@ import com.example.fasih.dukaanapp.home.fragments.services.FetchAddressIntentSer
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.utils.Constants;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
+import com.example.fasih.dukaanapp.utils.GeofenceMonitoringHelper;
 import com.example.fasih.dukaanapp.utils.GoogleMapsMethods;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -77,10 +78,14 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
     private void setupBroadcastReceiver() {
 
 
+        //Responsible for updating the DB city and
+        // country fields based on shop Current location
+
         resultReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d("TAG1234", "onReceive: ");
+
+
                 if (intent == null) {
                     return;
                 }
@@ -285,5 +290,11 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
 
         googleMapsMethods.createGeofenceList(currentUserID, currentLat,currentLng);
         googleMapsMethods.addGeofence();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        googleMapsMethods.removeGeofence(GeofenceMonitoringHelper.getGeofencePendingIntent(getContext()));
     }
 }

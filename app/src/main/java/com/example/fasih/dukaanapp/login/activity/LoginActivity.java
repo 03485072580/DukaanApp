@@ -17,6 +17,8 @@ import com.example.fasih.dukaanapp.login.fragment.ShopFragment;
 import com.example.fasih.dukaanapp.login.fragment.UserFragment;
 import com.example.fasih.dukaanapp.login.interfaces.AttachedFragment;
 import com.example.fasih.dukaanapp.login.interfaces.ResolveContainerConflicts;
+import com.example.fasih.dukaanapp.utils.GeofenceMonitoringHelper;
+import com.example.fasih.dukaanapp.utils.GoogleMapsMethods;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;

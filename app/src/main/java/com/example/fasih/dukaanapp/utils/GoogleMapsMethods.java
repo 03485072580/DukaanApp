@@ -3,7 +3,6 @@ package com.example.fasih.dukaanapp.utils;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -11,14 +10,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.PermissionChecker;
 import android.util.Log;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.activities.NavigationActivity;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryMapsFragment;
-import com.example.fasih.dukaanapp.home.fragments.services.GeofenceTransitionsIntentService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,11 +21,7 @@ import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,6 +39,7 @@ public class GoogleMapsMethods {
     private GoogleApiClient mGoogleApiClient;
     private ArrayList<Geofence> geofenceList;
     private GoogleMap mMap;
+    private android.app.Fragment currentAppFragment;
 
     public GoogleMapsMethods(Context mContext
             , Fragment currentFragment
@@ -58,6 +50,7 @@ public class GoogleMapsMethods {
         this.currentFragment = currentFragment;
         this.activityOrFragmentName = activityOrFragmentName;
         this.mMap = mMap;
+        this.currentAppFragment = currentAppFragment;
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(mContext);
         geofencingClient = LocationServices.getGeofencingClient(mContext);
         setupGoogleApiClient();
@@ -70,17 +63,20 @@ public class GoogleMapsMethods {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
 
+                        Log.d("TAG1234", "onConnected: ");
                     }
 
                     @Override
                     public void onConnectionSuspended(int i) {
 
+                        Log.d("TAG1234", "onConnectionSuspended: ");
                     }
                 })
                 .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+                        Log.d("TAG1234", "onConnectionFailed: ");
                     }
                 })
                 .addApi(LocationServices.API).build();
@@ -130,9 +126,6 @@ public class GoogleMapsMethods {
             , double currentLat
             , double currentLng) {
 
-        Log.d("TAG1234", "createGeofenceList: currentUserID" + currentUserID +
-                "\n currentLat" + currentLat +
-                "\n currentLng" + currentLng);
 
         geofenceList = new ArrayList();
 
@@ -146,16 +139,15 @@ public class GoogleMapsMethods {
                         currentLng,
                         Constants.GEOFENCE_RADIUS_IN_METERS
                 )
-                .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+//                .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
                         Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build());
 
-        Log.d("TAG1234", "createGeofenceList: END");
     }
 
     /**
-     *
      * First call createGeofenceList(...) method, then call this method
      */
 
@@ -187,20 +179,42 @@ public class GoogleMapsMethods {
                     public void onFailure(@NonNull Exception e) {
                         // Failed to add geofences
                         // ...
+                        e.printStackTrace();
                         Log.d("TAG1234", "onFailure: addGeofence()");
                     }
                 });
 
+
+    }
+
+    public void removeGeofence(PendingIntent pendingIntent) {
+
+        geofencingClient.removeGeofences(pendingIntent)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Geofences removed
+                        // ...
+                        Log.d("TAG1234", "onSuccess: Removed Geofence");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Failed to remove geofences
+                        // ...
+                        Log.d("TAG1234", "onFailure: Error Removing Geofence");
+                    }
+                });
     }
 
     /**
-     *
      * This example shows the use of two geofence triggers.
      * The GEOFENCE_TRANSITION_ENTER transition triggers when a device enters a geofence,
      * and the GEOFENCE_TRANSITION_EXIT transition triggers when a device exits a geofence.
      * Specifying INITIAL_TRIGGER_ENTER tells Location services that GEOFENCE_TRANSITION_ENTER
      * should be triggered if the device is already inside the geofence.
-     *
+     * <p>
      * In many cases, it may be preferable to use instead INITIAL_TRIGGER_DWELL,
      * which triggers events only when the user stops for a defined duration within a geofence.
      * This approach can help reduce "alert spam" resulting from large numbers notifications
@@ -208,6 +222,7 @@ public class GoogleMapsMethods {
      * Another strategy for getting best results from your geofences is to set a minimum radius of 100 meters.
      * This helps account for the location accuracy of typical Wi-Fi networks,
      * and also helps reduce device power consumption.
+     *
      * @return
      */
     private GeofencingRequest getGeofencingRequest() {
