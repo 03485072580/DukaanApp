@@ -64,6 +64,7 @@ public class Chat_Fragment extends Fragment {
     EditText edittext_chatbox;
 
     ProgressBar progressBar;
+    String UserName;
 
     @Nullable
     @Override
@@ -84,6 +85,9 @@ public class Chat_Fragment extends Fragment {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             currentUserID = user.getUid();
+            UserName = user.getDisplayName();
+
+
         }
 
         edittext_chatbox = (EditText) view.findViewById(R.id.edittext_chatbox);
@@ -92,6 +96,7 @@ public class Chat_Fragment extends Fragment {
         button_chatbox_send = (ImageView) view.findViewById(R.id.button_chatbox_send);
 
 
+//        Log.v("NAMEUSER",UserName);
         button_chatbox_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +133,14 @@ public class Chat_Fragment extends Fragment {
     public void onStart() {
         super.onStart();
         getChat();
+
+
     }
 
     private void getChat() {
+
+        Log.d("NAMEUSER",currentUserID);
+//        Toast.makeText(getActivity(), UserName+"", Toast.LENGTH_SHORT).show();
 
         myRef = FirebaseDatabase.getInstance().getReference().child("chat").child(currentUserID);
         myRef.addValueEventListener(new ValueEventListener() {
