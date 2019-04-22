@@ -39,7 +39,6 @@ public class UserLocationTrackerFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_user_location_tracker, container, false);
         setupFragmentWidgets();
         setupGoogleApiClient();
-        setupGoogleMapsFragment();
         return view;
     }
 
@@ -55,6 +54,7 @@ public class UserLocationTrackerFragment extends Fragment
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
 
+                        setupGoogleMapsFragment();
                     }
 
                     @Override
@@ -92,14 +92,14 @@ public class UserLocationTrackerFragment extends Fragment
 
         googleMapsMethods = new GoogleMapsMethods(UserLocationTrackerFragment.this.getActivity()
                 , UserLocationTrackerFragment.this
-                , getString(R.string.categoryMapsFragment)
+                , getString(R.string.userLocationTrackerFragment)
                 , mMap);
         mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
             @Override
             public boolean onMyLocationButtonClick() {
 
 
-                return googleMapsMethods.getCurrentShopLocation();
+                return googleMapsMethods.getCurrentLocation();
             }
         });
         mMap.setOnMyLocationClickListener(new GoogleMap.OnMyLocationClickListener() {

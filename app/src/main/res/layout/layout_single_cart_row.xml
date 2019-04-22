@@ -124,13 +124,11 @@
 
                         <TextView
                             android:id="@+id/sellingBy"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10dp"
                             android:layout_marginTop="@dimen/_10dp"
                             android:layout_marginEnd="@dimen/_10dp"
-                            android:layout_toStartOf="@id/cartAdd"
-                            android:layout_toLeftOf="@id/cartAdd"
                             android:layout_toEndOf="@id/sellerImage"
                             android:layout_toRightOf="@id/sellerImage"
                             android:ellipsize="end"
@@ -138,19 +136,9 @@
                             android:text="By Brand ZZZ"
                             android:textColor="@color/light_black" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/cartAdd"
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginStart="@dimen/_10dp"
-                            android:layout_marginLeft="@dimen/_10dp"
-                            android:layout_marginTop="@dimen/_10dp"
-                            android:src="@drawable/ic_cart" />
                     </RelativeLayout>
 
-                    <com.willy.ratingbar.ScaleRatingBar xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <com.willy.ratingbar.ScaleRatingBar
                         android:id="@+id/simpleRatingBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -159,15 +147,13 @@
                         app:srb_drawableEmpty="@drawable/star_empty"
                         app:srb_drawableFilled="@drawable/star_filled"
                         app:srb_isIndicator="false"
-                        app:srb_minimumStars="1"
+                        app:srb_minimumStars="0"
                         app:srb_numStars="5"
-                        app:srb_rating="3"
+                        app:srb_rating="-1"
                         app:srb_scrollable="true"
-                        app:srb_starHeight="20dp"
-                        app:srb_starWidth="20dp"
-                        app:srb_stepSize="1">
-
-                    </com.willy.ratingbar.ScaleRatingBar>
+                        app:srb_starHeight="30dp"
+                        app:srb_starWidth="30dp"
+                        app:srb_stepSize="1" />
 
 
                 </LinearLayout>

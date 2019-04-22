@@ -108,7 +108,6 @@ public class NavigationActivity extends AppCompatActivity {
                         if (ContextCompat.checkSelfPermission(this
                                 , permissions[0]) == PackageManager.PERMISSION_GRANTED) {
 
-                            Log.d("TAG1234", "setupNavigation: Permissions Granted");
                             FragmentManager manager = getSupportFragmentManager();
                             manager.beginTransaction()
                                     .replace(R.id.navigationFragmentContainer
@@ -117,7 +116,6 @@ public class NavigationActivity extends AppCompatActivity {
                                     .commitAllowingStateLoss();
 
                         } else {
-                            Log.d("TAG1234", "setupNavigation: Permissions Denied");
                             ActivityCompat.requestPermissions(this, permissions, MAPS_PERMISSIONS_CODE);
                         }
                     } else {
@@ -138,7 +136,7 @@ public class NavigationActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == MAPS_PERMISSIONS_CODE) {
-            Log.d("TAG1234", "onRequestPermissionsResult: "+permissions.length);
+
             if (permissions.length == 1 &&
                     permissions[0].equals(Manifest.permission.ACCESS_COARSE_LOCATION )
                     &&

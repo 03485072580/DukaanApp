@@ -30,10 +30,10 @@ import java.util.ArrayList;
 public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_CURRENT = 0, VIEW_TYPE_RECYCLER_PROGRESS_BAR = 1;
-    private ArrayList<Products> userViewProductsList;
     private Boolean isLoading;
     private int visibleThreshHold = 1;
     private LoadDynamicData loadData;
+    private ArrayList<Products> userViewProductsList;
     private OnRecyclerImageSelectedListener imageSelected;
 
 
@@ -98,9 +98,7 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void setInitialLoadingProgress(Boolean isLoading) {
         this.isLoading = isLoading;
     }
-    public void updateDataSet(ArrayList<Products> userViewProductsList) {
-        this.userViewProductsList = userViewProductsList;
-    }
+
 
     public void setLoadDynamicData(CarsFragment carsFragmentInstance) {
         this.loadData = carsFragmentInstance;

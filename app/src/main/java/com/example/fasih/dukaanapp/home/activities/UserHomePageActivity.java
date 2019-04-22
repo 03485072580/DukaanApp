@@ -23,6 +23,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.fragments.chat.Chat_Fragment;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.UserCartFragment;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.UserLocationTrackerFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,8 +64,8 @@ public class UserHomePageActivity extends AppCompatActivity {
                     replaceSupportFragment(new Chat_Fragment(), getString(R.string.chatFragment));
 //                    mTextMessage.setText(R.string.title_notifications);
                     return true;
-                case R.id.location:
-                    replaceSupportFragment(new UserLocationTrackerFragment(), getString(R.string.userLocationTrackerFragment));
+                case R.id.cart:
+                    replaceSupportFragment(new UserCartFragment(), getString(R.string.userLocationTrackerFragment));
                     return true;
             }
             return false;
