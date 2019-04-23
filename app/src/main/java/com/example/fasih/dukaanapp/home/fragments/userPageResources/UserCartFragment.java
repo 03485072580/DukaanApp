@@ -20,6 +20,7 @@ import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.order.activities.OrderPageActivity;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,12 +41,12 @@ implements OnRecyclerImageSelectedListener {
     @Override
     public void onClickGridImage(int position, View view, Products currentSelectedProduct) {
 
-        Log.d("TAG1234", "onClickGridImage: ");
+
         //start the Order Activity Here
 
-//        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
-//        intent.putExtra(getString(R.string.currentSelectedProduct), currentSelectedProduct);
-//        startActivity(intent);
+        Intent intent = new Intent(getActivity(), OrderPageActivity.class);
+        intent.putExtra(getString(R.string.currentSelectedProduct), currentSelectedProduct);
+        startActivity(intent);
     }
 
     @Override
@@ -101,7 +102,7 @@ implements OnRecyclerImageSelectedListener {
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
-        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.mobileFragment));
+        firebaseMethods = new FirebaseMethods(getActivity(), getString(R.string.userCartFragment));
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override

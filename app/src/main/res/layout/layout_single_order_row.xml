@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blackish_border"
+    android:padding="@dimen/_5dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="4dp"
+        app:contentPadding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/orderID"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:textSize="@dimen/_24sp"
+                    android:background="@drawable/button_radio_std1"
+                    android:textColor="@color/dark_golden"
+                    android:text="ORDER ID# "/>
+
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/orderID"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:foreground="@color/line_std" />
+
+                <TextView
+                    android:id="@+id/productTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_below="@id/line"
+                    android:text="Samsung Galaxy J7 Pro"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/_18sp" />
+
+
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/productTitle"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/_18sp"
+                    android:textColor="@color/light_green"
+                    android:text="350$" />
+
+                <TextView
+                    android:id="@+id/timeStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/productPrice"
+                    android:layout_marginStart="@dimen/_10dp"
+                    android:layout_marginEnd="@dimen/_10dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="@dimen/_24sp"
+                    android:textColor="@color/light_green"
+                    android:text="22-11-2019"
+                    android:textStyle="bold" />
+
+
+                <Button
+                    android:id="@+id/trackOrder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/productPrice"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:text="TRACK ORDER"
+                    android:padding="@dimen/_10dp"
+                    android:textColor="@color/white"
+                    android:background="@color/light_green"/>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.constraint.ConstraintLayout>

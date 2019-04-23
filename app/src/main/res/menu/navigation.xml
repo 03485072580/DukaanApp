@@ -7,18 +7,26 @@
         android:title="Home" />
 
     <item
+        android:id="@+id/userOrders"
+        android:icon="@drawable/ic_orders_black"
+        android:title="Orders" />
+
+    <item
         android:id="@+id/cart"
         android:icon="@drawable/ic_cart_black"
         android:title="Cart" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_chat"
+        android:title="Chat" />
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_user"
         android:title="Profile" />
 
-    <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_chat"
-        android:title="Chat" />
+
+
 
 </menu>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/layoutTopSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_60dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view1"
+                android:shadowColor="@color/dark_golden"
+                android:text="WELCOME TO ORDER PAGE"
+                android:textAlignment="center"
+                android:textColor="@color/dark_golden"
+                android:textSize="@dimen/_24sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layoutTopSection"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_50dp"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp">
+
+                <TextView
+                    android:id="@+id/availableStock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Available Stock : 454"
+                    android:textSize="@dimen/_18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_below="@id/availableStock"
+                    android:background="@color/dark_golden" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp">
+
+
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title : Samsung"
+                    android:textSize="@dimen/_18sp" />
+
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/productName"
+                    android:text="Price: 353$"
+                    android:textSize="@dimen/_18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_1dp"
+                    android:layout_below="@id/productPrice"
+                    android:background="@color/dark_golden" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20dp"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp">
+
+                <Button
+                    android:id="@+id/addShippingAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:background="@drawable/button_std2"
+                    android:text="ADD SHIPPING ADDRESS"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10dp"
+                android:paddingStart="@dimen/_5dp"
+                android:paddingLeft="@dimen/_5dp"
+                android:paddingEnd="@dimen/_5dp"
+                android:paddingRight="@dimen/_5dp">
+
+                <Button
+                    android:id="@+id/paymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_50dp"
+                    android:background="@color/black"
+                    android:text="SELECT A PAYMENT METHOD"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/paymentMethod"
+                    android:background="@drawable/button_radio_std1"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/payByHand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5dp"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="Pay By Hand" />
+
+                    <RadioButton
+                        android:id="@+id/payByCashOnDelivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="Pay By Cash On Delivery" />
+
+                    <RadioButton
+                        android:id="@+id/payByPaypal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="Pay By EasyPaisa" />
+
+
+                    <RadioButton
+                        android:id="@+id/payByStripe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="Pay By Stripe" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

@@ -45,8 +45,6 @@ public class NavigationActivity extends AppCompatActivity {
     private void setupNavigation(Intent intent) {
         //Dynamically Replace the Fragment to the NavigationActivity Screen
 
-        Log.d("TAG1234", "setupNavigation: ");
-
         if (intent != null) {
             if (intent.hasExtra(getString(R.string.adminFragment)))
                 if (intent.getStringExtra(getString(R.string.adminFragment)).equals(getString(R.string.adminFragment))) {
@@ -98,7 +96,6 @@ public class NavigationActivity extends AppCompatActivity {
             if (intent.hasExtra(getString(R.string.categoryMapsFragment)))
                 if (intent.getStringExtra(getString(R.string.categoryMapsFragment)).equals(getString(R.string.categoryMapsFragment))) {
 
-                    Log.d("TAG1234", "setupNavigation: categoryMapsFragment");
                     String[] permissions = new String[]{
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                     };

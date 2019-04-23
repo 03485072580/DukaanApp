@@ -26,11 +26,13 @@ import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ProgressDialogFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.SearchUsernameFragment;
 import com.example.fasih.dukaanapp.login.activity.LoginActivity;
+import com.example.fasih.dukaanapp.models.Orders;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
 import com.example.fasih.dukaanapp.models.Views;
+import com.example.fasih.dukaanapp.order.activities.OrderPageActivity;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -1121,6 +1123,46 @@ public class FirebaseMethods {
         myRef.child(mContext.getString(R.string.db_shop_profile_settings_node))
                 .child(mAuth.getCurrentUser().getUid())
                 .setValue(shopProfileSettings);
+    }
+
+    public void placeNewOrder(String currentUserID, Products product, String orderStatus) {
+
+        //future notify seller as well through Notification
+        String orderID= myRef.push().getKey().substring(3,13);
+        String timeStamp = new SimpleDateFormat("dd-MM-yyyy 'Time' HH:mm:ss", Locale.US).format(new Date());
+        Orders order = new Orders(product.getProduct_name()
+                , product.getProduct_price()
+                , timeStamp
+                , orderStatus
+                , currentUserID
+                , orderID
+                , product.getProduct_id()
+                , product.getShop_id());
+
+
+        myRef
+                .child(mContext.getString(R.string.db_orders_node))
+                .child(currentUserID)
+                .child(product.getShop_id())
+                .child(orderID)
+                .setValue(order)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+
+                            Toast.makeText(mContext, mContext.getString(R.string.successfully_created_order), Toast.LENGTH_SHORT).show();
+                            ((OrderPageActivity)mContext).finish();
+                            //plus needs to remove the cart Product as well in future
+                        }
+                        else
+                        {
+                            Toast.makeText(mContext, mContext.getString(R.string.failure_created_order), Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
+
     }
 }
 

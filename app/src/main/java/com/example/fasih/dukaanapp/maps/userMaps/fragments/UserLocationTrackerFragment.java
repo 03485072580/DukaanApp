@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.home.fragments.userPageResources;
+package com.example.fasih.dukaanapp.maps.userMaps.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

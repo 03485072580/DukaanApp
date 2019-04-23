@@ -28,4 +28,5 @@
     <color name="transparent_black">#5a170f1b</color>
     <color name="transparent_blue">#3d5ee9d4</color>
     <color name="white_light">#66f5efef</color>
+    <color name="orderPageBgColor">#4334</color>
 </resources>

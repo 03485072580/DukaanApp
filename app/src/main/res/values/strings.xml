@@ -11,8 +11,13 @@
     <string name="activity_login">LoginActivity</string>
     <string name="activity_home_page">HomePageActivity</string>
     <string name="activity_unique_category">UniqueCategoryActivity</string>
+    <string name="activity_order_page">OrderPageActivity</string>
+    <string name="activity_user_maps">UserMapsActivity</string>
 
     <!--Fragments Package-->
+
+    <string name="userCartFragment">UserCartFragment</string>
+    <string name="userOrderFragment">UserOrderFragment</string>
     <string name="userFragment">UserFragment</string>
     <string name="shopFragment">ShopFragment</string>
     <string name="adminFragment">AdminFragment</string>
@@ -41,6 +46,8 @@
     <string name="homeFragment">HomeFragment</string>
     <string name="userLocationTrackerFragment">UserLocationTrackerFragment</string>
     <string name="chatFragment">ChatFragment</string>
+    <string name="checkoutFragment">CheckoutFragment</string>
+    <string name="orderConfirmationFragment">OrderConfirmationFragment</string>
 
     <!--XML String resources-->
     <string name="username_password">username or email</string>
@@ -100,6 +107,7 @@
     <string name="db_mall_node">mall</string>
     <string name="db_cart_node">cart</string>
     <string name="db_views_node">views</string>
+    <string name="db_orders_node">orders</string>
 
     <string name="db_field_user_name">user_name</string>
     <string name="db_field_email">email</string>
@@ -128,9 +136,15 @@
     <string name="db_field_product_id">product_id</string>
     <string name="db_field_product_rating">product_rating</string>
     <string name="db_field_shop_id">shop_id</string>
+    <string name="db_field_order_price">order_price</string>
+    <string name="db_field_order_status">order_status</string>
+    <string name="db_field_order_id">order_id</string>
 
 
     <!--Simple Toast Messages-->
+
+    <string name="successfully_created_order">Successfully Placed An Order</string>
+    <string name="failure_created_order">Failure to Create An Order</string>
     <string name="warning_required_fields">All Fields are required</string>
     <string name="email_verification_required">Please verify your account by visiting your Inbox</string>
     <string name="conflict_username">That User Name is already Existent\nTry Another One</string>
