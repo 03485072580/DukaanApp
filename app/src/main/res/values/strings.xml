@@ -207,6 +207,9 @@
     <string name="currentLat">currentLat</string>
     <string name="currentLng">currentLng</string>
 
+    <!--Adapter Package-->
+    <string name="mobileProductsAdapter">MobileProductsAdapter</string>
+
 
     <!--Spinner entries-->
     <string-array name="spinner_items">

@@ -141,7 +141,9 @@ public class CarsFragment extends Fragment implements LoadDynamicData
                 backupUserViewProductsList = new ArrayList<>();
                 backupUserViewProductsList.addAll(userViewProductsList);
                 this.userViewProductsList = userViewProductsList;
-                adapter = new CarsFragmentAdapter(userViewProductsList, carsProductsContainer);
+                adapter = new CarsFragmentAdapter(getContext()
+                        , userViewProductsList
+                        , carsProductsContainer);
                 adapter.setupOnItemClickListener(this);
                 adapter.setInitialLoadingProgress();
                 adapter.setLoadDynamicData(this);

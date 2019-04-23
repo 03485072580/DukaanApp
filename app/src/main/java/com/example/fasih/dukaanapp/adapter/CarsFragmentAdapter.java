@@ -15,6 +15,7 @@ import com.example.fasih.dukaanapp.categories.fragments.CarsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.RecyclerProgressUpdater;
 import com.example.fasih.dukaanapp.utils.SquareImageView;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
@@ -22,6 +23,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.willy.ratingbar.ScaleRatingBar;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Fasih on 04/03/19.
@@ -32,14 +35,21 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_CURRENT = 0, VIEW_TYPE_RECYCLER_PROGRESS_BAR = 1;
     private Boolean isLoading;
     private int visibleThreshHold = 1;
+    private Context mContext;
     private LoadDynamicData loadData;
     private ArrayList<Products> userViewProductsList;
     private OnRecyclerImageSelectedListener imageSelected;
 
+    private FirebaseMethods firebaseMethods;
 
-    public CarsFragmentAdapter(final ArrayList<Products> userViewProductsList
+
+    public CarsFragmentAdapter(Context context
+            ,final ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.userViewProductsList = userViewProductsList;
+        this.mContext = context;
+        this.firebaseMethods = new FirebaseMethods(mContext
+                , mContext.getString(R.string.mobileProductsAdapter));
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -117,12 +127,14 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             myViewHolder.productTitle.setText(userViewProductsList.get(position).getProduct_name());
             myViewHolder.productDesc.setText(userViewProductsList.get(position).getProduct_description());
             myViewHolder.productPrice.setText(userViewProductsList.get(position).getProduct_price());
+            myViewHolder.simpleRatingBar.setRating(userViewProductsList.get(position).getProduct_rating());
+            setupSellerViews(myViewHolder, userViewProductsList.get(position).getShop_id());
             //sellingBY
-            if (userViewProductsList.get(position).getProduct_rating() == -1) {
-                myViewHolder.simpleRatingBar.setRating(0f);
-            } else {
-                myViewHolder.simpleRatingBar.setRating(userViewProductsList.get(position).getProduct_rating());
-            }
+//            if (userViewProductsList.get(position).getProduct_rating() == -1) {
+//                myViewHolder.simpleRatingBar.setRating(0f);
+//            } else {
+//                myViewHolder.simpleRatingBar.setRating(userViewProductsList.get(position).getProduct_rating());
+//            }
 
         }
         //do Progress Updating Stuff Here
@@ -132,6 +144,12 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
 
+    }
+
+    private void setupSellerViews(ViewHolder viewHolder , String shop_id) {
+
+        if(shop_id !=null)
+            firebaseMethods.setSellerViews(viewHolder, shop_id);
     }
 
     @Override
@@ -154,8 +172,10 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private SquareImageView perfectlySquareImage;
-        private ImageView sellerImage;
-        private TextView productTitle, productDesc, productPrice, sellingBy;
+        public ImageView sellerImage;
+        private TextView productTitle, productDesc, productPrice;
+        private CircleImageView addCart;
+        public TextView sellingBy;
         private ScaleRatingBar simpleRatingBar;
 
         public ViewHolder(final View itemView) {
@@ -166,7 +186,16 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             productDesc = itemView.findViewById(R.id.productDesc);
             productPrice = itemView.findViewById(R.id.productPrice);
             sellingBy = itemView.findViewById(R.id.sellingBy);
+            addCart = itemView.findViewById(R.id.addCart);
             simpleRatingBar = itemView.findViewById(R.id.simpleRatingBar);
+
+            addCart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    firebaseMethods.setupUserWishlistProducts(userViewProductsList.get(getAdapterPosition()));
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

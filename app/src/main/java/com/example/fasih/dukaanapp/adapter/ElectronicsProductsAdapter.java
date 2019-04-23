@@ -14,6 +14,7 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.RecyclerProgressUpdater;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -38,11 +39,15 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
 
+    private FirebaseMethods firebaseMethods;
+
     public ElectronicsProductsAdapter(Context context
             , ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.mContext = context;
         this.userViewProductsList = userViewProductsList;
+        this.firebaseMethods = new FirebaseMethods(mContext
+                , mContext.getString(R.string.mobileProductsAdapter));
         setupUniversalImageLoader(UniversalImageLoader.getConfiguration(context));
         setupScrollListner((LinearLayoutManager) recyclerView.getLayoutManager(), recyclerView);
     }
@@ -89,13 +94,19 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
             viewHolder.productDesc.setText(userViewProductsList.get(position).getProduct_description());
             viewHolder.productPrice.setText(userViewProductsList.get(position).getProduct_price());
             viewHolder.simpleRatingBar.setRating(userViewProductsList.get(position).getProduct_rating());
-
+            setupSellerViews(viewHolder, userViewProductsList.get(position).getShop_id());
         }
         if (holder instanceof RecyclerProgressUpdater) {
             RecyclerProgressUpdater progressUpdater = (RecyclerProgressUpdater) holder;
         }
 
 
+    }
+
+    private void setupSellerViews(MyViewHolder viewHolder , String shop_id) {
+
+        if(shop_id !=null)
+            firebaseMethods.setSellerViews(viewHolder, shop_id);
     }
 
     public void setLoadDynamicData(LoadDynamicData loadDynamicData) {
@@ -143,11 +154,13 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView productImage, sellerImage;
+        private ImageView productImage;
+        public ImageView sellerImage;
         private CircleImageView cartAdd;
-        private TextView productTitle, productDesc, productPrice, sellingBy;
+        private TextView productTitle, productDesc, productPrice;
+        public TextView sellingBy;
         private ScaleRatingBar simpleRatingBar;
 
         public MyViewHolder(final View itemView) {
@@ -161,6 +174,14 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
             productPrice = itemView.findViewById(R.id.productPrice);
             sellingBy = itemView.findViewById(R.id.sellingBy);
             simpleRatingBar = itemView.findViewById(R.id.simpleRatingBar);
+
+            cartAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    firebaseMethods.setupUserWishlistProducts(userViewProductsList.get(getAdapterPosition()));
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
