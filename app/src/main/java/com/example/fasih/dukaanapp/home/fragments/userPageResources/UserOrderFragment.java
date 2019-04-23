@@ -1,20 +1,23 @@
-package com.example.fasih.dukaanapp.home.fragments.sellerPageResources;
+package com.example.fasih.dukaanapp.home.fragments.userPageResources;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.adapter.CategoryShopOrderProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.OrderProductsAdapter;
+import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
+import com.example.fasih.dukaanapp.maps.userMaps.activities.UserMapsActivity;
 import com.example.fasih.dukaanapp.models.Orders;
+import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,16 +32,25 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Fasih on 03/07/19.
- */
+public class UserOrderFragment extends Fragment
+        implements OnRecyclerImageSelectedListener {
 
-public class CategoryShopOrderFragment extends Fragment {
+    @Override
+    public void onClickGridImage(int position, View view, Products currentSelectedProduct) {
 
+    }
+
+    @Override
+    public void onClickGridImage(int position, View view, String Url) {
+
+        Intent intent = new Intent(getActivity(), UserMapsActivity.class);
+        startActivity(intent);
+
+    }
 
 
     private RecyclerView currentOrdersContainer;
-    private CategoryShopOrderProductsAdapter adapter;
+    private OrderProductsAdapter adapter;
     private ArrayList<Orders> userViewOrdersList;
 
     //Firebase Stuff
@@ -49,26 +61,17 @@ public class CategoryShopOrderFragment extends Fragment {
     private FirebaseMethods firebaseMethods;
     private String currentUserID = null;
 
-
-    /**
-     * most Seller work here is to read the orders
-     * and get Notified of new Orders
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category_shop_order, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater
+            , @Nullable ViewGroup container
+            , @Nullable Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_user_order, container, false);
         setupFragmentWidgets(view);
         setupFirebase();
         return view;
     }
-
 
     private void setupFragmentWidgets(View view) {
 
@@ -80,7 +83,8 @@ public class CategoryShopOrderFragment extends Fragment {
         if (userViewOrdersList != null)
             if (!userViewOrdersList.isEmpty()) {
 
-                adapter = new CategoryShopOrderProductsAdapter(getContext(), userViewOrdersList);
+                adapter = new OrderProductsAdapter(getContext(), userViewOrdersList);
+                adapter.setupOnItemClickListener(this);
                 currentOrdersContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
                 currentOrdersContainer.setAdapter(adapter);
 
@@ -123,23 +127,25 @@ public class CategoryShopOrderFragment extends Fragment {
         }
     }
 
+
+
+
     private void queryDBCartProducts(String currentUserID) {
+
         userViewOrdersList = new ArrayList<>();
         myRef
                 .child(getString(R.string.db_orders_node))
+                .child(currentUserID)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-
                         if (dataSnapshot.exists()) {
-
                             userViewOrdersList.clear();
                             Map<String, Object> userMap = (HashMap<String, Object>) dataSnapshot.getValue();
                             Collection<Object> shopsCollection = userMap.values();
                             for (Object shop : shopsCollection) {
                                 HashMap<String, Object> orderMap = (HashMap<String, Object>) shop;
-                                Log.d("TAG1234", "onDataChange: "+orderMap.keySet());;
                                 Collection<Object> orderCollection = orderMap.values();
                                 for(Object order: orderCollection)
                                 {
@@ -158,7 +164,7 @@ public class CategoryShopOrderFragment extends Fragment {
                                 }
 
                             }
-//                            setupRecyclerView(userViewOrdersList);
+                            setupRecyclerView(userViewOrdersList);
                         }
                     }
 
@@ -168,5 +174,4 @@ public class CategoryShopOrderFragment extends Fragment {
                     }
                 });
     }
-
 }

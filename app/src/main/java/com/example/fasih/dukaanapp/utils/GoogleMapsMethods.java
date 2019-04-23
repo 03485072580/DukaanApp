@@ -20,7 +20,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +42,8 @@ public class GoogleMapsMethods {
     private String activityOrFragmentName;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private GeofencingClient geofencingClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback =null;
     private GoogleApiClient mGoogleApiClient;
     private ArrayList<Geofence> geofenceList;
     private GoogleMap mMap;
@@ -84,7 +92,7 @@ public class GoogleMapsMethods {
         mGoogleApiClient.connect();
     }
 
-    public Boolean getCurrentShopLocation() {
+    public Boolean getCurrentLocation() {
 
         if (ActivityCompat.checkSelfPermission(mContext
                 , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -104,6 +112,7 @@ public class GoogleMapsMethods {
                             Location currentLocation = task.getResult();
                             if (currentLocation != null) {
 
+
                                 if (activityOrFragmentName.equals(mContext.getString(R.string.categoryMapsFragment))) {
 
                                     double currentLat = currentLocation.getLatitude();
@@ -113,6 +122,13 @@ public class GoogleMapsMethods {
                                     ((CategoryMapsFragment) currentFragment).notifyUpdateMaps(currentLat, currentLng);
                                 }
 
+                                if (activityOrFragmentName.equals(mContext.getString(R.string.userLocationTrackerFragment))
+                                && locationCallback == null) {
+                                    //periodic location updates
+
+                                    configureLocationSettingsRequest();
+                                }
+
                             }
                         } else {
                             //Something Went wrong
@@ -120,6 +136,86 @@ public class GoogleMapsMethods {
                     }
                 });
         return true;
+    }
+
+    private void configureLocationSettingsRequest() {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(createLocationRequest());
+
+        final SettingsClient client = LocationServices.getSettingsClient(mContext);
+        configureSettingsClient(builder, client);
+    }
+
+    private void configureSettingsClient(LocationSettingsRequest.Builder builder, SettingsClient client) {
+
+        client.checkLocationSettings(builder.build())
+                .addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+
+                        if (task.isSuccessful()) {
+                            //do your work
+                           startPeriodicLocationUpdates();
+
+
+                        } else {
+                            //exception occurs
+                            task.getException().printStackTrace();
+                            ;
+                        }
+                    }
+                });
+    }
+
+    private void startPeriodicLocationUpdates() {
+
+
+        locationCallback=new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+
+                if (locationResult == null) {
+                    return;
+                }
+                //notify the fragment with the current Location Object to Update the DB
+
+                Log.d("TAG1234", "onLocationResult: "+locationResult.getLastLocation());
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(mContext,
+                Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(mContext,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest
+                ,locationCallback
+                ,null);
+    }
+
+    private void stopPeriodicLocationUpdates() {
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+    }
+
+    private LocationRequest createLocationRequest() {
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(5000);//requires location updates after every 5 sec
+        locationRequest.setFastestInterval(3000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return locationRequest;
     }
 
     public void createGeofenceList(String currentUserID

@@ -13,8 +13,8 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION "/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION " />
 
     <application
         android:allowBackup="true"
@@ -23,16 +23,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".maps.userMaps.activities.UserMapsActivity"></activity>
+        <activity android:name=".order.activities.OrderPageActivity" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />]
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/ADMOB_APP_ID" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_api_key"/>
+            android:value="@string/google_maps_api_key" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -82,18 +84,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/SellerAppTheme"
             android:windowSoftInputMode="adjustResize"
-            tools:targetApi="n"></activity>
+            tools:targetApi="n" />
         <activity
             android:name=".home.activities.MallActivity"
-            android:theme="@style/SellerAppTheme">
+            android:theme="@style/SellerAppTheme" />
 
-        </activity>
-
-        <service android:name=".home.fragments.services.GeofenceTransitionsIntentService"/>
+        <service android:name=".home.fragments.services.GeofenceTransitionsIntentService" />
         <service
             android:name=".home.fragments.services.FetchAddressIntentService"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,7 +1,6 @@
 package com.example.fasih.dukaanapp.home.activities;
 
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +21,8 @@ import android.view.inputmethod.InputMethodManager;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.home.fragments.chat.Chat_Fragment;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
-import com.example.fasih.dukaanapp.home.fragments.userPageResources.UserLocationTrackerFragment;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.UserCartFragment;
+import com.example.fasih.dukaanapp.home.fragments.userPageResources.UserOrderFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -63,8 +62,11 @@ public class UserHomePageActivity extends AppCompatActivity {
                     replaceSupportFragment(new Chat_Fragment(), getString(R.string.chatFragment));
 //                    mTextMessage.setText(R.string.title_notifications);
                     return true;
-                case R.id.location:
-                    replaceSupportFragment(new UserLocationTrackerFragment(), getString(R.string.userLocationTrackerFragment));
+                case R.id.cart:
+                    replaceSupportFragment(new UserCartFragment(), getString(R.string.userLocationTrackerFragment));
+                    return true;
+                case R.id.userOrders:
+                    replaceSupportFragment(new UserOrderFragment(), getString(R.string.userOrderFragment) );
                     return true;
             }
             return false;
