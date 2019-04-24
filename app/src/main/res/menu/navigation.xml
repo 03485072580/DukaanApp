@@ -21,12 +21,11 @@
         android:icon="@drawable/ic_chat"
         android:title="Chat" />
 
-    <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_user"
-        android:title="Profile" />
-
-
+    <!--<item-->
+        <!--android:id="@+id/navigation_dashboard"-->
+        <!--android:icon="@drawable/ic_user"-->
+        <!--android:title="Profile"-->
+        <!--android:visible="false" />-->
 
 
 </menu>
