@@ -178,6 +178,15 @@
                         android:textColorHint="@color/light_black" />
                 </RelativeLayout>
 
+                <Button
+                    android:id="@+id/updateProfileBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button_std1"
+                    android:text="@string/updateProfile"
+                    android:textColor="@color/black" />
+
                 <RelativeLayout
                     android:id="@+id/mallLayout"
                     android:layout_width="match_parent"
@@ -187,14 +196,7 @@
                     android:backgroundTint="@color/spinnerColor"
                     tools:targetApi="lollipop">
 
-                    <Button
-                        android:id="@+id/updateProfileBtn"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/button_std1"
-                        android:text="@string/updateProfile"
-                        android:textColor="@color/black" />
+
                 </RelativeLayout>
 
 

@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.CarsFragmentAdapter;
@@ -45,6 +46,7 @@ public class CarsFragment extends Fragment implements LoadDynamicData
     private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
     private RecyclerView carsProductsContainer;
     private CarsFragmentAdapter adapter;
+
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -220,9 +222,10 @@ public class CarsFragment extends Fragment implements LoadDynamicData
         }
     }
 
-    public void setSearchView(SearchView searchView) {
+    public void setSearchView(SearchView searchView ) {
         this.searchView = searchView;
         this.searchView.setOnQueryTextListener(this);
+
         filteredList = new ArrayList<>();
     }
 

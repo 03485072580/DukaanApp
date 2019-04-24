@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.home.fragments.chat.Chat_Fragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryMapsFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryShopHelpFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategoryShopOrderFragment;
@@ -88,7 +89,7 @@ public class NavigationActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     manager.beginTransaction()
                             .replace(R.id.navigationFragmentContainer
-                                    , new CategoryShopSupportFragment()
+                                    , new Chat_Fragment()
                                     , getString(R.string.categoryShopSupportFragment))
                             .commitAllowingStateLoss();
                 }

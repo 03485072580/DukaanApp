@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.fragments.CarsFragment;
@@ -30,6 +32,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
 
 
     private SearchView search;
+    private TextView userVisibleSearch;
 
 
     //Firebase Stuff
@@ -57,6 +60,15 @@ public class UniqueCategoryActivity extends AppCompatActivity {
 
     private void setupActivityWidgets() {
         search = findViewById(R.id.search);
+        userVisibleSearch = findViewById(R.id.userVisibleSearch);
+
+        //Listener
+        search.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                userVisibleSearch.setVisibility(View.GONE);
+            }
+        });
     }
 
     public void setupIntentResources(ArrayList<Products> userViewProductsList) {
