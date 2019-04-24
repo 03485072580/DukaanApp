@@ -30,6 +30,7 @@ public class Products implements Parcelable {
     private String product_id;
     private long product_rating;
     private String shop_id;
+    private String type;
 
     public Products() {
     }
@@ -44,7 +45,8 @@ public class Products implements Parcelable {
             , String timeStamp
             , String product_id
             , long product_rating
-            , String shop_id) {
+            , String shop_id
+            , String type) {
         this.product_name = product_name;
         this.product_category = product_category;
         this.product_image_url = product_image_url;
@@ -56,6 +58,7 @@ public class Products implements Parcelable {
         this.product_id = product_id;
         this.product_rating = product_rating;
         this.shop_id = shop_id;
+        this.type = type;
     }
 
     protected Products(Parcel in) {
@@ -70,6 +73,15 @@ public class Products implements Parcelable {
         product_id = in.readString();
         product_rating = in.readLong();
         shop_id = in.readString();
+        type = in.readString();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getShop_id() {
@@ -174,6 +186,7 @@ public class Products implements Parcelable {
                 ", product_id='" + product_id + '\'' +
                 ", product_rating=" + product_rating +
                 ", shop_id='" + shop_id + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 
@@ -195,5 +208,6 @@ public class Products implements Parcelable {
         parcel.writeString(product_id);
         parcel.writeLong(product_rating);
         parcel.writeString(shop_id);
+        parcel.writeString(type);
     }
 }

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,13 @@ import android.widget.ProgressBar;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
+import com.example.fasih.dukaanapp.adapter.SubCategoriesListAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
+import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
+import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
+import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
@@ -43,6 +48,8 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
     private ClothingProductsAdapter adapter;
     private RecyclerView clothingContainer;
     private ProgressBar categoriesProgress;
+    private RecyclerView subCategoriesListRecyclerView;
+    private SubCategoriesListAdapter subCategoriesAdapter;
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -109,9 +116,65 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
         startActivity(intent);
     }
 
+    /**
+     * Pass String for Identification from where the Call appears here and
+     * do code accordingly
+     *
+     * @param position
+     * @param view
+     * @param Url
+     */
     @Override
     public void onClickGridImage(int position, View view, String Url) {
 
+        if (Url != null) {
+            if (Url.equals(getString(R.string.subCategoriesListAdapter))) {
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_deodorant)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_clothing)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_car)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_ring)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+            }
+        }
     }
 
     @Nullable
@@ -141,7 +204,6 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
 
         if (userViewProductsList != null)
             if (!userViewProductsList.isEmpty()) {
-
                 backupUserViewProductsList = new ArrayList<>();
                 backupUserViewProductsList.addAll(userViewProductsList);
                 adapter = new ClothingProductsAdapter(getActivity(), userViewProductsList, clothingContainer);
@@ -194,4 +256,15 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
         filteredList = new ArrayList<>();
     }
 
+    public void setSubCategoriesResources(RecyclerView subCategoriesListRecyclerView
+            , SubCategoriesListAdapter adapter
+            , ArrayList<RecyclerSelectedCategory> dataList) {
+
+        this.subCategoriesListRecyclerView = subCategoriesListRecyclerView;
+        this.subCategoriesAdapter = adapter;
+        adapter.setData(dataList);
+        adapter.setupOnItemClickListener(this);
+        adapter.notifyDataSetChanged();
+
+    }
 }

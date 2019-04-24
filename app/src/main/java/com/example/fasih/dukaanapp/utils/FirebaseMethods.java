@@ -23,6 +23,7 @@ import com.example.fasih.dukaanapp.adapter.CosmeticsProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.ElectronicsProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
+import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
@@ -936,9 +937,18 @@ public class FirebaseMethods {
                             userProduct.setTimeStamp(productObj.get(mContext.getString(R.string.db_field_timeStamp)));
                             userProduct.setProduct_id(productObj.get(mContext.getString(R.string.db_field_product_id)));
                             userProduct.setShop_id(productObj.get(mContext.getString(R.string.db_field_shop_id)));
+                            userProduct.setType("");
+                            if(productObj.get(mContext.getString(R.string.db_field_type))!=null){
+                                userProduct.setType(productObj.get(mContext.getString(R.string.db_field_type)));
+                            }
                             userProduct.setProduct_rating(Long.parseLong(String.valueOf(productObj.get(mContext.getString(R.string.db_field_product_rating)))));
 
                             if (userProduct.getProduct_category().equals(queryString)) {
+                                //add to the list for displaying to the user
+                                userViewProductsList.add(userProduct);
+                                //now notify the Home Fragment that new Products are Ready to display to the use
+                            }
+                            if (userProduct.getType().equals(queryString)) {
                                 //add to the list for displaying to the user
                                 userViewProductsList.add(userProduct);
                                 //now notify the Home Fragment that new Products are Ready to display to the use
@@ -949,6 +959,9 @@ public class FirebaseMethods {
 
                     if (activityName.equals(mContext.getString(R.string.activity_unique_category))) {
                         ((UniqueCategoryActivity) mContext).setupIntentResources(userViewProductsList);
+                    }
+                    if (activityName.equals(mContext.getString(R.string.activity_sub_category))) {
+                        ((SubCategoryActivity) mContext).setupIntentResources(userViewProductsList);
                     }
                 }
             }

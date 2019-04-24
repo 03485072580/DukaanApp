@@ -11,10 +11,11 @@
         <item>Coat</item>
         <item>Suits</item>
         <item>Stitched</item>
-        <item>Un-Stitched</item>
+        <item>UnStitched</item>
     </string-array>
 
     <!--Activity Package-->
+    <string name="activity_sub_category">SubCategoryActivity</string>
     <string name="activity_register">RegisterActivity</string>
     <string name="activity_product_detail">ProductDetailActivity</string>
     <string name="activity_login">LoginActivity</string>
@@ -24,7 +25,6 @@
     <string name="activity_user_maps">UserMapsActivity</string>
 
     <!--Fragments Package-->
-
     <string name="userCartFragment">UserCartFragment</string>
     <string name="userOrderFragment">UserOrderFragment</string>
     <string name="userFragment">UserFragment</string>
@@ -119,6 +119,7 @@
     <string name="db_orders_node">orders</string>
 
     <string name="db_field_user_name">user_name</string>
+    <string name="db_field_type">type</string>
     <string name="db_field_email">email</string>
     <string name="db_field_first_name">first_name</string>
     <string name="db_field_last_name">last_name</string>
@@ -207,6 +208,11 @@
     <string name="query_COSMETICS">COSMETICS</string>
     <string name="query_ELECTRONICS">ELECTRONICS</string>
     <string name="query_FRAGRANCES">FRAGRANCES</string>
+    <string name="query_type_Coat">coat</string>
+    <string name="query_type_Suits">Suits</string>
+    <string name="query_type_Stitched">Stitched</string>
+    <string name="query_type_UnStitched">UnStitched</string>
+
     <string name="product_details">Product Details</string>
     <string name="currentSelectedProduct">CurrentSelectedProduct</string>
 
@@ -218,7 +224,7 @@
 
     <!--Adapter Package-->
     <string name="mobileProductsAdapter">MobileProductsAdapter</string>
-
+    <string name="subCategoriesListAdapter">SubCategoriesListAdapter</string>
 
     <!--Spinner entries-->
     <string-array name="spinner_items">

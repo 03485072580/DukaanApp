@@ -19,24 +19,9 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/recyclerSubCategoriesList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/topBar">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/subCategoriesListRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recyclerSubCategoriesList">
             <!--Material Relevant to the Login Screen-->
 
             <!--Container for the Different Categories-->

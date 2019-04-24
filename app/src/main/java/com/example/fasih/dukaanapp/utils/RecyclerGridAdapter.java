@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.home.customModels.RecyclerSelectedCategory;
+import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.fragments.userPageResources.HomeFragment;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;

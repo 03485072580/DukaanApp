@@ -15,9 +15,12 @@ import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
+import com.example.fasih.dukaanapp.adapter.SubCategoriesListAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
+import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
+import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
@@ -45,6 +48,8 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
     private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
     private RecyclerView productsContainer;
     private MobileProductsAdapter mobileProductsAdapter;
+    private RecyclerView subCategoriesListRecyclerView;
+    private SubCategoriesListAdapter subCategoriesAdapter;
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
@@ -111,6 +116,54 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
 
     @Override
     public void onClickGridImage(int position, View view, String Url) {
+        if (Url != null) {
+            if (Url.equals(getString(R.string.subCategoriesListAdapter))) {
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_deodorant)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_clothing)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_car)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_ring)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+            }
+        }
 
     }
 
@@ -192,4 +245,15 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
         filteredList = new ArrayList<>();
     }
 
+    public void setSubCategoriesResources(RecyclerView subCategoriesListRecyclerView
+            , SubCategoriesListAdapter adapter
+            , ArrayList<RecyclerSelectedCategory> dataList) {
+
+        this.subCategoriesListRecyclerView = subCategoriesListRecyclerView;
+        this.subCategoriesAdapter = adapter;
+        adapter.setData(dataList);
+        adapter.setupOnItemClickListener(this);
+        adapter.notifyDataSetChanged();
+
+    }
 }

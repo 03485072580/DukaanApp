@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
-import com.example.fasih.dukaanapp.home.customModels.RecyclerSelectedCategory;
+import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.RecyclerGridAdapter;

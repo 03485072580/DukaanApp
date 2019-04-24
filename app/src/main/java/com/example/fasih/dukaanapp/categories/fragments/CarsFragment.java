@@ -18,9 +18,12 @@ import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.CarsFragmentAdapter;
+import com.example.fasih.dukaanapp.adapter.SubCategoriesListAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
+import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
+import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
@@ -46,6 +49,8 @@ public class CarsFragment extends Fragment implements LoadDynamicData
     private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
     private RecyclerView carsProductsContainer;
     private CarsFragmentAdapter adapter;
+    private RecyclerView subCategoriesListRecyclerView;
+    private SubCategoriesListAdapter subCategoriesAdapter;
 
     //Firebase Stuff
     private FirebaseAuth mAuth;
@@ -118,6 +123,54 @@ public class CarsFragment extends Fragment implements LoadDynamicData
 
     @Override
     public void onClickGridImage(int position, View view, String Url) {
+        if (Url != null) {
+            if (Url.equals(getString(R.string.subCategoriesListAdapter))) {
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_deodorant)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_clothing)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_car)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+                if(subCategoriesAdapter
+                        .getRecyclerSelectedCategoryObject(position)
+                        .getCategoryImageResource() ==
+                        R.drawable.ic_ring)
+                {
+                    Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+                    intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
+                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    startActivity(intent);
+                }
+
+            }
+        }
 
     }
 
@@ -137,6 +190,18 @@ public class CarsFragment extends Fragment implements LoadDynamicData
             userViewProductsList = arguments.getParcelableArrayList(getString(R.string.userViewProductsList));
         }
         return userViewProductsList;
+    }
+
+    public void setSubCategoriesResources(RecyclerView subCategoriesListRecyclerView
+            , SubCategoriesListAdapter adapter
+            , ArrayList<RecyclerSelectedCategory> dataList) {
+
+        this.subCategoriesListRecyclerView = subCategoriesListRecyclerView;
+        this.subCategoriesAdapter = adapter;
+        adapter.setData(dataList);
+        adapter.setupOnItemClickListener(this);
+        adapter.notifyDataSetChanged();
+
     }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

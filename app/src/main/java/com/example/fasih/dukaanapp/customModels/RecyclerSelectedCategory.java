@@ -1,4 +1,4 @@
-package com.example.fasih.dukaanapp.home.customModels;
+package com.example.fasih.dukaanapp.customModels;
 
 /**
  * Created by Fasih on 04/02/19.

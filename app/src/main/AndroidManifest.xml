@@ -23,8 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".login.activity.LoginActivity"></activity>
+        <activity android:name=".categories.actvities.SubCategoryActivity"></activity>
+        <activity android:name=".login.activity.LoginActivity" />
         <activity android:name=".maps.userMaps.activities.UserMapsActivity" />
         <activity android:name=".order.activities.OrderPageActivity" />
 
@@ -65,9 +65,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".home.activities.UserHomePageActivity" />
-        <activity
-            android:name=".home.activities.SplashActivity"
-            >
+        <activity android:name=".home.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
