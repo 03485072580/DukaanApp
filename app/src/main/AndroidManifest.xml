@@ -67,7 +67,7 @@
         <activity android:name=".home.activities.UserHomePageActivity" />
         <activity
             android:name=".home.activities.SplashActivity"
-            android:windowSoftInputMode="adjustResize">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -76,7 +76,7 @@
         </activity>
         <activity
             android:name=".register.RegisterActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".categories.actvities.UniqueCategoryActivity" />
         <activity android:name=".categories.actvities.ProductDetailActivity" />
         <activity android:name=".home.activities.NavigationActivity" />
