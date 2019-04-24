@@ -11,22 +11,52 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="20">
+            android:layout_height="100sp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorPrimary"
+            android:padding="20dp">
 
-            <ImageView
-                android:layout_width="@dimen/_180dp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:contentDescription="@string/contentDescription"
-                android:src="@drawable/dukaan_logo" />
+            <RelativeLayout
+                android:id="@+id/logoshop"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/round_circle_white_circle"
+                android:padding="2dp">
 
-            <ImageView
-                android:layout_width="@dimen/_120dp"
+                <ImageView
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="2dp"
+                    android:src="@drawable/logo_shopping" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/xt"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:contentDescription="@string/contentDescription"
-                android:src="@drawable/dukaanapp" />
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/logoshop"
+                android:layout_toRightOf="@+id/logoshop"
+                android:paddingBottom="10dp"
+                android:text="D"
+                android:textColor="@color/white"
+                android:textSize="48sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/xt"
+                android:layout_toRightOf="@+id/xt"
+                android:text="ukaan App"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout

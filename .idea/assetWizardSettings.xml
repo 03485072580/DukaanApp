@@ -142,8 +142,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="opacityPercent" value="89" />
-                            <entry key="outputName" value="chat_icon" />
-                            <entry key="sourceFile" value="C:\Users\Hex Tech\Desktop\iconfinder_telegram_519183.svg" />
+                            <entry key="outputName" value="ic_shirt" />
+                            <entry key="sourceFile" value="C:\Users\Hex Tech\Desktop\shirt.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
@@ -19,6 +20,8 @@ import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListen
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.RecyclerGridAdapter;
 import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
@@ -33,6 +36,9 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
     private RecyclerView recyclerView;
     private RecyclerView saleRecyclerVIew;
 
+    CarouselView carouselView;
+
+    int[] sampleImages = {R.drawable.promotion2, R.drawable.holidays_sales, R.drawable.sale, R.drawable.promotional_banner, R.drawable.test};
 
     /**
      * This method is responsible for
@@ -97,21 +103,35 @@ public class HomeFragment extends Fragment implements OnRecyclerImageSelectedLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        carouselView = (CarouselView) view.findViewById(R.id.carouselView);
+        carouselView.setPageCount(sampleImages.length);
+
         setupFragmentWidgets(view);
         setupRecyclerView();
+
+
+        carouselView.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                imageView.setImageResource(sampleImages[position]);
+            }
+        });
+
         return view;
     }
 
+
     private void setupRecyclerView() {
         ArrayList<RecyclerSelectedCategory> selectedCategories = new ArrayList<>();
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Cars"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Clothing"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Jewellary"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Mobile"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Electronics"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Cosmetics"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Fragrances"));
-        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.circle_test, "Hot Deals"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_car, "Cars"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_clothing, "Clothing"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_ring, "Jewellary"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_smartphone, "Mobile"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_refrigerator, "Electronics"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_deodorant, "Cosmetics"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_frag, "Fragrances"));
+        selectedCategories.add(new RecyclerSelectedCategory(R.drawable.ic_shirt, "Hot Deals"));
         RecyclerGridAdapter adapter = new RecyclerGridAdapter(getActivity(), this, selectedCategories);
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 4);
         recyclerView.setLayoutManager(manager);

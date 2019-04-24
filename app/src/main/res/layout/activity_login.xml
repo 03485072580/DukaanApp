@@ -18,6 +18,7 @@
             <!--Material Relevant to the Login Screen-->
             <include layout="@layout/snippet_center_activity_login" />
 
+
         </RelativeLayout>
 
         <FrameLayout

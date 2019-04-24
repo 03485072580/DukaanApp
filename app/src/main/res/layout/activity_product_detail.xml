@@ -34,16 +34,17 @@
         <!--Snippet After Mid Section-->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="90dp"
             android:layout_alignParentBottom="true">
 
             <Button
                 android:id="@+id/addToCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_2dp"
+                android:layout_margin="28dp"
                 android:background="@drawable/button_std1"
-                android:text="ADD TO CART" />
+                android:text="ADD TO CART"
+                android:textSize="13sp" />
 
         </RelativeLayout>
 

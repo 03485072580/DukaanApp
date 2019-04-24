@@ -8,10 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
-        <!-- Customize your theme here. -->
+    <!--<style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">-->
+        <!--<item name="colorControlActivated">@color/white</item>-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+    <!--</style>-->
+    <style name="MyProgressBarStyle" parent="AppTheme">
+        <item name="colorControlActivated">@color/white</item>
     </style>
 
+    <style name="Progressbar.White" parent="AppTheme">
+        <item name="colorControlActivated">@color/white</item>
+    </style>
     <style name="SellerAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>

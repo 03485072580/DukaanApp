@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".maps.userMaps.activities.UserMapsActivity"></activity>
+
+        <activity android:name=".login.activity.LoginActivity"></activity>
+        <activity android:name=".maps.userMaps.activities.UserMapsActivity" />
         <activity android:name=".order.activities.OrderPageActivity" />
 
         <meta-data
@@ -64,7 +66,7 @@
         </activity>
         <activity android:name=".home.activities.UserHomePageActivity" />
         <activity
-            android:name=".login.activity.LoginActivity"
+            android:name=".home.activities.SplashActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

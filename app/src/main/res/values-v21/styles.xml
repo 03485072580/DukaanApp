@@ -5,25 +5,33 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/statusBarColor</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <!--<item name="android:statusBarColor">@color/statusBarColor</item>-->
 
     </style>
+
 
     <style name="SellerAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:windowTranslucentNavigation">true</item>
 
     </style>
 
-
-    <style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
-        <!-- Customize your theme here. -->
-        <item name="android:backgroundTint">@color/white</item>
-        <item name="android:progressTint">@color/white</item>
+    <style name="MyProgressBarStyle" parent="AppTheme">
+        <item name="colorControlActivated">@color/white</item>
     </style>
+
+    <style name="Progressbar.White" parent="AppTheme">
+        <item name="colorControlActivated">@color/white</item>
+    </style>
+
+    <!--<style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="android:backgroundTint">@color/white</item>-->
+        <!--<item name="android:progressTint">@color/white</item>-->
+    <!--</style>-->
 </resources>
