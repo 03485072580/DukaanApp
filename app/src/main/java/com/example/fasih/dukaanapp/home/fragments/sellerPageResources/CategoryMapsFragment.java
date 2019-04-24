@@ -35,6 +35,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -281,6 +282,7 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
 
         LatLngBounds bounds = new LatLngBounds(latLng, latLng);
         mMap.setLatLngBoundsForCameraTarget(bounds);
+        mMap.addMarker(new MarkerOptions().position(latLng));
         CameraUpdate update = CameraUpdateFactory.newLatLngBounds(bounds, 0);
         mMap.animateCamera(update);
     }

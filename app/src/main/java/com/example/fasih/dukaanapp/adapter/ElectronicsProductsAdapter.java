@@ -32,12 +32,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_PROGRESS_LOADING = 0, VIEW_TYPE_CURRENT_LAYOUT = 1;
-    private final int threshHold = 5;
+    private int threshHold = 5;
     private Context mContext;
     private OnRecyclerImageSelectedListener imageSelected;
     private ArrayList<Products> userViewProductsList;
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
+
+    private int pastVisibleItems = 0, visibleItemCount = 0, totalItemCount = 0;
 
     private FirebaseMethods firebaseMethods;
 
@@ -73,7 +75,7 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-        if (position == userViewProductsList.size() - 1) {
+        if (position == userViewProductsList.size()) {
             return VIEW_TYPE_PROGRESS_LOADING;
         }
         return VIEW_TYPE_CURRENT_LAYOUT;
@@ -119,10 +121,19 @@ public class ElectronicsProductsAdapter extends RecyclerView.Adapter<RecyclerVie
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (!isLoading && manager.getItemCount() >= manager.findLastVisibleItemPosition() + threshHold) {
-                    if (loadDynamicData != null) {
-                        loadDynamicData.onRequestData(userViewProductsList);
-                        isLoading = true;
+                visibleItemCount = manager.getChildCount();
+                totalItemCount = manager.getItemCount();
+                pastVisibleItems = manager.findLastVisibleItemPosition();
+
+                threshHold = manager.findLastVisibleItemPosition();
+                if (dy > 0) {
+
+                    if (!isLoading && (totalItemCount - 1) == threshHold) {
+
+                        if (loadDynamicData != null) {
+                            loadDynamicData.onRequestData(userViewProductsList);
+                            isLoading = true;
+                        }
                     }
                 }
             }

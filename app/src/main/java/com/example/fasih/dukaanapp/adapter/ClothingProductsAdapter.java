@@ -28,10 +28,10 @@ import java.util.ArrayList;
 public class ClothingProductsAdapter extends RecyclerView.Adapter {
 
     private static final int VIEW_TYPE_EVEN_LAYOUT = 0, VIEW_TYPE_ODD_LAYOUT = 1;
-    private int threshHold = 2;
     private int pastVisibleItems = 0, visibleItemCount = 0, totalItemCount = 0, previousTotal = 0;
     private Context mContext;
     private ArrayList<Products> userViewProductsList;
+    private int threshHold = 2;
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
     private int currentPositionParsed = -1;
@@ -237,6 +237,7 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
     }
 
     public void setFilteredList(ArrayList<Products> filteredList) {
+
         userViewProductsList.clear();
         userViewProductsList.addAll(filteredList);
         notifyDataSetChanged();
@@ -370,7 +371,6 @@ public class ClothingProductsAdapter extends RecyclerView.Adapter {
             productImage0.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("TAG1234", "onClick: " + getAdapterPosition());
 
                     try {
 

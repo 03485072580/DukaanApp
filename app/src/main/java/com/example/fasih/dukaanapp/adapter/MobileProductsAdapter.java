@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +44,15 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     private final int VIEW_TYPE_PROGRESS_LOADING = 0, VIEW_TYPE_CURRENT_LAYOUT = 1;
-    private final int threshHold = 5;
+    private int threshHold = 5;
     private Context mContext;
     private OnRecyclerImageSelectedListener imageSelected;
     private ArrayList<Products> userViewProductsList;
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
+
+    private int pastVisibleItems = 0, visibleItemCount = 0, totalItemCount = 0;
+
 
     private FirebaseMethods firebaseMethods;
 
@@ -84,7 +88,7 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemViewType(int position) {
-        if (position == userViewProductsList.size() - 1) {
+        if (position == userViewProductsList.size() ) {
             return VIEW_TYPE_PROGRESS_LOADING;
         }
         return VIEW_TYPE_CURRENT_LAYOUT;
@@ -132,10 +136,19 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (!isLoading && manager.getItemCount() >= manager.findLastVisibleItemPosition() + threshHold) {
-                    if (loadDynamicData != null) {
-                        loadDynamicData.onRequestData(userViewProductsList);
-                        isLoading = true;
+
+                visibleItemCount = manager.getChildCount();
+                totalItemCount = manager.getItemCount();
+                pastVisibleItems = manager.findLastVisibleItemPosition();
+                threshHold = manager.findLastVisibleItemPosition();
+                if (dy > 0) {
+
+                    if (!isLoading && (totalItemCount - 1) == threshHold) {
+
+                        if (loadDynamicData != null) {
+                            loadDynamicData.onRequestData(userViewProductsList);
+                            isLoading = true;
+                        }
                     }
                 }
             }
@@ -156,6 +169,7 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public void setFilteredList(ArrayList<Products> filteredList) {
+
         userViewProductsList.clear();
         userViewProductsList.addAll(filteredList);
         notifyDataSetChanged();

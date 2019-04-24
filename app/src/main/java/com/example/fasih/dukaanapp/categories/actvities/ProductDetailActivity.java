@@ -38,6 +38,7 @@ public class ProductDetailActivity extends AppCompatActivity
     private ScaleRatingBar simpleRatingBar;
     private Products product;
     private String currentlyAttachedFragment;
+
     //Firebase Stuff
     private FirebaseAuth mAuth;
     private FirebaseDatabase firebaseDatabase;
