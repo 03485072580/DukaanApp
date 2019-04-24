@@ -5,6 +5,15 @@
     <string name="as_shop">SHOP</string>
     <string name="admin">ADMIN</string>
 
+    <string name="type_prompt">Choose a Type</string>
+    <string-array name="type_arrays">
+        <item>Choose a Type</item>
+        <item>Coat</item>
+        <item>Suits</item>
+        <item>Stitched</item>
+        <item>Un-Stitched</item>
+    </string-array>
+
     <!--Activity Package-->
     <string name="activity_register">RegisterActivity</string>
     <string name="activity_product_detail">ProductDetailActivity</string>

@@ -32,6 +32,7 @@ import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.SearchUser
 import com.example.fasih.dukaanapp.login.activity.LoginActivity;
 import com.example.fasih.dukaanapp.models.Orders;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.models.ProductsNew;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
@@ -668,7 +669,8 @@ public class FirebaseMethods {
             , final String productWarranty
             , final String availableStock
             , final String timeStamp
-            , final String shop_id) {
+            , final String shop_id
+            , final String selectedType) {
         if (activityName.equals(mContext.getString(R.string.shareFragment))) {
 
             dialogFragment = new ProgressDialogFragment();
@@ -723,9 +725,9 @@ public class FirebaseMethods {
                         productID = productID.substring(3, 13);
                         Uri downloadUri = task.getResult();
 
-                        Products product = new Products(productName, selectedCategory, downloadUri.toString()
+                        ProductsNew product = new ProductsNew(productName, selectedCategory, downloadUri.toString()
                                 , productDescription, productPrice, productWarranty
-                                , availableStock, timeStamp, productID, -1, shop_id);
+                                , availableStock, timeStamp, productID, -1, shop_id,selectedType);
                         myRef
                                 .child(mContext.getString(R.string.db_products_node))
                                 .child(mAuth.getCurrentUser().getUid())
