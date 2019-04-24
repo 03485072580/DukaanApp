@@ -128,7 +128,7 @@
                     android:layout_marginRight="@dimen/_10dp"
                     android:background="@drawable/round_edits"
                     android:ems="10"
-                    android:hint="@string/shopName"
+                    android:hint="@string/username"
                     android:inputType="textPersonName"
                     android:paddingStart="@dimen/_5dp"
                     android:paddingLeft="@dimen/_5dp"
@@ -137,6 +137,7 @@
 
                 <EditText
                     android:id="@+id/address"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_below="@+id/username"
@@ -200,6 +201,7 @@
                     android:layout_marginRight="@dimen/_10dp"
                     android:background="@drawable/round_edits"
                     android:ems="10"
+                    android:visibility="gone"
                     android:hint="@string/mallID"
                     android:inputType="text"
                     android:paddingStart="@dimen/_5dp"

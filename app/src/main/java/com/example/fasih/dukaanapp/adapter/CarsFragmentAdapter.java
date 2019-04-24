@@ -44,7 +44,7 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
     public CarsFragmentAdapter(Context context
-            ,final ArrayList<Products> userViewProductsList
+            , final ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.userViewProductsList = userViewProductsList;
         this.mContext = context;
@@ -146,9 +146,9 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    private void setupSellerViews(ViewHolder viewHolder , String shop_id) {
+    private void setupSellerViews(ViewHolder viewHolder, String shop_id) {
 
-        if(shop_id !=null)
+        if (shop_id != null)
             firebaseMethods.setSellerViews(viewHolder, shop_id);
     }
 
@@ -205,4 +205,11 @@ public class CarsFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         }
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+
 }
