@@ -4,18 +4,29 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
+import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.RecyclerProgressUpdater;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.willy.ratingbar.ScaleRatingBar;
@@ -39,11 +50,15 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private LoadDynamicData loadDynamicData;
     private Boolean isLoading;
 
+    private FirebaseMethods firebaseMethods;
+
     public MobileProductsAdapter(Context context
             , ArrayList<Products> userViewProductsList
             , RecyclerView recyclerView) {
         this.mContext = context;
         this.userViewProductsList = userViewProductsList;
+        this.firebaseMethods = new FirebaseMethods(mContext
+                , mContext.getString(R.string.mobileProductsAdapter));
         setupUniversalImageLoader(UniversalImageLoader.getConfiguration(context));
         setupScrollListner((LinearLayoutManager) recyclerView.getLayoutManager(), recyclerView);
     }
@@ -83,6 +98,7 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyViewHolder) {
+
             MyViewHolder viewHolder = (MyViewHolder) holder;
             ImageLoader.getInstance().displayImage(userViewProductsList.get(position).getProduct_image_url()
                     , viewHolder.productImage);
@@ -90,6 +106,7 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             viewHolder.productDesc.setText(userViewProductsList.get(position).getProduct_description());
             viewHolder.productPrice.setText(userViewProductsList.get(position).getProduct_price());
             viewHolder.simpleRatingBar.setRating(userViewProductsList.get(position).getProduct_rating());
+            setupSellerViews(viewHolder, userViewProductsList.get(position).getShop_id());
 
         }
         if (holder instanceof RecyclerProgressUpdater) {
@@ -97,6 +114,12 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
 
+    }
+
+    private void setupSellerViews(MyViewHolder viewHolder , String shop_id) {
+
+        if(shop_id !=null)
+        firebaseMethods.setSellerViews(viewHolder, shop_id);
     }
 
     public void setLoadDynamicData(LoadDynamicData loadDynamicData) {
@@ -144,33 +167,47 @@ public class MobileProductsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView productImage, sellerImage;
+        private ImageView productImage;
+        public ImageView sellerImage;
         private CircleImageView cartAdd;
-        private TextView productTitle, productDesc, productPrice, sellingBy;
+        private TextView productTitle, productDesc, productPrice;
+        public TextView sellingBy;
         private ScaleRatingBar simpleRatingBar;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
 
             productImage = itemView.findViewById(R.id.productImage);
-            sellerImage = itemView.findViewById(R.id.sellerImage);
-            cartAdd = itemView.findViewById(R.id.cartAdd);
             productTitle = itemView.findViewById(R.id.productTitle);
             productDesc = itemView.findViewById(R.id.productDesc);
             productPrice = itemView.findViewById(R.id.productPrice);
+            cartAdd = itemView.findViewById(R.id.cartAdd);
             sellingBy = itemView.findViewById(R.id.sellingBy);
             simpleRatingBar = itemView.findViewById(R.id.simpleRatingBar);
+            sellerImage = itemView.findViewById(R.id.sellerImage);
+
+            cartAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    firebaseMethods.setupUserWishlistProducts(userViewProductsList.get(getAdapterPosition()));
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    imageSelected.onClickGridImage(getAdapterPosition(), itemView, userViewProductsList.get(getAdapterPosition()));
+                    imageSelected.onClickGridImage(getAdapterPosition()
+                            , itemView
+                            , userViewProductsList.get(getAdapterPosition()));
                 }
             });
         }
     }
+
+
 }
 
 

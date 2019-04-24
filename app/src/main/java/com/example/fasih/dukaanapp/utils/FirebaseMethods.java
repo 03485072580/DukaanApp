@@ -17,8 +17,12 @@ import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.CarsFragmentAdapter;
+import com.example.fasih.dukaanapp.adapter.CartProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
+import com.example.fasih.dukaanapp.adapter.CosmeticsProductsAdapter;
+import com.example.fasih.dukaanapp.adapter.ElectronicsProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
+import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
@@ -60,6 +64,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import org.apache.http.util.ByteArrayBuffer;
 
@@ -109,7 +115,14 @@ public class FirebaseMethods {
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         myRef = firebaseDatabase.getReference();
+
+        setupUniversalImageLoader(UniversalImageLoader.getConfiguration(context));
     }
+
+    private void setupUniversalImageLoader(ImageLoaderConfiguration config) {
+        ImageLoader.getInstance().init(config);
+    }
+
     //Username might be the name of the User or
     // may be the shop Name depending upon the situation
 
@@ -213,7 +226,6 @@ public class FirebaseMethods {
         // else just update the DB
 
         //mall Id is responsible for the creation of the new node called as mall_shops
-        Log.d("TAG1234", "addNewUser: " + mallUniqueID);
 
         if (updateProgress != null) {
             updateProgress.setVisibility(View.VISIBLE);
@@ -726,7 +738,6 @@ public class FirebaseMethods {
                                             dialogFragment.dismissAllowingStateLoss();
                                         }
                                         if (task.isSuccessful()) {
-                                            Log.d("TAG1234", "onComplete: Successfully Created");
                                         } else {
                                             task.getException().printStackTrace();
                                         }
@@ -778,7 +789,6 @@ public class FirebaseMethods {
                 if (task.isSuccessful()) {
 
                     final Uri downloadUrl = task.getResult();
-                    Log.d("TAG1234", "onComplete: " + downloadUrl);
                     Query query = myRef.child(mContext.getString(R.string.db_shop_profile_settings_node))
                             .orderByChild(mContext.getString(R.string.db_field_user_id))
                             .equalTo(mAuth.getCurrentUser().getUid());
@@ -809,7 +819,6 @@ public class FirebaseMethods {
                                 myRef.child(mContext.getString(R.string.db_shop_profile_settings_node))
                                         .child(mAuth.getCurrentUser().getUid())
                                         .setValue(shopSettings);
-                                Log.d("TAG1234", "onComplete: " + shopSettings.toString());
                             }
                         }
 
@@ -827,7 +836,6 @@ public class FirebaseMethods {
 
 
     public void searchQueryTextByUsername(String query) {
-        Log.d("TAG1234", "searchQueryTextByUsername: " + query);
         Query queryDB = myRef
                 .child(mContext.getString(R.string.db_mall_node))
                 .child(mAuth.getCurrentUser().getUid())
@@ -898,7 +906,6 @@ public class FirebaseMethods {
     }
 
     public void queryProducts(final String queryString) {
-        Log.d("TAG1234", "queryProducts: " + queryString);
 
         Query productsNodeQuery = myRef
                 .child(mContext.getString(R.string.db_products_node));
@@ -1010,12 +1017,10 @@ public class FirebaseMethods {
                             || activityName.equals(mContext.getString(R.string.electronicsFragment))
                             || activityName.equals(mContext.getString(R.string.fragrancesFragment))
                             || activityName.equals(mContext.getString(R.string.jewellaryFragment))) {
-                        Log.d("TAG1234", "onDataChange: Here it comes");
 
                         int previousProductsListSize = userViewProductsList.size();
                         int currentProductsListSize = tempUserViewProductList.size();
                         if (currentProductsListSize == previousProductsListSize) {
-                            Log.d("TAG1234", "onDataChange: Similar Arrays");
                             if (adapter instanceof ClothingProductsAdapter) {
                                 ((ClothingProductsAdapter) adapter).setLoading();
                             }
@@ -1048,8 +1053,6 @@ public class FirebaseMethods {
                                 }
                             }, 2000);
 
-                            Log.d("TAG1234", "onDataChange: isEqual"
-                                    + userViewProductsList.equals(tempUserViewProductList));
                         }
 
                     }
@@ -1160,6 +1163,155 @@ public class FirebaseMethods {
                             Toast.makeText(mContext, mContext.getString(R.string.failure_created_order), Toast.LENGTH_SHORT).show();
 
                         }
+                    }
+                });
+
+    }
+
+    public void setupUserWishlistProducts(final Products product) {
+
+
+        myRef
+                .child(mContext.getString(R.string.db_cart_node))
+                .child(mAuth.getCurrentUser().getUid())
+                .orderByChild(mContext.getString(R.string.db_field_product_id))
+                .equalTo(product.getProduct_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        if (!dataSnapshot.exists()) {
+
+                            FirebaseMethods.this.initializeAddToCart(mAuth.getCurrentUser().getUid(), product);
+                        } else {
+                            Toast.makeText(mContext, mContext.getString(R.string.Already_Added_to_the_Cart), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void setSellerViews(final MobileProductsAdapter.MyViewHolder viewHolder
+            , String currentShopID) {
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(currentShopID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+
+                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                            {
+                                HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
+                                viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void setSellerViews(final ElectronicsProductsAdapter.MyViewHolder viewHolder
+            , String currentShopID) {
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(currentShopID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+
+                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                            {
+                                HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
+                                viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void setSellerViews(final CosmeticsProductsAdapter.MyViewHolder viewHolder
+            , String currentShopID) {
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(currentShopID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+
+                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                            {
+                                HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
+                                viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void setSellerViews(final CarsFragmentAdapter.ViewHolder viewHolder
+            , String currentShopID) {
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(currentShopID)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        if(dataSnapshot.exists()){
+
+                            for (DataSnapshot ds: dataSnapshot.getChildren())
+                            {
+                                HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
+                                viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
 

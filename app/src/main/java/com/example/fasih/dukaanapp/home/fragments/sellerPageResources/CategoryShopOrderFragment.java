@@ -123,7 +123,7 @@ public class CategoryShopOrderFragment extends Fragment {
         }
     }
 
-    private void queryDBCartProducts(String currentUserID) {
+    private void queryDBCartProducts(final String currentUserID) {
         userViewOrdersList = new ArrayList<>();
         myRef
                 .child(getString(R.string.db_orders_node))
@@ -138,27 +138,31 @@ public class CategoryShopOrderFragment extends Fragment {
                             Map<String, Object> userMap = (HashMap<String, Object>) dataSnapshot.getValue();
                             Collection<Object> shopsCollection = userMap.values();
                             for (Object shop : shopsCollection) {
-                                HashMap<String, Object> orderMap = (HashMap<String, Object>) shop;
-                                Log.d("TAG1234", "onDataChange: "+orderMap.keySet());;
-                                Collection<Object> orderCollection = orderMap.values();
-                                for(Object order: orderCollection)
-                                {
-                                    HashMap<String, Object> singleOrder = (HashMap<String, Object>) order;
-                                    Orders orders = new Orders();
-                                    orders.setProduct_name((String) singleOrder.get(getString(R.string.db_field_product_name)));
-                                    orders.setOrder_price((String) singleOrder.get(getString(R.string.db_field_order_price)));
-                                    orders.setTimeStamp((String) singleOrder.get(getString(R.string.db_field_timeStamp)));
-                                    orders.setOrder_status((String) singleOrder.get(getString(R.string.db_field_order_status)));
-                                    orders.setUser_id((String) singleOrder.get(getString(R.string.db_field_user_id)));
-                                    orders.setOrder_id((String) singleOrder.get(getString(R.string.db_field_order_id)));
-                                    orders.setProduct_id((String) singleOrder.get(getString(R.string.db_field_product_id)));
-                                    orders.setShop_id((String) singleOrder.get(getString(R.string.db_field_shop_id)));
+                                HashMap<String, Object> shopMap = (HashMap<String, Object>) shop;
 
-                                    userViewOrdersList.add(orders);
+                                if(shopMap.containsKey(currentUserID)){
+
+                                    HashMap<String,Object> orderMap = (HashMap<String, Object>) shopMap.get(currentUserID);
+
+                                    Collection<Object> orderCollection = orderMap.values();
+                                    for(Object order: orderCollection)
+                                    {
+                                        HashMap<String, Object> singleOrder = (HashMap<String, Object>) order;
+                                        Orders orders = new Orders();
+                                        orders.setProduct_name((String) singleOrder.get(getString(R.string.db_field_product_name)));
+                                        orders.setOrder_price((String) singleOrder.get(getString(R.string.db_field_order_price)));
+                                        orders.setTimeStamp((String) singleOrder.get(getString(R.string.db_field_timeStamp)));
+                                        orders.setOrder_status((String) singleOrder.get(getString(R.string.db_field_order_status)));
+                                        orders.setUser_id((String) singleOrder.get(getString(R.string.db_field_user_id)));
+                                        orders.setOrder_id((String) singleOrder.get(getString(R.string.db_field_order_id)));
+                                        orders.setProduct_id((String) singleOrder.get(getString(R.string.db_field_product_id)));
+                                        orders.setShop_id((String) singleOrder.get(getString(R.string.db_field_shop_id)));
+
+                                        userViewOrdersList.add(orders);
+                                    }
                                 }
-
                             }
-//                            setupRecyclerView(userViewOrdersList);
+                            setupRecyclerView(userViewOrdersList);
                         }
                     }
 
