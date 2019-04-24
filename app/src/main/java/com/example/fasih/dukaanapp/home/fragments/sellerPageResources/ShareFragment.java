@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatSpinner;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +50,8 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
     private String imageLoadingUrl;
     private Button currencyPicker;
     private EditText productName, productDescription, productPrice, productWarranty, availableStock;
-    private MaterialSpinner selectedCategory;
+    private MaterialSpinner selectedCategory, selectedtype;
+
 
     //Firebase Stuff
     private FirebaseAuth mAuth;
@@ -92,9 +95,11 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
         productPrice = view.findViewById(R.id.productPrice);
         productWarranty = view.findViewById(R.id.productWarranty);
         availableStock = view.findViewById(R.id.availableStock);
-
+        selectedtype = view.findViewById(R.id.selectedtype);
         selectedCategory = view.findViewById(R.id.selectedCategory);
+
         selectedCategory.setItems(getResources().getStringArray(R.array.spinner_items));
+        selectedtype.setItems(getResources().getStringArray(R.array.type_arrays));
 //        testImage.setImageURI(Uri.parse(capturedImage));
 
         backArrow.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +192,7 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
         if (!TextUtils.isEmpty(productName.getText().toString()) && !TextUtils.isEmpty(productDescription.getText().toString()) &&
                 !TextUtils.isEmpty(productPrice.getText().toString()) && !TextUtils.isEmpty(productWarranty.getText().toString())
                 && !TextUtils.isEmpty(availableStock.getText().toString()) && !TextUtils.isEmpty(imageLoadingUrl)) {
-            if (selectedCategory.getSelectedIndex() != 0) {
+            if (selectedCategory.getSelectedIndex() != 0 && selectedtype.getSelectedIndex() != 0 && selectedtype.getSelectedIndex() != 1) {
                 //All Correct. Firebase Server work Here
                 firebaseMethods.uploadProduct(productName.getText().toString()
                         , selectedCategory.getText().toString()
@@ -197,7 +202,9 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
                         , productWarranty.getText().toString()
                         , availableStock.getText().toString()
                         , getTimeStamp()
-                        , currentUserID);
+                        , currentUserID
+                        , selectedtype.getText().toString())
+                ;
 
             } else {
                 try {

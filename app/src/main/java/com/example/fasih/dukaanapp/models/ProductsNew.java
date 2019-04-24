@@ -1,0 +1,187 @@
+package com.example.fasih.dukaanapp.models;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ProductsNew implements Parcelable {
+    public static final Parcelable.Creator<Products> CREATOR = new Parcelable.Creator<Products>() {
+        @Override
+        public Products createFromParcel(Parcel in) {
+            return new Products(in);
+        }
+
+        @Override
+        public Products[] newArray(int size) {
+            return new Products[size];
+        }
+    };
+
+    private String product_name;
+    private String product_category;
+    private String product_image_url;
+    private String product_description;
+    private String product_price;
+    private String product_warranty;
+    private String product_stock;
+    private String timeStamp;
+    private String product_id;
+    private long product_rating;
+    private String shop_id;
+    private String type;
+
+    public ProductsNew(String product_name, String product_category, String product_image_url, String product_description, String product_price, String product_warranty, String product_stock, String timeStamp, String product_id, long product_rating, String shop_id, String type) {
+        this.product_name = product_name;
+        this.product_category = product_category;
+        this.product_image_url = product_image_url;
+        this.product_description = product_description;
+        this.product_price = product_price;
+        this.product_warranty = product_warranty;
+        this.product_stock = product_stock;
+        this.timeStamp = timeStamp;
+        this.product_id = product_id;
+        this.product_rating = product_rating;
+        this.shop_id = shop_id;
+        this.type = type;
+    }
+
+
+    @Override
+    public String toString() {
+        return "ProductsNew{" +
+                "product_name='" + product_name + '\'' +
+                ", product_category='" + product_category + '\'' +
+                ", product_image_url='" + product_image_url + '\'' +
+                ", product_description='" + product_description + '\'' +
+                ", product_price='" + product_price + '\'' +
+                ", product_warranty='" + product_warranty + '\'' +
+                ", product_stock='" + product_stock + '\'' +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", product_id='" + product_id + '\'' +
+                ", product_rating=" + product_rating +
+                ", shop_id='" + shop_id + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+
+    public static Creator<Products> getCREATOR() {
+        return CREATOR;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public String getProduct_category() {
+        return product_category;
+    }
+
+    public void setProduct_category(String product_category) {
+        this.product_category = product_category;
+    }
+
+    public String getProduct_image_url() {
+        return product_image_url;
+    }
+
+    public void setProduct_image_url(String product_image_url) {
+        this.product_image_url = product_image_url;
+    }
+
+    public String getProduct_description() {
+        return product_description;
+    }
+
+    public void setProduct_description(String product_description) {
+        this.product_description = product_description;
+    }
+
+    public String getProduct_price() {
+        return product_price;
+    }
+
+    public void setProduct_price(String product_price) {
+        this.product_price = product_price;
+    }
+
+    public String getProduct_warranty() {
+        return product_warranty;
+    }
+
+    public void setProduct_warranty(String product_warranty) {
+        this.product_warranty = product_warranty;
+    }
+
+    public String getProduct_stock() {
+        return product_stock;
+    }
+
+    public void setProduct_stock(String product_stock) {
+        this.product_stock = product_stock;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public long getProduct_rating() {
+        return product_rating;
+    }
+
+    public void setProduct_rating(long product_rating) {
+        this.product_rating = product_rating;
+    }
+
+    public String getShop_id() {
+        return shop_id;
+    }
+
+    public void setShop_id(String shop_id) {
+        this.shop_id = shop_id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(product_name);
+        parcel.writeString(product_category);
+        parcel.writeString(product_image_url);
+        parcel.writeString(product_description);
+        parcel.writeString(product_price);
+        parcel.writeString(product_warranty);
+        parcel.writeString(product_stock);
+        parcel.writeString(timeStamp);
+        parcel.writeString(product_id);
+        parcel.writeLong(product_rating);
+        parcel.writeString(shop_id);
+        parcel.writeString(type);
+
+    }
+}

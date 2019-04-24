@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -55,8 +56,8 @@
                         android:layout_width="@dimen/_45dp"
                         android:layout_height="@dimen/_45dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5dp"
                         android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginLeft="@dimen/_5dp"
                         android:src="@drawable/ic_description" />
 
                     <EditText
@@ -68,8 +69,8 @@
                         android:layout_toRightOf="@id/productDescriptionImage"
                         android:background="@drawable/editext_std2"
                         android:hint="@string/product_description"
-                        android:paddingLeft="@dimen/_10dp"
                         android:paddingStart="@dimen/_10dp"
+                        android:paddingLeft="@dimen/_10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_black" />
                 </RelativeLayout>
@@ -87,8 +88,8 @@
                         android:layout_width="@dimen/_45dp"
                         android:layout_height="@dimen/_45dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5dp"
                         android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginLeft="@dimen/_5dp"
                         android:src="@drawable/ic_price" />
 
                     <EditText
@@ -101,8 +102,8 @@
                         android:background="@drawable/editext_std2"
                         android:hint="@string/product_price"
                         android:inputType="number"
-                        android:paddingLeft="@dimen/_10dp"
                         android:paddingStart="@dimen/_10dp"
+                        android:paddingLeft="@dimen/_10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_black" />
                 </RelativeLayout>
@@ -120,8 +121,8 @@
                         android:layout_width="@dimen/_45dp"
                         android:layout_height="@dimen/_45dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5dp"
                         android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginLeft="@dimen/_5dp"
                         android:src="@drawable/ic_waranty" />
 
                     <EditText
@@ -133,8 +134,8 @@
                         android:layout_toRightOf="@id/productWarrantyImage"
                         android:background="@drawable/editext_std2"
                         android:hint="@string/product_warranty"
-                        android:paddingLeft="@dimen/_10dp"
                         android:paddingStart="@dimen/_10dp"
+                        android:paddingLeft="@dimen/_10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_black" />
                 </RelativeLayout>
@@ -152,8 +153,8 @@
                         android:layout_width="@dimen/_45dp"
                         android:layout_height="@dimen/_45dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/_5dp"
                         android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginLeft="@dimen/_5dp"
                         android:src="@drawable/ic_stock" />
 
                     <EditText
@@ -166,11 +167,43 @@
                         android:background="@drawable/editext_std2"
                         android:hint="@string/available_stock"
                         android:inputType="number"
-                        android:paddingLeft="@dimen/_10dp"
                         android:paddingStart="@dimen/_10dp"
+                        android:paddingLeft="@dimen/_10dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/light_black" />
                 </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5dp"
+                    android:background="@drawable/editext_std2"
+                    android:backgroundTint="@color/spinnerColor"
+                    tools:targetApi="lollipop">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/availableStockImagess"
+                        android:layout_width="@dimen/_45dp"
+                        android:layout_height="@dimen/_45dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_5dp"
+                        android:layout_marginLeft="@dimen/_5dp"
+                        android:src="@drawable/ic_action_name" />
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/selectedtype"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dp"
+                        android:layout_toEndOf="@id/availableStockImagess"
+                        android:layout_toRightOf="@id/availableStockImagess"
+                        android:entries="@array/type_arrays"
+                        android:paddingStart="@dimen/_10dp"
+                        android:paddingLeft="@dimen/_10dp"
+                        android:spinnerMode="dialog"
+                        app:ms_background_selector="@drawable/editext_std2"
+                        tools:ignore="RtlSymmetry" />
+                </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -54,10 +54,10 @@ public class UserHomePageActivity extends AppCompatActivity {
                     replaceSupportFragment(new HomeFragment(), getString(R.string.homeFragment));
 //                    mTextMessage.setText(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
+//                case R.id.navigation_dashboard:
 //                    replaceFragment(new Chat_Fragment(), "Profile");
 //                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
+//                    return true;
                 case R.id.navigation_notifications:
                     replaceSupportFragment(new Chat_Fragment(), getString(R.string.chatFragment));
 //                    mTextMessage.setText(R.string.title_notifications);
