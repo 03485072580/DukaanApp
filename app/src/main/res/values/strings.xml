@@ -61,7 +61,7 @@
     <string name="contentDescription">contentDescription</string>
     <string name="signUp_options">OPTIONS</string>
     <string name="register_button">REGISTER NOW</string>
-    <string name="first_name">first name</string>
+    <string name="first_name">First Name</string>
     <string name="last_name">last name</string>
     <string name="username">username</string>
     <string name="email">email</string>

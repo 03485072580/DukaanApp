@@ -6,7 +6,7 @@
     <dimen name="_24sp">24sp</dimen>
     <dimen name="_130dp">130dp</dimen>
     <dimen name="_150dp">150dp</dimen>
-    <dimen name="_5dp">5dp</dimen>
+    <dimen name="_5dp">10dp</dimen>
     <dimen name="_18sp">18sp</dimen>
     <dimen name="_56dp">56dp</dimen>
     <dimen name="_200dp">200dp</dimen>

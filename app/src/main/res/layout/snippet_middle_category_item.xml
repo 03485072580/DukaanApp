@@ -21,6 +21,6 @@
         android:text="Cosmetics"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
 </LinearLayout>

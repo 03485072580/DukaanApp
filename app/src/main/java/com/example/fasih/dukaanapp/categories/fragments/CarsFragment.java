@@ -1,13 +1,16 @@
 package com.example.fasih.dukaanapp.categories.fragments;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,6 +137,27 @@ public class CarsFragment extends Fragment implements LoadDynamicData
         return userViewProductsList;
     }
 
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+
+    }
+
+
+    private int dpToPx(int i) {
+        Resources r = getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, r.getDisplayMetrics()));
+    }
+
     public void setupRecyclerView(ArrayList<Products> userViewProductsList) {
 
         if (userViewProductsList != null)
@@ -147,8 +171,13 @@ public class CarsFragment extends Fragment implements LoadDynamicData
                 adapter.setupOnItemClickListener(this);
                 adapter.setInitialLoadingProgress();
                 adapter.setLoadDynamicData(this);
+
+
                 carsProductsContainer.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                carsProductsContainer.addItemDecoration(new GridSpacingItemDecoration(10, dpToPx(10), true));
+                carsProductsContainer.setItemAnimator(new DefaultItemAnimator());
                 carsProductsContainer.setAdapter(adapter);
+
 
             }
     }
