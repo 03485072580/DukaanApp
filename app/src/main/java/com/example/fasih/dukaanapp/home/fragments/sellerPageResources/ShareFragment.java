@@ -27,8 +27,11 @@ import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.example.fasih.dukaanapp.utils.UniversalImageLoader;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.mynameismidori.currencypicker.CurrencyPicker;
 import com.mynameismidori.currencypicker.CurrencyPickerListener;
@@ -36,6 +39,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -194,17 +198,43 @@ public class ShareFragment extends Fragment implements OnBackButtonPressedListen
                 && !TextUtils.isEmpty(availableStock.getText().toString()) && !TextUtils.isEmpty(imageLoadingUrl)) {
             if (selectedCategory.getSelectedIndex() != 0 && selectedtype.getSelectedIndex() != 0 && selectedtype.getSelectedIndex() != 1) {
                 //All Correct. Firebase Server work Here
-                firebaseMethods.uploadProduct(productName.getText().toString()
-                        , selectedCategory.getText().toString()
-                        , imageLoadingUrl
-                        , productDescription.getText().toString()
-                        , productPrice.getText().toString()
-                        , productWarranty.getText().toString()
-                        , availableStock.getText().toString()
-                        , getTimeStamp()
-                        , currentUserID
-                        , selectedtype.getText().toString())
-                ;
+                myRef
+                        .child(getString(R.string.db_shop_profile_settings_node))
+                        .orderByChild(getString(R.string.db_field_user_id))
+                        .equalTo(mAuth.getCurrentUser().getUid())
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                for(DataSnapshot singleShop:dataSnapshot.getChildren())
+                                {
+                                    HashMap<String, Object> shopProfileSettingsNode = (HashMap<String, Object>) singleShop.getValue();
+                                    if((Boolean) shopProfileSettingsNode.get(getString(R.string.db_field_admin_approved)))
+                                    {
+
+                                        firebaseMethods.uploadProduct(productName.getText().toString()
+                                                , selectedCategory.getText().toString()
+                                                , imageLoadingUrl
+                                                , productDescription.getText().toString()
+                                                , productPrice.getText().toString()
+                                                , productWarranty.getText().toString()
+                                                , availableStock.getText().toString()
+                                                , getTimeStamp()
+                                                , currentUserID
+                                                , selectedtype.getText().toString());
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(getContext(),getString(R.string.upload_failed_msg), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
             } else {
                 try {

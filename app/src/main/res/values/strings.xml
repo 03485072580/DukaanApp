@@ -152,7 +152,7 @@
 
 
     <!--Simple Toast Messages-->
-
+    <string name="upload_failed_msg">We are Really Sorry for the Inconvienience. Our Team of Experts is Analyzing your Provided Shop Details and will approve your account if provided details are accepted by our experts. You can\'t be able to upload the Products untill your Profile got approved by our team.  Thank You</string>
     <string name="successfully_created_order">Successfully Placed An Order</string>
     <string name="failure_created_order">Failure to Create An Order</string>
     <string name="warning_required_fields">All Fields are required</string>
