@@ -65,9 +65,9 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
         adapter.setLoading(true);
         filteredList.clear();
-
         if (newText.equals("")) {
             filteredList.addAll(backupUserViewProductsList);
             adapter.setLoading(false);
@@ -133,7 +133,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
                 if(subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_deodorant)
+                        R.drawable.ic_clothing)
                 {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
@@ -144,7 +144,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
                 if(subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_clothing)
+                        R.drawable.suit)
                 {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
@@ -155,7 +155,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
                 if(subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_car)
+                        R.drawable.dress)
                 {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
@@ -165,7 +165,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
                 if(subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_ring)
+                        R.drawable.scarf)
                 {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
