@@ -3,6 +3,7 @@ package com.example.fasih.dukaanapp.categories.actvities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.example.fasih.dukaanapp.categories.fragments.MobileFragment;
 import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
+import com.example.fasih.dukaanapp.utils.RecyclerDataHelper;
 import com.example.fasih.dukaanapp.utils.RecyclerLinearAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -101,7 +103,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     carsFragment.setSearchView(search);
                     carsFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(carsFragment));
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -122,7 +124,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     clothingFragment.setSearchView(search);
                     clothingFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(clothingFragment));
                     Bundle myArrayListHolder = new Bundle();
                     myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -143,7 +145,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     jewellaryFragment.setSearchView(search);
                     jewellaryFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(jewellaryFragment));
                     Bundle myArrayListHolder = new Bundle();
                     myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -165,7 +167,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     mobileFragment.setSearchView(search);
                     mobileFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(mobileFragment));
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -186,7 +188,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     fragrancesFragment.setSearchView(search);
                     fragrancesFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(fragrancesFragment));
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -207,7 +209,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     cosmeticsFragment.setSearchView(search);
                     cosmeticsFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(cosmeticsFragment));
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -228,7 +230,7 @@ public class UniqueCategoryActivity extends AppCompatActivity {
                     electronicsFragment.setSearchView(search);
                     electronicsFragment.setSubCategoriesResources(subCategoriesListRecyclerView
                             , adapter
-                            , getClothingSubCategoriesDataList());
+                            , getClothingSubCategoriesDataList(electronicsFragment));
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -246,19 +248,39 @@ public class UniqueCategoryActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList<RecyclerSelectedCategory> getClothingSubCategoriesDataList() {
+    /**
+     * This method is responsible for updating the SubCategory Horizontal items List
+     *
+     * @param fragment
+     * @return
+     */
 
+    private ArrayList<RecyclerSelectedCategory> getClothingSubCategoriesDataList(Fragment fragment) {
 
-        ArrayList<RecyclerSelectedCategory> dataList = new ArrayList<>();
-        dataList.add(new RecyclerSelectedCategory(R.drawable.ic_deodorant
-                , getString(R.string.query_type_Coat)));
-        dataList.add(new RecyclerSelectedCategory(R.drawable.ic_clothing
-                , getString(R.string.query_type_Suits)));
-        dataList.add(new RecyclerSelectedCategory(R.drawable.ic_car
-                , getString(R.string.query_type_Stitched)));
-        dataList.add(new RecyclerSelectedCategory(R.drawable.ic_ring
-                , getString(R.string.query_type_UnStitched)));
-        return dataList;
+        if( fragment instanceof CarsFragment){
+            return RecyclerDataHelper.getSubCategoryCarsData(this);
+        }
+        if( fragment instanceof ClothingFragment){
+            return RecyclerDataHelper.getSubCategoryClothingData(this);
+        }
+        if( fragment instanceof CosmeticsFragment){
+            return RecyclerDataHelper.getSubCategoryCosmeticsData(this);
+        }
+        if( fragment instanceof ElectronicsFragment){
+            return RecyclerDataHelper.getSubCategoryElectronicsData(this);
+        }
+        if( fragment instanceof FragrancesFragment){
+            return RecyclerDataHelper.getSubCategoryFragrancesData(this);
+        }
+        if( fragment instanceof JewellaryFragment){
+            return RecyclerDataHelper.getSubCategoryJewellaryData(this);
+        }
+        if( fragment instanceof MobileFragment){
+            return RecyclerDataHelper.getSubCategoryMobileData(this);
+        }
+
+        return null;
+
     }
 
 
