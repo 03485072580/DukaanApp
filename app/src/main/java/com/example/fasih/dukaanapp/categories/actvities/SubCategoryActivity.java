@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class SubCategoryActivity extends AppCompatActivity {
 
     private SearchView search;
     private TextView userVisibleSearch;
+    private MaterialSpinner selectSearchMethodSpinner;
 
 
     //Firebase Stuff
@@ -61,7 +63,10 @@ public class SubCategoryActivity extends AppCompatActivity {
     private void setupActivityWidgets() {
         search = findViewById(R.id.search);
         userVisibleSearch = findViewById(R.id.userVisibleSearch);
+        selectSearchMethodSpinner = findViewById(R.id.materialSpinner);
 
+        selectSearchMethodSpinner.setItems(getResources().getStringArray(R.array.search_type));
+        selectSearchMethodSpinner.setVisibility(View.GONE);
         //Listener
         search.setOnSearchClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +86,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                 if (intent.getStringExtra(getString(R.string.carsFragment)).equals(getString(R.string.carsFragment))) {
                     CarsFragment carsFragment = new CarsFragment();
                     carsFragment.setSearchView(search);
+                    carsFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -99,6 +105,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                 if (intent.getStringExtra(getString(R.string.clothingFragment)).equals(getString(R.string.clothingFragment))) {
                     ClothingFragment clothingFragment = new ClothingFragment();
                     clothingFragment.setSearchView(search);
+                    clothingFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolder = new Bundle();
                     myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -117,6 +124,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                 if (intent.getStringExtra(getString(R.string.jewellaryFragment)).equals(getString(R.string.jewellaryFragment))) {
                     JewellaryFragment jewellaryFragment = new JewellaryFragment();
                     jewellaryFragment.setSearchView(search);
+                    jewellaryFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolder = new Bundle();
                     myArrayListHolder.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -136,6 +144,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     MobileFragment mobileFragment = new MobileFragment();
                     mobileFragment.setSearchView(search);
+                    mobileFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -154,6 +163,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     FragrancesFragment fragrancesFragment = new FragrancesFragment();
                     fragrancesFragment.setSearchView(search);
+                    fragrancesFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -172,6 +182,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     CosmeticsFragment cosmeticsFragment = new CosmeticsFragment();
                     cosmeticsFragment.setSearchView(search);
+                    cosmeticsFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);
@@ -190,6 +201,7 @@ public class SubCategoryActivity extends AppCompatActivity {
                     FragmentManager manager = getSupportFragmentManager();
                     ElectronicsFragment electronicsFragment = new ElectronicsFragment();
                     electronicsFragment.setSearchView(search);
+                    electronicsFragment.setMaterialSpinner(selectSearchMethodSpinner);
                     Bundle myArrayListHolderBundle = new Bundle();
                     myArrayListHolderBundle.putParcelableArrayList(getString(R.string.userViewProductsList)
                             , userViewProductsList);

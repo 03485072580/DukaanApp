@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.SubCategoriesListAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
-import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.categories.interfaces.LoadDynamicData;
 import com.example.fasih.dukaanapp.customModels.RecyclerSelectedCategory;
@@ -31,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 
@@ -45,6 +45,7 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
 
     private SearchView searchView;
     private ArrayList<Products> userViewProductsList, filteredList, backupUserViewProductsList;
+    private MaterialSpinner selectSearchMethodSpinner;
     private ClothingProductsAdapter adapter;
     private RecyclerView clothingContainer;
     private ProgressBar categoriesProgress;
@@ -59,28 +60,66 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
     private String currentUserID = null;
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
+    public boolean onQueryTextSubmit(String newText) {
+
+        if (searchView.getQueryHint().equals("Search Shop")) {
+            //do restriction on the entered shop Name (Unique)
+
+            adapter.setLoading(true);
+            if (newText.equals("")) {
+                filteredList.clear();
+                filteredList.addAll(backupUserViewProductsList);
+                adapter.setLoading(false);
+            } else {
+                //these products reflects all the current search query items
+                // (E,g All XLI cars selling by different vendors)and
+                // then needs to get all those products that are available
+                // in shop of particular user interest
+
+                ArrayList<Products> shopRestrictedList = new ArrayList<>();
+                for (Products product : filteredList) {
+
+                    firebaseMethods.filterInterestedShopProducts(shopRestrictedList
+                            , newText
+                            , product
+                            , adapter);
+                }
+                shopRestrictedList.clear();
+            }
+            adapter.setFilteredList(filteredList);
+        }
+        return true;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
 
-        adapter.setLoading(true);
-        filteredList.clear();
-        if (newText.equals("")) {
-            filteredList.addAll(backupUserViewProductsList);
-            adapter.setLoading(false);
-        }
+        selectSearchMethodSpinner.setVisibility(View.VISIBLE);
 
-        for (Products product : backupUserViewProductsList) {
+        if (!TextUtils.isEmpty(searchView.getQueryHint())) {
+            if (searchView.getQueryHint().equals("Search")) {
+                //do general Search Here
+                adapter.setLoading(true);
+                filteredList.clear();
+                if (newText.equals("")) {
+                    selectSearchMethodSpinner.setVisibility(View.GONE);
+                    filteredList.addAll(backupUserViewProductsList);
+                    adapter.setLoading(false);
+                } else {
+                    for (Products product : backupUserViewProductsList) {
 
-            if (StringManipulations.toLowerCase(product.getProduct_name())
-                    .contains(StringManipulations.toLowerCase(newText))) {
-                filteredList.add(product);
+                        if (StringManipulations.toLowerCase(product.getProduct_name())
+                                .contains(StringManipulations.toLowerCase(newText))) {
+                            filteredList.add(product);
+                        }
+                    }
+                }
+
+
+                adapter.setFilteredList(filteredList);
             }
         }
-        adapter.setFilteredList(filteredList);
+
         return true;
     }
 
@@ -130,43 +169,39 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
         if (Url != null) {
             if (Url.equals(getString(R.string.subCategoriesListAdapter))) {
 
-                if(subCategoriesAdapter
+                if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_clothing)
-                {
+                        R.drawable.ic_clothing) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
                     intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
                     startActivity(intent);
                 }
 
-                if(subCategoriesAdapter
+                if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.suit)
-                {
+                        R.drawable.suit) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
                     intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
                     startActivity(intent);
                 }
 
-                if(subCategoriesAdapter
+                if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.dress)
-                {
+                        R.drawable.dress) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
                     intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
                     startActivity(intent);
                 }
-                if(subCategoriesAdapter
+                if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.scarf)
-                {
+                        R.drawable.scarf) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
                     intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
                     intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
@@ -266,5 +301,17 @@ public class ClothingFragment extends Fragment implements LoadDynamicData
         adapter.setupOnItemClickListener(this);
         adapter.notifyDataSetChanged();
 
+    }
+
+    public void setMaterialSpinner(MaterialSpinner selectSearchMethodSpinner) {
+
+        this.selectSearchMethodSpinner = selectSearchMethodSpinner;
+        selectSearchMethodSpinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                searchView.setQueryHint(view.getText());
+                searchView.setQuery("", false);
+            }
+        });
     }
 }

@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <RelativeLayout
             android:id="@+id/logo"
             android:layout_width="match_parent"
@@ -63,16 +64,37 @@
                 android:layout_height="@dimen/_50dp"
                 android:background="@color/colorPrimaryDark">
 
-                <android.support.v7.widget.SearchView
-                    android:id="@+id/search"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="7dp"
-                    android:background="@drawable/grey_borderless_background"
-                    app:defaultQueryHint="Search"></android.support.v7.widget.SearchView>
+                    android:layout_height="match_parent">
 
+
+                    <android.support.v7.widget.SearchView
+                        android:id="@+id/search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:background="@drawable/grey_borderless_background"
+                        app:defaultQueryHint="Search">
+
+                    </android.support.v7.widget.SearchView>
+
+
+                    <com.jaredrummler.materialspinner.MaterialSpinner
+                        android:id="@+id/materialSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:entries="@array/search_type"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:visibility="visible"
+                        app:ms_background_selector="@drawable/grey_borderless_background" />
+
+                </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
+
 
             <TextView
                 android:id="@+id/userVisibleSearch"
@@ -83,8 +105,8 @@
                 android:layerType="software"
                 android:text="Search" />
 
-
         </android.support.v7.widget.ActionBarContainer>
+
 
     </RelativeLayout>
 

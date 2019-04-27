@@ -197,6 +197,7 @@
                         android:layout_toEndOf="@id/availableStockImagess"
                         android:layout_toRightOf="@id/availableStockImagess"
                         android:entries="@array/type_arrays"
+                        android:textColor="@color/black"
                         android:paddingStart="@dimen/_10dp"
                         android:paddingLeft="@dimen/_10dp"
                         android:spinnerMode="dialog"

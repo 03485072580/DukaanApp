@@ -14,6 +14,11 @@
         <item>UnStitched</item>
     </string-array>
 
+    <string-array name="search_type">
+        <item>Search</item>
+        <item>Search Shop</item>
+    </string-array>
+
     <!--Activity Package-->
     <string name="activity_sub_category">SubCategoryActivity</string>
     <string name="activity_register">RegisterActivity</string>

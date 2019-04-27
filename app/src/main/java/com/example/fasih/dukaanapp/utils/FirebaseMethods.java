@@ -25,6 +25,7 @@ import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
 import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
+import com.example.fasih.dukaanapp.categories.fragments.CarsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
 import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
@@ -1331,6 +1332,202 @@ public class FirebaseMethods {
                 });
 
     }
+
+    public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
+            ,final String queryShopTerms
+            , final Products product
+            , final ClothingProductsAdapter adapter){
+
+
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(product.getShop_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                            HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
+
+                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
+                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms))
+                                {
+
+                                    Log.d("TAG1234", "onDataChange: ");
+                                    shopRestrictedList.add(product);
+                                    adapter.setFilteredList(shopRestrictedList);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
+            ,final String queryShopTerms
+            , final Products product
+            , final CarsFragmentAdapter adapter){
+
+
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(product.getShop_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                            HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
+
+                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
+                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms))
+                                {
+
+                                    Log.d("TAG1234", "onDataChange: ");
+                                    shopRestrictedList.add(product);
+                                    adapter.setFilteredList(shopRestrictedList);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
+            ,final String queryShopTerms
+            , final Products product
+            , final MobileProductsAdapter adapter){
+
+
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(product.getShop_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                            HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
+
+                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
+                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms))
+                                {
+
+                                    Log.d("TAG1234", "onDataChange: ");
+                                    shopRestrictedList.add(product);
+                                    adapter.setFilteredList(shopRestrictedList);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
+            ,final String queryShopTerms
+            , final Products product
+            , final CosmeticsProductsAdapter adapter){
+
+
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(product.getShop_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                            HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
+
+                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
+                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms))
+                                {
+
+                                    Log.d("TAG1234", "onDataChange: ");
+                                    shopRestrictedList.add(product);
+                                    adapter.setFilteredList(shopRestrictedList);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
+            ,final String queryShopTerms
+            , final Products product
+            , final ElectronicsProductsAdapter adapter){
+
+
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(product.getShop_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                            HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
+
+                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
+                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms))
+                                {
+
+                                    Log.d("TAG1234", "onDataChange: ");
+                                    shopRestrictedList.add(product);
+                                    adapter.setFilteredList(shopRestrictedList);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
 }
 
 
