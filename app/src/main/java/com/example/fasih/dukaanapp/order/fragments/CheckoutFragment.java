@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.order.interfaces.PaymentNotifier;
 
 public class CheckoutFragment extends Fragment implements View.OnClickListener {
 
@@ -19,8 +20,10 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
     private TextView availableStock, productName, productPrice;
 
     private Products product;
+    private String paymentMethod;
 
     private Boolean isPaymentMethodCorrect = false;
+    private PaymentNotifier paymentNotifier;
 
     @Nullable
     @Override
@@ -71,15 +74,23 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
 
             case R.id.payByHand:
                 isPaymentMethodCorrect = true;
+                paymentMethod = "payByHand";
+                paymentNotifier.callbackPaymentMethodSelected(paymentMethod);
                 break;
             case R.id.payByCashOnDelivery:
                 isPaymentMethodCorrect = false;
+                paymentMethod = "payByCashOnDelivery";
+                paymentNotifier.callbackPaymentMethodSelected(paymentMethod);
                 break;
             case R.id.payByPaypal:
                 isPaymentMethodCorrect = false;
+                paymentMethod = "payByPaypal";
+                paymentNotifier.callbackPaymentMethodSelected(paymentMethod);
                 break;
             case R.id.payByStripe:
-                isPaymentMethodCorrect = false;
+                isPaymentMethodCorrect = true;
+                paymentMethod = "payByStripe";
+                paymentNotifier.callbackPaymentMethodSelected(paymentMethod);
                 break;
         }
     }
@@ -90,5 +101,9 @@ public class CheckoutFragment extends Fragment implements View.OnClickListener {
 
     public Products getCurrentProduct() {
         return product;
+    }
+
+    public void setActivityNotifierForChosenPaymentMethod(PaymentNotifier notify){
+        this.paymentNotifier = notify;
     }
 }

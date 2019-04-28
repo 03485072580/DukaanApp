@@ -7,6 +7,17 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="CardWidgetStyle" parent="@android:style/Theme.DeviceDefault">
+        <item name="android:background">#0000FF</item>
+        <item name="editTextStyle">@style/EditTextOverride</item>
+        <item name="android:editTextStyle">@style/EditTextOverride</item>
+    </style>
+
+    <style name="EditTextOverride" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:textColorHint">#00FF00</item>
+    </style>
+
 
     <!--<style name="MyProgressBarStyle" parent="Widget.AppCompat.ProgressBar">-->
         <!--<item name="colorControlActivated">@color/white</item>-->

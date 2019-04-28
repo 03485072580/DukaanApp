@@ -14,7 +14,6 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".categories.actvities.SubCategoryActivity"></activity>
+        <activity android:name=".order.activities.PaymentGatewayActivity"></activity>
+        <activity android:name=".categories.actvities.SubCategoryActivity" />
         <activity android:name=".login.activity.LoginActivity" />
         <activity android:name=".maps.userMaps.activities.UserMapsActivity" />
         <activity android:name=".order.activities.OrderPageActivity" />

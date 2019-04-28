@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -12,6 +13,7 @@ import android.widget.FrameLayout;
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.order.fragments.CheckoutFragment;
+import com.example.fasih.dukaanapp.order.interfaces.PaymentNotifier;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +25,7 @@ public class OrderPageActivity extends AppCompatActivity {
     private FrameLayout orderPageFragmentContainer;
     private Button placeOrder;
     private CheckoutFragment checkoutFragment;
+    private String paymentMethod;
 
 
     //Firebase Stuff
@@ -54,9 +57,16 @@ public class OrderPageActivity extends AppCompatActivity {
 
                 if(checkoutFragment.getPaymentMethodCorrect()){
                     //place an order on the DB
+                    if (paymentMethod.equals("payByHand"))
                     firebaseMethods.placeNewOrder(currentUserID
                             , checkoutFragment.getCurrentProduct()
                             , "Pending");
+
+                    if(paymentMethod.equals("payByStripe")){
+                        Intent intent = new Intent(OrderPageActivity.this,PaymentGatewayActivity.class);
+                        startActivity(intent);
+                    }
+
                 }
             }
         });
@@ -65,6 +75,12 @@ public class OrderPageActivity extends AppCompatActivity {
     private void addFragment(Intent intent) {
 
         checkoutFragment = new CheckoutFragment();
+        checkoutFragment.setActivityNotifierForChosenPaymentMethod(new PaymentNotifier() {
+            @Override
+            public void callbackPaymentMethodSelected(String paymentMethod) {
+                OrderPageActivity.this.paymentMethod = paymentMethod;
+            }
+        });
         if (intent != null) {
 
             Bundle bundle = new Bundle();
