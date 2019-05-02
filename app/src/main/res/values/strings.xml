@@ -285,8 +285,9 @@
     <string name="subCategoriesListAdapter">SubCategoriesListAdapter</string>
 
     <!--Stripe Test Api Key-->
-    <!--Always remember to replace this test key with production key before deployment-->
+    <!--Always remember to replace this test key + Base URL with production key + Base URL before deployment-->
     <string name="stripe_testApiKey">pk_test_Cy2QcAs1XUqNFOimYEpNRR9a006i6TEI1C</string>
+    <string name="TestStripeBaseURL">https://76ff5982.ngrok.io/</string>
 
     <!--Spinner entries-->
     <string-array name="spinner_items">
