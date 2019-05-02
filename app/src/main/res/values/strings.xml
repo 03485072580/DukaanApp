@@ -11,7 +11,32 @@
         <item>Coat</item>
         <item>Suits</item>
         <item>Stitched</item>
-        <item>UnStitched</item>
+        <item>Honda</item>
+        <item>Suzuki</item>
+        <item>Toyota</item>
+        <item>BMW</item>
+        <item>Lotions</item>
+        <item>Creams</item>
+        <item>Base</item>
+        <item>MakeupKits</item>
+        <item>J.</item>
+        <item>Alisha</item>
+        <item>Boss</item>
+        <item>Fogg</item>
+        <item>Philips</item>
+        <item>Haier</item>
+        <item>Orient</item>
+        <item>Toshiba</item>
+        <item>Samsung</item>
+        <item>OPPO</item>
+        <item>IPhone</item>
+        <item>QMobile</item>
+        <item>Jhumar</item>
+        <item>Matha_Patti</item>
+        <item>Payal</item>
+        <item>Kanta</item>
+
+
     </string-array>
 
     <string-array name="search_type">
@@ -28,6 +53,7 @@
     <string name="activity_unique_category">UniqueCategoryActivity</string>
     <string name="activity_order_page">OrderPageActivity</string>
     <string name="activity_user_maps">UserMapsActivity</string>
+    <string name="activity_payment_gateway">PaymentGatewayActivity</string>
 
     <!--Fragments Package-->
     <string name="userCartFragment">UserCartFragment</string>
@@ -122,6 +148,8 @@
     <string name="db_cart_node">cart</string>
     <string name="db_views_node">views</string>
     <string name="db_orders_node">orders</string>
+    <string name="db_stripeToken_node">stripeToken</string>
+    <string name="db_FCMToken_node">FCMToken</string>
 
     <string name="db_field_user_name">user_name</string>
     <string name="db_field_type">type</string>
@@ -217,6 +245,31 @@
     <string name="query_type_Suits">Suits</string>
     <string name="query_type_Stitched">Stitched</string>
     <string name="query_type_UnStitched">UnStitched</string>
+    <string name="query_type_Honda">Honda</string>
+    <string name="query_type_Suzuki">Suzuki</string>
+    <string name="query_type_Toyota">Toyota</string>
+    <string name="query_type_BMW">BMW</string>
+    <string name="query_type_Lotions">Lotions</string>
+    <string name="query_type_Creams">Creams</string>
+    <string name="query_type_Base">Base</string>
+    <string name="query_type_MakeupKits">MakeupKits</string>
+    <string name="query_type_J_">J.</string>
+    <string name="query_type_Boss">Boss</string>
+    <string name="query_type_Alisha">Alisha</string>
+    <string name="query_type_Fogg">Fogg</string>
+    <string name="query_type_Philips">Philips</string>
+    <string name="query_type_Haier">Haier</string>
+    <string name="query_type_Orient">Orient</string>
+    <string name="query_type_Toshiba">Toshiba</string>
+    <string name="query_type_Samsung">Samsung</string>
+    <string name="query_type_OPPO">OPPO</string>
+    <string name="query_type_QMobile">QMobile</string>
+    <string name="query_type_IPhone">IPhone</string>
+    <string name="query_type_Jhumar">Jhumar</string>
+    <string name="query_type_Matha_Patti">Matha_Patti</string>
+    <string name="query_type_Payal">Payal</string>
+    <string name="query_type_Kanta">Kanta</string>
+
 
     <string name="product_details">Product Details</string>
     <string name="currentSelectedProduct">CurrentSelectedProduct</string>
@@ -230,6 +283,10 @@
     <!--Adapter Package-->
     <string name="mobileProductsAdapter">MobileProductsAdapter</string>
     <string name="subCategoriesListAdapter">SubCategoriesListAdapter</string>
+
+    <!--Stripe Test Api Key-->
+    <!--Always remember to replace this test key with production key before deployment-->
+    <string name="stripe_testApiKey">pk_test_Cy2QcAs1XUqNFOimYEpNRR9a006i6TEI1C</string>
 
     <!--Spinner entries-->
     <string-array name="spinner_items">

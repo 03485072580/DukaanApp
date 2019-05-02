@@ -159,9 +159,9 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_deodorant) {
+                        R.drawable.samsung) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
+                    intent.putExtra(getString(R.string.query_type_Samsung), getString(R.string.query_type_Samsung));
                     intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
                     startActivity(intent);
                 }
@@ -169,9 +169,9 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_clothing) {
+                        R.drawable.oppo) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
+                    intent.putExtra(getString(R.string.query_type_OPPO), getString(R.string.query_type_OPPO));
                     intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
                     startActivity(intent);
                 }
@@ -179,19 +179,19 @@ public class MobileFragment extends Fragment implements OnRecyclerImageSelectedL
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_car) {
+                        R.drawable.qmobile) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
-                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    intent.putExtra(getString(R.string.query_type_QMobile), getString(R.string.query_type_QMobile));
+                    intent.putExtra(getString(R.string.mobileFragment), getString(R.string.mobileFragment));
                     startActivity(intent);
                 }
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_ring) {
+                        R.drawable.iphone) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
-                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    intent.putExtra(getString(R.string.query_type_IPhone), getString(R.string.query_type_IPhone));
+                    intent.putExtra(getString(R.string.mobileFragment), getString(R.string.mobileFragment));
                     startActivity(intent);
                 }
 

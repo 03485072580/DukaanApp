@@ -296,6 +296,7 @@ public class CategoryMapsFragment extends Fragment implements OnMapReadyCallback
     @Override
     public void onDetach() {
         super.onDetach();
+        if(googleMapsMethods!=null)
         googleMapsMethods.removeGeofence(GeofenceMonitoringHelper.getGeofencePendingIntent(getContext()));
     }
 }

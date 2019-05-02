@@ -17,15 +17,12 @@ import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.adapter.CarsFragmentAdapter;
-import com.example.fasih.dukaanapp.adapter.CartProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.ClothingProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.CosmeticsProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.ElectronicsProductsAdapter;
 import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
-import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.categories.actvities.SubCategoryActivity;
 import com.example.fasih.dukaanapp.categories.actvities.UniqueCategoryActivity;
-import com.example.fasih.dukaanapp.categories.fragments.CarsFragment;
 import com.example.fasih.dukaanapp.categories.interfaces.KeepHandleRecyclerList;
 import com.example.fasih.dukaanapp.home.activities.SellerHomePageActivity;
 import com.example.fasih.dukaanapp.home.activities.UserHomePageActivity;
@@ -35,11 +32,16 @@ import com.example.fasih.dukaanapp.login.activity.LoginActivity;
 import com.example.fasih.dukaanapp.models.Orders;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.ProductsNew;
+import com.example.fasih.dukaanapp.models.StripeShipping;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
+import com.example.fasih.dukaanapp.models.StripeCustomCharge;
+import com.example.fasih.dukaanapp.models.StripeRecipientAddress;
+import com.example.fasih.dukaanapp.models.StripeToken;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
 import com.example.fasih.dukaanapp.models.Views;
 import com.example.fasih.dukaanapp.order.activities.OrderPageActivity;
+import com.example.fasih.dukaanapp.order.interfaces.PaymentNotifier;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -69,6 +71,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.stripe.android.model.Token;
 
 import org.apache.http.util.ByteArrayBuffer;
 
@@ -85,6 +88,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Fasih on 01/04/19.
@@ -98,6 +102,7 @@ public class FirebaseMethods {
     GoogleSignInAccount account;
 
     private KeepHandleRecyclerList currentChildReference;
+    private PaymentNotifier paymentNotifier;
 
     private ProgressDialogFragment dialogFragment;
     private Boolean isScopeCorrect = false;
@@ -1528,6 +1533,90 @@ public class FirebaseMethods {
                 });
     }
 
+    public void sendStripeTokenToFirebase(String stripe_token) {
+
+
+        myRef
+                .child(mContext.getString(R.string.db_users_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(mAuth.getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for(DataSnapshot singleUser : dataSnapshot.getChildren())
+                        {
+
+                            HashMap<String,Object> mMap = (HashMap<String, Object>) singleUser.getValue();
+
+                            StripeToken token = new StripeToken((String)mMap.get(mContext.getString(R.string.db_field_user_id))
+                                    , (String)mMap.get(mContext.getString(R.string.db_field_user_name))
+                                    , (String)mMap.get(mContext.getString(R.string.db_field_scope))
+                                    , stripe_token);
+
+                            myRef
+                                    .child(mContext.getString(R.string.db_stripeToken_node))
+                                    .child((String)mMap.get(mContext.getString(R.string.db_field_user_id)))
+                                    .setValue(token);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void retrieveShopShippingInformation(Products product
+            , Token token) {
+
+        long price = Long.parseLong(product.getProduct_price().split(" ")[0]) * 100;//millis
+        String currency = product.getProduct_price().split(" ")[1].toLowerCase();
+
+        myRef
+                .child(mContext.getString(R.string.db_shop_profile_settings_node))
+                .orderByChild(mContext.getString(R.string.db_field_user_id))
+                .equalTo(product.getShop_id())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        for(DataSnapshot singleShop: dataSnapshot.getChildren())
+                        {
+                            Map<String, Object> mMap = (HashMap<String, Object>) singleShop.getValue();
+                            StripeShipping stripeShipping = new StripeShipping();
+                            StripeRecipientAddress address = new StripeRecipientAddress();
+
+                            address.setCity((String) mMap.get(mContext.getString(R.string.db_field_city)));
+                            address.setCountry((String) mMap.get(mContext.getString(R.string.db_field_country)));
+                            address.setLine1((String) mMap.get(mContext.getString(R.string.db_field_shop_address)));
+                            stripeShipping.setName((String) mMap.get(mContext.getString(R.string.db_field_user_name)));
+                            stripeShipping.setPhone(null);
+                            stripeShipping.setAddress(address);
+
+                            //notify the activity to make a Post Api call
+                            StripeCustomCharge charge = new StripeCustomCharge(token.getId()
+                                    , currency
+                                    , price
+                                    , stripeShipping);
+                            paymentNotifier.callbackActivityMakePostChargeRequest(charge);
+                            Log.d("TAG1234", "onDataChange: StripeShipping Details"+charge.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    public void setStripeCustomCharge(PaymentNotifier paymentNotifier){
+        this.paymentNotifier = paymentNotifier;
+    }
 }
 
 

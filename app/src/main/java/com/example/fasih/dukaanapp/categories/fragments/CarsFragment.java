@@ -169,39 +169,39 @@ public class CarsFragment extends Fragment implements LoadDynamicData
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_deodorant) {
+                        R.drawable.honda_logo) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_Coat), getString(R.string.query_type_Coat));
-                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    intent.putExtra(getString(R.string.query_type_Honda), getString(R.string.query_type_Honda));
+                    intent.putExtra(getString(R.string.carsFragment), getString(R.string.carsFragment));
                     startActivity(intent);
                 }
 
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_clothing) {
+                        R.drawable.suzuki) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_Suits), getString(R.string.query_type_Suits));
-                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    intent.putExtra(getString(R.string.query_type_Suzuki), getString(R.string.query_type_Suzuki));
+                    intent.putExtra(getString(R.string.carsFragment), getString(R.string.carsFragment));
                     startActivity(intent);
                 }
 
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_car) {
+                        R.drawable.toyota) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_Stitched), getString(R.string.query_type_Stitched));
-                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    intent.putExtra(getString(R.string.query_type_Toyota), getString(R.string.query_type_Toyota));
+                    intent.putExtra(getString(R.string.carsFragment), getString(R.string.carsFragment));
                     startActivity(intent);
                 }
                 if (subCategoriesAdapter
                         .getRecyclerSelectedCategoryObject(position)
                         .getCategoryImageResource() ==
-                        R.drawable.ic_ring) {
+                        R.drawable.bmw) {
                     Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-                    intent.putExtra(getString(R.string.query_type_UnStitched), getString(R.string.query_type_UnStitched));
-                    intent.putExtra(getString(R.string.clothingFragment), getString(R.string.clothingFragment));
+                    intent.putExtra(getString(R.string.query_type_BMW), getString(R.string.query_type_BMW));
+                    intent.putExtra(getString(R.string.carsFragment), getString(R.string.carsFragment));
                     startActivity(intent);
                 }
 

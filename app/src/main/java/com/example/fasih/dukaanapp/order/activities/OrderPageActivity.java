@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.models.Products;
+import com.example.fasih.dukaanapp.models.StripeCustomCharge;
 import com.example.fasih.dukaanapp.order.fragments.CheckoutFragment;
 import com.example.fasih.dukaanapp.order.interfaces.PaymentNotifier;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
@@ -63,7 +64,9 @@ public class OrderPageActivity extends AppCompatActivity {
                             , "Pending");
 
                     if(paymentMethod.equals("payByStripe")){
-                        Intent intent = new Intent(OrderPageActivity.this,PaymentGatewayActivity.class);
+                        Intent intent = new Intent(OrderPageActivity.this
+                                ,PaymentGatewayActivity.class);
+                        intent.putExtra(getString(R.string.uploadProduct),checkoutFragment.getCurrentProduct());
                         startActivity(intent);
                     }
 
@@ -79,6 +82,11 @@ public class OrderPageActivity extends AppCompatActivity {
             @Override
             public void callbackPaymentMethodSelected(String paymentMethod) {
                 OrderPageActivity.this.paymentMethod = paymentMethod;
+            }
+
+            @Override
+            public void callbackActivityMakePostChargeRequest(StripeCustomCharge stripeCustomCharge) {
+                //Not Interested
             }
         });
         if (intent != null) {

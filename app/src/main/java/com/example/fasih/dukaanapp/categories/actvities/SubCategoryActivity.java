@@ -263,6 +263,154 @@ public class SubCategoryActivity extends AppCompatActivity {
                     firebaseMethods.queryProducts(queryString);
                 }
             }
+            if (intent.hasExtra(getString(R.string.query_type_Honda))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Honda)).equals(getString(R.string.query_type_Honda))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Honda));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Suzuki))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Suzuki)).equals(getString(R.string.query_type_Suzuki))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Suzuki));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Toyota))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Toyota)).equals(getString(R.string.query_type_Toyota))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Toyota));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_BMW))) {
+                if (intent.getStringExtra(getString(R.string.query_type_BMW)).equals(getString(R.string.query_type_BMW))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_BMW));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Payal))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Payal)).equals(getString(R.string.query_type_Payal))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Payal));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Jhumar))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Jhumar)).equals(getString(R.string.query_type_Jhumar))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Jhumar));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Matha_Patti))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Matha_Patti)).equals(getString(R.string.query_type_Matha_Patti))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Matha_Patti));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Kanta))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Kanta)).equals(getString(R.string.query_type_Kanta))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Kanta));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_type_Samsung))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Samsung)).equals(getString(R.string.query_type_Samsung))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Samsung));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_OPPO))) {
+                if (intent.getStringExtra(getString(R.string.query_type_OPPO)).equals(getString(R.string.query_type_OPPO))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_OPPO));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_QMobile))) {
+                if (intent.getStringExtra(getString(R.string.query_type_QMobile)).equals(getString(R.string.query_type_QMobile))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_QMobile));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_IPhone))) {
+                if (intent.getStringExtra(getString(R.string.query_type_IPhone)).equals(getString(R.string.query_type_IPhone))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_IPhone));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_type_Philips))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Philips)).equals(getString(R.string.query_type_Philips))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Philips));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Haier))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Haier)).equals(getString(R.string.query_type_Haier))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Haier));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Orient))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Orient)).equals(getString(R.string.query_type_Orient))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Orient));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Toshiba))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Toshiba)).equals(getString(R.string.query_type_Toshiba))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Toshiba));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_type_Lotions))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Lotions)).equals(getString(R.string.query_type_Lotions))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Lotions));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Creams))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Creams)).equals(getString(R.string.query_type_Creams))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Creams));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Base))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Base)).equals(getString(R.string.query_type_Base))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Base));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_MakeupKits))) {
+                if (intent.getStringExtra(getString(R.string.query_type_MakeupKits)).equals(getString(R.string.query_type_MakeupKits))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_MakeupKits));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+
+            if (intent.hasExtra(getString(R.string.query_type_J_))) {
+                if (intent.getStringExtra(getString(R.string.query_type_J_)).equals(getString(R.string.query_type_J_))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_J_));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Alisha))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Alisha)).equals(getString(R.string.query_type_Alisha))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Alisha));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Boss))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Boss)).equals(getString(R.string.query_type_Boss))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Boss));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
+            if (intent.hasExtra(getString(R.string.query_type_Fogg))) {
+                if (intent.getStringExtra(getString(R.string.query_type_Fogg)).equals(getString(R.string.query_type_Fogg))) {
+                    queryString = intent.getStringExtra(getString(R.string.query_type_Fogg));
+                    firebaseMethods.queryProducts(queryString);
+                }
+            }
 
         }
 

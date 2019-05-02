@@ -146,7 +146,7 @@
                         app:srb_clickable="false"
                         app:srb_drawableEmpty="@drawable/star_empty"
                         app:srb_drawableFilled="@drawable/star_filled"
-                        app:srb_isIndicator="false"
+                        app:srb_isIndicator="true"
                         app:srb_minimumStars="0"
                         app:srb_numStars="5"
                         app:srb_rating="-1"

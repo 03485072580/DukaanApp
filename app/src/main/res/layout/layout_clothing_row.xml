@@ -45,7 +45,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:padding="@dimen/_2dp"
-            android:text="Honda City"
             android:textColor="@color/white"
             android:textSize="@dimen/_16sp"
             tools:targetApi="lollipop" />
@@ -63,7 +62,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:padding="@dimen/_2dp"
-            android:text="300$"
             android:textColor="@color/white"
             android:textSize="12sp"
             tools:targetApi="lollipop" />
@@ -138,7 +136,6 @@
                                 android:gravity="end"
                                 android:maxLines="1"
                                 android:padding="@dimen/_2dp"
-                                android:text="Honda City"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_16sp"
                                 tools:targetApi="lollipop" />
@@ -157,7 +154,6 @@
                                 android:gravity="end"
                                 android:maxLines="1"
                                 android:padding="@dimen/_2dp"
-                                android:text="300$"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
                                 tools:targetApi="lollipop" />
@@ -209,7 +205,6 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:padding="@dimen/_2dp"
-                                android:text="Honda City"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_16sp"
                                 tools:targetApi="lollipop" />
@@ -227,7 +222,6 @@
                                 android:ellipsize="end"
                                 android:maxLines="1"
                                 android:padding="@dimen/_2dp"
-                                android:text="300$"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
                                 tools:targetApi="lollipop" />
@@ -283,7 +277,6 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:padding="@dimen/_2dp"
-                        android:text="Honda City"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_16sp"
                         tools:targetApi="lollipop" />
@@ -301,7 +294,6 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:padding="@dimen/_2dp"
-                        android:text="300$"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         tools:targetApi="lollipop" />

@@ -223,4 +223,5 @@ public class UserHomePageActivity extends AppCompatActivity {
             mAuth.removeAuthStateListener(authStateStateListener);
         }
     }
+
 }
