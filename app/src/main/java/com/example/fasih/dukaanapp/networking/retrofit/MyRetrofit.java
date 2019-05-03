@@ -112,8 +112,6 @@ public class MyRetrofit {
 
     public void makePostFcmMessageAPICall(GitHubService service, Message message) {
 
-        Log.d("TAG1234", "makePostFcmMessageAPICall: "+message);
-
         service.postFcmMessageToPlaceOrder(message)
                 .enqueue(new Callback<Object>() {
                     @Override

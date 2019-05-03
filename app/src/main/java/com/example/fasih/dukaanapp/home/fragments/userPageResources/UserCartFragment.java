@@ -5,19 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.fasih.dukaanapp.R;
-import com.example.fasih.dukaanapp.adapter.CarsFragmentAdapter;
 import com.example.fasih.dukaanapp.adapter.CartProductsAdapter;
-import com.example.fasih.dukaanapp.adapter.MobileProductsAdapter;
-import com.example.fasih.dukaanapp.categories.actvities.ProductDetailActivity;
 import com.example.fasih.dukaanapp.home.interfaces.OnRecyclerImageSelectedListener;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.order.activities.OrderPageActivity;
@@ -36,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserCartFragment extends Fragment
-implements OnRecyclerImageSelectedListener {
+        implements OnRecyclerImageSelectedListener {
 
     @Override
     public void onClickGridImage(int position, View view, Products currentSelectedProduct) {
@@ -86,16 +81,13 @@ implements OnRecyclerImageSelectedListener {
         if (userViewProductsList != null)
             if (!userViewProductsList.isEmpty()) {
 
-                adapter = new CartProductsAdapter(getContext(),userViewProductsList);
+                adapter = new CartProductsAdapter(getContext(), userViewProductsList);
                 adapter.setupOnItemClickListener(this);
                 cartProductsContainer.setLayoutManager(new LinearLayoutManager(getActivity()));
                 cartProductsContainer.setAdapter(adapter);
 
             }
     }
-
-
-
 
 
     private void setupFirebase() {
@@ -146,26 +138,28 @@ implements OnRecyclerImageSelectedListener {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.exists()){
-                            Log.d("TAG1234", "onDataChange: "+dataSnapshot.toString());
+                        if (dataSnapshot.exists()) {
+
                             Map<String, Object> allProductMap = (Map<String, Object>) dataSnapshot.getValue();
                             Collection<Object> cartProducts = allProductMap.values();
                             userViewProductsList.clear();
-                            for(Object cartProduct : cartProducts )
-                            {
+                            for (Object cartProduct : cartProducts) {
                                 Products product = new Products();
-                                product.setProduct_name((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_name)));
-                                product.setProduct_category((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_category)));
-                                product.setProduct_image_url((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_image_url)));
-                                product.setProduct_description((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_description)));
-                                product.setProduct_price((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_price)));
-                                product.setProduct_warranty((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_warranty)));
-                                product.setProduct_stock((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_stock)));
-                                product.setTimeStamp((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_timeStamp)));
-                                product.setProduct_id((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_id)));
-                                product.setProduct_rating((Long) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_product_rating)));
-                                product.setShop_id((String) ((HashMap<String,Object>)cartProduct).get(getString(R.string.db_field_shop_id)));
-                                userViewProductsList.add(product);
+                                if (getActivity() != null) {
+                                    product.setProduct_name((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_name)));
+                                    product.setProduct_category((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_category)));
+                                    product.setProduct_image_url((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_image_url)));
+                                    product.setProduct_description((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_description)));
+                                    product.setProduct_price((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_price)));
+                                    product.setProduct_warranty((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_warranty)));
+                                    product.setProduct_stock((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_stock)));
+                                    product.setTimeStamp((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_timeStamp)));
+                                    product.setProduct_id((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_id)));
+                                    product.setProduct_rating((Long) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_product_rating)));
+                                    product.setShop_id((String) ((HashMap<String, Object>) cartProduct).get(getString(R.string.db_field_shop_id)));
+                                    userViewProductsList.add(product);
+                                }
+
                             }
 
                             setupRecyclerView(userViewProductsList);
