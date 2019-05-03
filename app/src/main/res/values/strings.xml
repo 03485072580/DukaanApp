@@ -56,6 +56,7 @@
     <string name="activity_payment_gateway">PaymentGatewayActivity</string>
 
     <!--Fragments Package-->
+    <string name="alertPaymentDialogFragment">AlertPaymentDialogFragment</string>
     <string name="userCartFragment">UserCartFragment</string>
     <string name="userOrderFragment">UserOrderFragment</string>
     <string name="userFragment">UserFragment</string>
@@ -287,7 +288,37 @@
     <!--Stripe Test Api Key-->
     <!--Always remember to replace this test key + Base URL with production key + Base URL before deployment-->
     <string name="stripe_testApiKey">pk_test_Cy2QcAs1XUqNFOimYEpNRR9a006i6TEI1C</string>
-    <string name="TestStripeBaseURL">https://76ff5982.ngrok.io/</string>
+    <string name="TestStripeBaseURL">https://c7d6e8cd.ngrok.io/</string>
+
+    <!--Stripe Nodes & Fields-->
+    <string name="db_stripe_billing_details_node">stripe_billing_details</string>
+    <string name="db_stripe_charge_node">stripe_charge</string>
+
+    <string name="db_stripe_field_address">address</string>
+    <string name="db_stripe_field_email">email</string>
+    <string name="db_stripe_field_name">name</string>
+    <string name="db_stripe_field_phone">phone</string>
+    <string name="db_stripe_field_id">id</string>
+    <string name="db_stripe_field_amount">amount</string>
+    <string name="db_stripe_field_created">created</string>
+    <string name="db_stripe_field_currency">currency</string>
+    <string name="db_stripe_field_livemode">livemode</string>
+    <string name="db_stripe_field_shipping">shipping</string>
+    <string name="db_stripe_field_status">status</string>
+    <string name="db_stripe_field_stripe_token">stripe_token</string>
+    <string name="db_stripe_field_amount_millis">amount_millis</string>
+    <string name="db_stripe_field_line1">line1</string>
+    <string name="db_stripe_field_city">city</string>
+    <string name="db_stripe_field_country">country</string>
+    <string name="db_stripe_field_line2">line2</string>
+    <string name="db_stripe_field_postal_code">postal_code</string>
+    <string name="db_stripe_field_state">state</string>
+
+
+    <!--Firebase Cloud Messaging-->
+    <string name="fcm_token">FCM_TOKEN</string>
+    <string name="myPreferences">myPreferences</string>
+
 
     <!--Spinner entries-->
     <string-array name="spinner_items">

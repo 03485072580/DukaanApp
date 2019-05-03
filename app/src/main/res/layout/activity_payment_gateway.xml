@@ -29,12 +29,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/stripeLogo"
+                android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/stripeLogo"
-                android:textSize="@dimen/_16sp"
-                android:textColor="@color/dark_golden"
+                android:layout_toRightOf="@id/stripeLogo"
                 android:text="A Reliable Platform with 100% Payment Guarantee"
-                android:layout_centerVertical="true"/>
+                android:textColor="@color/dark_golden"
+                android:textSize="@dimen/_16sp" />
 
         </RelativeLayout>
 
@@ -59,12 +59,31 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/_20dp">
 
-            <Button
-                android:id="@+id/confirmPayment"
+            <RelativeLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/confirmPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_std1"
+                    android:text="Confirm Payment " />
+
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/confirmPaymentProgress"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_std1"
-                android:text="Confirm Payment "/>
+                android:indeterminateTint="@color/white"
+                tools:targetApi="lollipop"
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/_5dp"
+                android:layout_marginRight="@dimen/_5dp" />
 
         </RelativeLayout>
 

@@ -1,6 +1,7 @@
 package com.example.fasih.dukaanapp.home.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.CategorySh
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ShareFragment;
 import com.example.fasih.dukaanapp.home.fragments.sellerPageResources.ZoomImageViewFragment;
 import com.example.fasih.dukaanapp.home.interfaces.OnBackButtonPressedListener;
+import com.example.fasih.dukaanapp.models.FCMTokens;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -333,6 +335,14 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
 
     }
 
+    private void sendTokenToServer(String fcm_token, String currentUserID) {
+
+        myRef
+                .child(getString(R.string.db_FCMToken_node))
+                .child(currentUserID)
+                .setValue(new FCMTokens(currentUserID,fcm_token));
+    }
+
     private void setupFirebase(final Bundle savedInstanceState) {
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -344,6 +354,11 @@ public class SellerHomePageActivity extends AppCompatActivity implements View.On
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     currentUserID = user.getUid();
+                    SharedPreferences preferences = getSharedPreferences(getString(R.string.myPreferences), MODE_PRIVATE);
+                    String fcm_token = preferences.getString(getString(R.string.fcm_token), "");
+                    if (!fcm_token.equals("")) {
+                        sendTokenToServer(fcm_token,currentUserID);
+                    }
                     if (savedInstanceState == null) {
                         setupView();
                     } else {

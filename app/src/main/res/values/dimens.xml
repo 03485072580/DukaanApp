@@ -28,4 +28,6 @@
     <dimen name="_100dp">100dp</dimen>
     <dimen name="_280dp">280dp</dimen>
     <dimen name="_40dp">40dp</dimen>
+    <dimen name="_22sp">22sp</dimen>
+    <dimen name="_20sp">20sp</dimen>
 </resources>

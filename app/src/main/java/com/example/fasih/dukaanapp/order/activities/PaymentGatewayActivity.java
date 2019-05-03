@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.StripeCustomCharge;
+import com.example.fasih.dukaanapp.networking.fragments.AlertPaymentDialogFragment;
 import com.example.fasih.dukaanapp.networking.interfaces.GitHubService;
 import com.example.fasih.dukaanapp.networking.retrofit.MyRetrofit;
+import com.example.fasih.dukaanapp.order.interfaces.DialogClickNotify;
 import com.example.fasih.dukaanapp.order.interfaces.PaymentNotifier;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +36,8 @@ public class PaymentGatewayActivity extends AppCompatActivity {
 
     private Products product;
     private MyRetrofit myRetrofit;
+    private ProgressBar confirmPaymentProgress;
+    private AlertPaymentDialogFragment paymentDialog;
 
     private CardMultilineWidget card_multiline_widget;
     private Button confirmPayment;
@@ -52,14 +57,37 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_gateway);
         setupActivityWidgets();
         setupFirebase();
-//        setupPaymentInitialization();
-
     }
 
     private void setupActivityWidgets() {
 
         card_multiline_widget = findViewById(R.id.card_multiline_widget);
         confirmPayment = findViewById(R.id.confirmPayment);
+        confirmPaymentProgress = findViewById(R.id.confirmPaymentProgress);
+        paymentDialog = new AlertPaymentDialogFragment();
+
+
+        paymentDialog.setupOnButtonClickListener(new DialogClickNotify() {
+            @Override
+            public void setupOnClickListener(View view) {
+
+                if (view.findViewById(R.id.confirm) != null)
+                    if (view.getId() == view.findViewById(R.id.confirm).getId()) {
+                        //init Payment Procedure
+                        paymentDialog.dismiss();
+                        confirmPaymentProgress.setVisibility(View.VISIBLE);
+                        setupPaymentInitialization(product);
+                        return;
+                    }
+                if (view.findViewById(R.id.cancel) != null)
+                    if (view.getId() == view.findViewById(R.id.cancel).getId()) {
+                        //cancel payment
+                        paymentDialog.dismiss();
+                    }
+
+            }
+        });
+
         product = getProduct(getIntent());
         confirmPayment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +95,12 @@ public class PaymentGatewayActivity extends AppCompatActivity {
 
                 if (isCardComplete && isExpirationComplete && isCvcComplete && isPostalCodeComplete) {
                     //setupPayment
-                    if (product != null)
-                        setupPaymentInitialization(product);
+                    if (product != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(getString(R.string.uploadProduct), product);
+                        paymentDialog.setArguments(bundle);
+                        paymentDialog.show(getSupportFragmentManager(), getString(R.string.alertPaymentDialogFragment));
+                    }
                 } else {
                     //show message
                     Toast.makeText(PaymentGatewayActivity.this, "Please Again Fill all the fields", Toast.LENGTH_SHORT).show();
@@ -121,6 +153,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         Card cardToSave = card_multiline_widget.getCard();
         if (cardToSave == null) {
             Toast.makeText(this, "Invalid Card Data", Toast.LENGTH_SHORT).show();
+            confirmPaymentProgress.setVisibility(View.GONE);
             return;
         }
 //        createPaymentIntent(cardToSave);
@@ -149,6 +182,7 @@ public class PaymentGatewayActivity extends AppCompatActivity {
 
                     public void onError(Exception error) {
                         // Show localized error message
+                        confirmPaymentProgress.setVisibility(View.GONE);
                         Toast.makeText(PaymentGatewayActivity.this,
                                 "Error while generating token",
                                 Toast.LENGTH_LONG
@@ -167,38 +201,12 @@ public class PaymentGatewayActivity extends AppCompatActivity {
         return null;
     }
 
-//    private void createPaymentIntent(Card cardToSave) {
-//        Stripe stripe = new Stripe(PaymentGatewayActivity.this, "pk_test_Cy2QcAs1XUqNFOimYEpNRR9a006i6TEI1C");
-//
-//        PaymentMethodCreateParams paymentMethodCreateParams =
-//                PaymentMethodCreateParams.create(cardToSave,null);
-//        PaymentIntentParams paymentIntentParams =
-//                PaymentIntentParams.createConfirmPaymentIntentWithPaymentMethodCreateParams(
-//                        paymentMethodCreateParams, clientSecret,
-//                        "yourapp://post-authentication-return-url");
-//
-//        try {
-//            PaymentIntent paymentIntent = stripe.confirmPaymentIntentSynchronous(
-//                    paymentIntentParams,
-//                    "pk_test_Cy2QcAs1XUqNFOimYEpNRR9a006i6TEI1C"
-//            );
-//        } catch (AuthenticationException e) {
-//            e.printStackTrace();
-//        } catch (InvalidRequestException e) {
-//            e.printStackTrace();
-//        } catch (APIConnectionException e) {
-//            e.printStackTrace();
-//        } catch (APIException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     private void setupFirebase() {
         mAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         myRef = firebaseDatabase.getReference();
         firebaseMethods = new FirebaseMethods(this, getString(R.string.activity_payment_gateway));
-        myRetrofit = new MyRetrofit();
+        myRetrofit = new MyRetrofit(mAuth, myRef, firebaseMethods, this, getString(R.string.activity_payment_gateway));
 
         authStateListener = firebaseAuth -> {
             FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -218,10 +226,15 @@ public class PaymentGatewayActivity extends AppCompatActivity {
             @Override
             public void callbackActivityMakePostChargeRequest(StripeCustomCharge stripeCustomCharge) {
                 //Here you can initialize retrofit Instance and Make a Post Request
-                Retrofit retrofit = myRetrofit.getRetrofitSingletonInstance();
+                Retrofit retrofit = myRetrofit.getRetrofitSingletonInstance(PaymentGatewayActivity.this);
                 GitHubService service = myRetrofit.getGitHubServiceInstance();
-                if(service!=null && stripeCustomCharge!=null){
-                    myRetrofit.makePostChargeAPICall(service, stripeCustomCharge);
+                if (service != null && stripeCustomCharge != null) {
+                    myRetrofit.makePostChargeAPICall(service
+                            , stripeCustomCharge
+                            , confirmPaymentProgress
+                            , product);
+                } else {
+                    confirmPaymentProgress.setVisibility(View.GONE);
                 }
             }
         });

@@ -32,15 +32,16 @@ import com.example.fasih.dukaanapp.login.activity.LoginActivity;
 import com.example.fasih.dukaanapp.models.Orders;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.ProductsNew;
-import com.example.fasih.dukaanapp.models.StripeShipping;
 import com.example.fasih.dukaanapp.models.ShopProfileSettings;
 import com.example.fasih.dukaanapp.models.StripeCustomCharge;
 import com.example.fasih.dukaanapp.models.StripeRecipientAddress;
+import com.example.fasih.dukaanapp.models.StripeShipping;
 import com.example.fasih.dukaanapp.models.StripeToken;
 import com.example.fasih.dukaanapp.models.UserAccountSettings;
 import com.example.fasih.dukaanapp.models.Users;
 import com.example.fasih.dukaanapp.models.Views;
 import com.example.fasih.dukaanapp.order.activities.OrderPageActivity;
+import com.example.fasih.dukaanapp.order.activities.PaymentGatewayActivity;
 import com.example.fasih.dukaanapp.order.interfaces.PaymentNotifier;
 import com.example.fasih.dukaanapp.register.RegisterActivity;
 import com.facebook.AccessToken;
@@ -734,7 +735,7 @@ public class FirebaseMethods {
 
                         ProductsNew product = new ProductsNew(productName, selectedCategory, downloadUri.toString()
                                 , productDescription, productPrice, productWarranty
-                                , availableStock, timeStamp, productID, -1, shop_id,selectedType);
+                                , availableStock, timeStamp, productID, -1, shop_id, selectedType);
                         myRef
                                 .child(mContext.getString(R.string.db_products_node))
                                 .child(mAuth.getCurrentUser().getUid())
@@ -944,7 +945,7 @@ public class FirebaseMethods {
                             userProduct.setProduct_id(productObj.get(mContext.getString(R.string.db_field_product_id)));
                             userProduct.setShop_id(productObj.get(mContext.getString(R.string.db_field_shop_id)));
                             userProduct.setType("");
-                            if(productObj.get(mContext.getString(R.string.db_field_type))!=null){
+                            if (productObj.get(mContext.getString(R.string.db_field_type)) != null) {
                                 userProduct.setType(productObj.get(mContext.getString(R.string.db_field_type)));
                             }
                             userProduct.setProduct_rating(Long.parseLong(String.valueOf(productObj.get(mContext.getString(R.string.db_field_product_rating)))));
@@ -1152,7 +1153,7 @@ public class FirebaseMethods {
     public void placeNewOrder(String currentUserID, Products product, String orderStatus) {
 
         //future notify seller as well through Notification
-        String orderID= myRef.push().getKey().substring(3,13);
+        String orderID = myRef.push().getKey().substring(3, 13);
         String timeStamp = new SimpleDateFormat("dd-MM-yyyy 'Time' HH:mm:ss", Locale.US).format(new Date());
         Orders order = new Orders(product.getProduct_name()
                 , product.getProduct_price()
@@ -1173,14 +1174,16 @@ public class FirebaseMethods {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
                             Toast.makeText(mContext, mContext.getString(R.string.successfully_created_order), Toast.LENGTH_SHORT).show();
-                            ((OrderPageActivity)mContext).finish();
+                            if (activityName.equals(mContext.getString(R.string.activity_order_page)))
+                                ((OrderPageActivity) mContext).finish();
+                            if (activityName.equals(mContext.getString(R.string.activity_payment_gateway)))
+                                ((PaymentGatewayActivity) mContext).finish();
+
                             //plus needs to remove the cart Product as well in future
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(mContext, mContext.getString(R.string.failure_created_order), Toast.LENGTH_SHORT).show();
 
                         }
@@ -1229,13 +1232,12 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.exists()){
+                        if (dataSnapshot.exists()) {
 
-                            for (DataSnapshot ds: dataSnapshot.getChildren())
-                            {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
                                 viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
-                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)), viewHolder.sellerImage);
                             }
                         }
                     }
@@ -1259,13 +1261,12 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.exists()){
+                        if (dataSnapshot.exists()) {
 
-                            for (DataSnapshot ds: dataSnapshot.getChildren())
-                            {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
                                 viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
-                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)), viewHolder.sellerImage);
                             }
                         }
                     }
@@ -1289,13 +1290,12 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.exists()){
+                        if (dataSnapshot.exists()) {
 
-                            for (DataSnapshot ds: dataSnapshot.getChildren())
-                            {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
                                 viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
-                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)), viewHolder.sellerImage);
                             }
                         }
                     }
@@ -1319,13 +1319,12 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if(dataSnapshot.exists()){
+                        if (dataSnapshot.exists()) {
 
-                            for (DataSnapshot ds: dataSnapshot.getChildren())
-                            {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 HashMap<String, Object> shopProfileSettings = (HashMap<String, Object>) ds.getValue();
                                 viewHolder.sellingBy.setText((String) shopProfileSettings.get(mContext.getString(R.string.db_field_user_name)));
-                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)),viewHolder.sellerImage);
+                                ImageLoader.getInstance().displayImage((String) shopProfileSettings.get(mContext.getString(R.string.db_field_profile_image_url)), viewHolder.sellerImage);
                             }
                         }
                     }
@@ -1339,10 +1338,9 @@ public class FirebaseMethods {
     }
 
     public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
-            ,final String queryShopTerms
+            , final String queryShopTerms
             , final Products product
-            , final ClothingProductsAdapter adapter){
-
+            , final ClothingProductsAdapter adapter) {
 
 
         myRef
@@ -1354,13 +1352,12 @@ public class FirebaseMethods {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                        for (DataSnapshot shop : dataSnapshot.getChildren()) {
                             HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
 
-                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
-                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
-                                        .toString().contains(queryShopTerms))
-                                {
+                            if (shopNode.containsKey(mContext.getString(R.string.db_field_user_name))) {
+                                if (shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms)) {
 
                                     Log.d("TAG1234", "onDataChange: ");
                                     shopRestrictedList.add(product);
@@ -1378,10 +1375,9 @@ public class FirebaseMethods {
     }
 
     public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
-            ,final String queryShopTerms
+            , final String queryShopTerms
             , final Products product
-            , final CarsFragmentAdapter adapter){
-
+            , final CarsFragmentAdapter adapter) {
 
 
         myRef
@@ -1393,13 +1389,12 @@ public class FirebaseMethods {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                        for (DataSnapshot shop : dataSnapshot.getChildren()) {
                             HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
 
-                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
-                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
-                                        .toString().contains(queryShopTerms))
-                                {
+                            if (shopNode.containsKey(mContext.getString(R.string.db_field_user_name))) {
+                                if (shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms)) {
 
                                     Log.d("TAG1234", "onDataChange: ");
                                     shopRestrictedList.add(product);
@@ -1417,10 +1412,9 @@ public class FirebaseMethods {
     }
 
     public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
-            ,final String queryShopTerms
+            , final String queryShopTerms
             , final Products product
-            , final MobileProductsAdapter adapter){
-
+            , final MobileProductsAdapter adapter) {
 
 
         myRef
@@ -1432,13 +1426,12 @@ public class FirebaseMethods {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                        for (DataSnapshot shop : dataSnapshot.getChildren()) {
                             HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
 
-                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
-                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
-                                        .toString().contains(queryShopTerms))
-                                {
+                            if (shopNode.containsKey(mContext.getString(R.string.db_field_user_name))) {
+                                if (shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms)) {
 
                                     Log.d("TAG1234", "onDataChange: ");
                                     shopRestrictedList.add(product);
@@ -1456,10 +1449,9 @@ public class FirebaseMethods {
     }
 
     public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
-            ,final String queryShopTerms
+            , final String queryShopTerms
             , final Products product
-            , final CosmeticsProductsAdapter adapter){
-
+            , final CosmeticsProductsAdapter adapter) {
 
 
         myRef
@@ -1471,13 +1463,12 @@ public class FirebaseMethods {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                        for (DataSnapshot shop : dataSnapshot.getChildren()) {
                             HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
 
-                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
-                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
-                                        .toString().contains(queryShopTerms))
-                                {
+                            if (shopNode.containsKey(mContext.getString(R.string.db_field_user_name))) {
+                                if (shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms)) {
 
                                     Log.d("TAG1234", "onDataChange: ");
                                     shopRestrictedList.add(product);
@@ -1495,10 +1486,9 @@ public class FirebaseMethods {
     }
 
     public void filterInterestedShopProducts(final ArrayList<Products> shopRestrictedList
-            ,final String queryShopTerms
+            , final String queryShopTerms
             , final Products product
-            , final ElectronicsProductsAdapter adapter){
-
+            , final ElectronicsProductsAdapter adapter) {
 
 
         myRef
@@ -1510,13 +1500,12 @@ public class FirebaseMethods {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                        for (DataSnapshot shop : dataSnapshot.getChildren()){
+                        for (DataSnapshot shop : dataSnapshot.getChildren()) {
                             HashMap<String, Object> shopNode = (HashMap<String, Object>) shop.getValue();
 
-                            if(shopNode.containsKey(mContext.getString(R.string.db_field_user_name))){
-                                if(shopNode.get(mContext.getString(R.string.db_field_user_name))
-                                        .toString().contains(queryShopTerms))
-                                {
+                            if (shopNode.containsKey(mContext.getString(R.string.db_field_user_name))) {
+                                if (shopNode.get(mContext.getString(R.string.db_field_user_name))
+                                        .toString().contains(queryShopTerms)) {
 
                                     Log.d("TAG1234", "onDataChange: ");
                                     shopRestrictedList.add(product);
@@ -1544,19 +1533,18 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        for(DataSnapshot singleUser : dataSnapshot.getChildren())
-                        {
+                        for (DataSnapshot singleUser : dataSnapshot.getChildren()) {
 
-                            HashMap<String,Object> mMap = (HashMap<String, Object>) singleUser.getValue();
+                            HashMap<String, Object> mMap = (HashMap<String, Object>) singleUser.getValue();
 
-                            StripeToken token = new StripeToken((String)mMap.get(mContext.getString(R.string.db_field_user_id))
-                                    , (String)mMap.get(mContext.getString(R.string.db_field_user_name))
-                                    , (String)mMap.get(mContext.getString(R.string.db_field_scope))
+                            StripeToken token = new StripeToken((String) mMap.get(mContext.getString(R.string.db_field_user_id))
+                                    , (String) mMap.get(mContext.getString(R.string.db_field_user_name))
+                                    , (String) mMap.get(mContext.getString(R.string.db_field_scope))
                                     , stripe_token);
 
                             myRef
                                     .child(mContext.getString(R.string.db_stripeToken_node))
-                                    .child((String)mMap.get(mContext.getString(R.string.db_field_user_id)))
+                                    .child((String) mMap.get(mContext.getString(R.string.db_field_user_id)))
                                     .setValue(token);
 
                         }
@@ -1584,8 +1572,7 @@ public class FirebaseMethods {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        for(DataSnapshot singleShop: dataSnapshot.getChildren())
-                        {
+                        for (DataSnapshot singleShop : dataSnapshot.getChildren()) {
                             Map<String, Object> mMap = (HashMap<String, Object>) singleShop.getValue();
                             StripeShipping stripeShipping = new StripeShipping();
                             StripeRecipientAddress address = new StripeRecipientAddress();
@@ -1603,7 +1590,7 @@ public class FirebaseMethods {
                                     , price
                                     , stripeShipping);
                             paymentNotifier.callbackActivityMakePostChargeRequest(charge);
-                            Log.d("TAG1234", "onDataChange: StripeShipping Details"+charge.toString());
+
                         }
                     }
 
@@ -1614,24 +1601,10 @@ public class FirebaseMethods {
                 });
     }
 
-    public void setStripeCustomCharge(PaymentNotifier paymentNotifier){
+    public void setStripeCustomCharge(PaymentNotifier paymentNotifier) {
         this.paymentNotifier = paymentNotifier;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //        if(currentChildReference instanceof CarsFragment){
