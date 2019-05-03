@@ -153,6 +153,7 @@
     <string name="db_FCMToken_node">FCMToken</string>
 
     <string name="db_field_user_name">user_name</string>
+    <string name="db_field_fcm_token">fcm_token</string>
     <string name="db_field_type">type</string>
     <string name="db_field_email">email</string>
     <string name="db_field_first_name">first_name</string>
@@ -288,7 +289,7 @@
     <!--Stripe Test Api Key-->
     <!--Always remember to replace this test key + Base URL with production key + Base URL before deployment-->
     <string name="stripe_testApiKey">pk_test_Cy2QcAs1XUqNFOimYEpNRR9a006i6TEI1C</string>
-    <string name="TestStripeBaseURL">https://c7d6e8cd.ngrok.io/</string>
+    <string name="TestStripeBaseURL">https://0323d6c8.ngrok.io/</string>
 
     <!--Stripe Nodes & Fields-->
     <string name="db_stripe_billing_details_node">stripe_billing_details</string>
@@ -317,6 +318,8 @@
 
     <!--Firebase Cloud Messaging-->
     <string name="fcm_token">FCM_TOKEN</string>
+
+    <!--Shared Preferences-->
     <string name="myPreferences">myPreferences</string>
 
 
@@ -333,5 +336,9 @@
         <item>FRAGRANCES</item>
     </string-array>
 
+    <!--Notifications Data-->
+    <string name="CHANNEL_ID">NotificationChannel</string>
+    <string name="channel_name">Android 8.0 Channel</string>
+    <string name="channel_description">This is only for Android 8.0+ deveices</string>
 
 </resources>

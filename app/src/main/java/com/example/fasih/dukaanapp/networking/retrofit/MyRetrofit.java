@@ -10,6 +10,7 @@ import com.example.fasih.dukaanapp.R;
 import com.example.fasih.dukaanapp.models.Products;
 import com.example.fasih.dukaanapp.models.StripeCharge;
 import com.example.fasih.dukaanapp.models.StripeCustomCharge;
+import com.example.fasih.dukaanapp.models.fcmMessage.Message;
 import com.example.fasih.dukaanapp.networking.interfaces.GitHubService;
 import com.example.fasih.dukaanapp.utils.FirebaseMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -106,5 +107,25 @@ public class MyRetrofit {
                 confirmPaymentProgress.setVisibility(View.GONE);
             }
         });
+    }
+
+
+    public void makePostFcmMessageAPICall(GitHubService service, Message message) {
+
+        Log.d("TAG1234", "makePostFcmMessageAPICall: "+message);
+
+        service.postFcmMessageToPlaceOrder(message)
+                .enqueue(new Callback<Object>() {
+                    @Override
+                    public void onResponse(Call<Object> call, Response<Object> response) {
+
+                        Log.d("TAG1234", "onResponse: "+response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<Object> call, Throwable t) {
+
+                    }
+                });
     }
 }
